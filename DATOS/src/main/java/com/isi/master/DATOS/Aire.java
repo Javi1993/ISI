@@ -86,7 +86,7 @@ public class Aire {
 	private void insertarEstaciones()
 	{
 		try {
-			final CsvReader estaciones = new CsvReader("C:\\Users\\javie\\OneDrive\\Documentos\\Integración de sistemas de información\\Aire_\\estaciones.csv", ';');
+			final CsvReader estaciones = new CsvReader(".\\documentos\\Aire_\\estaciones.csv", ';');
 			estaciones.readHeaders();
 
 			List<Document> registros = new ArrayList<Document>();//lista con las estaciones y sus medidas
@@ -109,7 +109,7 @@ public class Aire {
 						.append("Provincia", Funciones.quitarTildes(cpp[1]))
 						.append("Pais", Funciones.quitarTildes(cpp[2]));
 
-				CsvReader medidas = new CsvReader("C:\\Users\\javie\\OneDrive\\Documentos\\Integración de sistemas de información\\Aire_\\datos\\"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
+				CsvReader medidas = new CsvReader(".\\documentos\\Aire_\\datos\\"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
 				medidas.readHeaders();
 
 				List<Document> valores = new ArrayList<Document>();//lista con las medidas de una estacion

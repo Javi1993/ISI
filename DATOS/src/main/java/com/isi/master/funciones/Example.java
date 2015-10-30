@@ -15,7 +15,7 @@ public class Example {
 	{
 		try {
 
-			CsvReader products = new CsvReader("C:\\Users\\javie\\Downloads\\avisa-ciudadanos-Madrid-Filtrado.csv", ';');
+			CsvReader products = new CsvReader("ruta", ';');
 
 			products.readHeaders();
 
@@ -46,7 +46,7 @@ public class Example {
 	private static void ejemploEscritura(){
 		try {
 			// use FileWriter constructor that specifies open for appending
-			CsvWriter csvOutput = new CsvWriter(new FileWriter("C:\\Users\\javie\\Downloads\\avisa-ciudadanos-Madrid-Filtrado.csv", true), ';');
+			CsvWriter csvOutput = new CsvWriter(new FileWriter("ruta", true), ';');
 
 			// else assume that the file already has the correct header line
 
@@ -69,8 +69,8 @@ public class Example {
 	@SuppressWarnings("unused")
 	private static void ejemploLecturaMasEscritura(){
 		String ciudad = "MADRID";//poner ciudad
-		String rutaViejo = "C:\\Users\\javie\\Downloads\\avisa-ciudadanos-Madrid-Filtrado.csv";
-		String rutaNuevo = "C:\\Users\\javie\\Downloads\\avisos-Madrid.csv";
+		String rutaViejo = "rutaViejo";
+		String rutaNuevo = "rutaNuevo";
 
 		//Cambio de formato fecha y se aniade la ciudad
 		try {

@@ -33,7 +33,7 @@ public class Ciudadanos {
 	private void avisosMadrid()
 	{
 		String ciudad = "MADRID";//poner ciudad
-		String rutaViejo = "C:\\Users\\javie\\OneDrive\\Documentos\\Integración de sistemas de información\\Avisos_ Ciudadanos-Madrid\\avisos-madrid.csv";
+		String rutaViejo = ".\\documentos\\Ciudadanos_\\avisos-madrid.csv";
 
 		//Cambio de formato fecha y se aniade la ciudad
 		try {
@@ -45,8 +45,9 @@ public class Ciudadanos {
 
 			while (viejo.readRecord())
 			{//leemos el registro viejo y lo adecuamos al nuevo
+				String[] fecha = viejo.get("FECHA").split("/");
 				Document registro = new Document()
-						.append("Fecha", formatoFecha.parse(viejo.get("FECHA").replace("/", "-")+" 00:00:00"))
+						.append("Fecha", formatoFecha.parse(fecha[2]+"-"+fecha[1]+"-"+fecha[0]+" 20:00:00"))
 						.append("Aviso", Funciones.quitarTildes(viejo.get("TIPO")))
 						.append("Descripcion", Funciones.quitarTildes(viejo.get("DESCRIPCION")))
 						.append("Ciudad", Funciones.quitarTildes(ciudad))
