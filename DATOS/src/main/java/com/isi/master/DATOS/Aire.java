@@ -127,10 +127,8 @@ public class Aire {
 						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+medidas.get("Hora")));
 					}
 
-					//añadimos la medida a la lista de la estacion
-
 					medida = cogerMedidasDecimal(medida, parametrosMedicion(medidas));//completamos las medidas
-					if(medida!=null){valores.add(medida);}//hay medidas reales para esa fecha
+					if(medida!=null){valores.add(medida);}//añadimos la medida a la lista de la estacion
 				}
 				estacion.append("Medidas", valores);//aniadimos a la estacion todas sus medidas
 				registros.add(estacion);//aniadimos la estacion completa a la lista de estaciones
@@ -173,6 +171,8 @@ public class Aire {
 				new Document("$set", new Document("Provincia", "ISLAS BALEARES")));
 		collection.updateMany(new Document("Provincia", "ILLES BALEARS"), 
 				new Document("$set", new Document("Provincia", "ISLAS BALEARES")));
+		collection.updateMany(new Document("Provincia", "CDAD. REAL"), 
+				new Document("$set", new Document("Provincia", "CIUDAD REAL")));
 	}
 
 	public static void main(String[] args) {
