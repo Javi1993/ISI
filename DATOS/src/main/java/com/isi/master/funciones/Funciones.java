@@ -27,16 +27,17 @@ public class Funciones {
 	/**
 	 * Comprueba si el contenido de un String es un valor numerico
 	 * @param s - string a evaluar
+	 * @param magnitud - magnitud de la medida, la TMP(temperatura) puede ser negativa
 	 * @return Booleano indicando si es numerico (true) o no (false)
 	 */
-	public static boolean isNumeric(String s) { 
+	public static boolean isNumeric(String s,String... magnitud) { 
 		if(s.matches("[-+]?\\d*\\.?\\d+"))
 		{
-			if(Double.valueOf(s)>=0){//el valor es correcto
+			if(Double.valueOf(s)>0||magnitud.equals("TMP")){//el valor es correcto
 				return true;
 			}
 		}
-		return false;//el valor no es numerico o no es positivo
+		return false;//el valor no es numerico o no es positivo(si es una magnitud)
 	} 
 
 	/**
@@ -177,7 +178,5 @@ public class Funciones {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 	}
 }

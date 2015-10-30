@@ -41,7 +41,7 @@ public class Aire {
 		{
 			mediciones[i] = mediciones[i].trim();
 			aux = mediciones[i].split(":");
-			if(aux.length>1&&Funciones.isNumeric(aux[1]))
+			if(aux.length>1&&Funciones.isNumeric(aux[1],aux[0]))
 			{
 				medida.append(aux[0], Float.valueOf(aux[1]));
 				cnt++;
