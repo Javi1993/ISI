@@ -81,7 +81,6 @@ public class Aire {
 	/**
 	 * Inserta todas las estaciones de calidad de aire con sus medidas en la DB
 	 */
-	//DE MOMENTO SOLO CASTILLALEON, CANARIAS, VALENCIA, MADRID, GIJON, ARAGON, BALEARES y EUSKADI
 	@SuppressWarnings("serial")
 	private void insertarEstaciones()
 	{
@@ -152,7 +151,6 @@ public class Aire {
 	private void optimizarDB(){
 		//Algunas estaciones no midieorn para este tiempo u hora
 		collection.deleteMany(new Document("Medidas",new Document("$size",0)));
-		//añadir el que borra solo un doc de Medidas!
 
 		//Creamos indice para agilizar consultas
 		collection.createIndex(new Document("Estacion",1));
@@ -173,6 +171,8 @@ public class Aire {
 				new Document("$set", new Document("Provincia", "ISLAS BALEARES")));
 		collection.updateMany(new Document("Provincia", "CDAD. REAL"), 
 				new Document("$set", new Document("Provincia", "CIUDAD REAL")));
+		collection.updateMany(new Document("Provincia", "A CORUNA"), 
+				new Document("$set", new Document("Provincia", "LA CORUNA")));
 	}
 
 	public static void main(String[] args) {
