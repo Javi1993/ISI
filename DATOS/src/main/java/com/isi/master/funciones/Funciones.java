@@ -137,29 +137,6 @@ public class Funciones {
 		return coordenadas;
 	}
 
-	/**
-	 * Corrigen unas coordenadas en decimal en el caso de que estas no se adecuen al formato de geo de MongoDB
-	 * @param latitud
-	 * @param longitud
-	 * @return Coordenadas corregidas
-	 */
-	public static double[] corregirCoordenadas(String latitud, String longitud) {
-		String[] lat = latitud.split("\\.");
-		latitud = lat[0]+".";
-		for(int i = 1; i<lat.length; i++)
-		{
-			latitud+=lat[i];
-		}
-		String[] lon = longitud.split("\\.");
-		longitud = lon[0]+".";
-		for(int i = 1; i<lon.length; i++)
-		{
-			longitud+=lon[i];
-		}
-		double[] coordenadas = {Double.parseDouble(latitud),Double.parseDouble(longitud)};
-		return coordenadas;
-	}
-
 	public static void main(String[] args) {
 		try {
 			CsvReader estaciones = new CsvReader("C:\\Users\\javie\\OneDrive\\Documentos\\Integración de sistemas de información\\Aire_ Madrid\\madrid_estaciones_red_calidad_aire-limpio.csv", ';');
