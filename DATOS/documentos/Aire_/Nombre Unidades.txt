@@ -1,7 +1,7 @@
 ﻿SO2 = Dióxido de azufre (µg/m3)
 NO = Monóxido de nitrógeno (µg/m3)
 NO2 = Dióxido de nitrógeno (µg/m3)
-NOX = ¿? (µg/m3)
+NOX = Óxidos de nitrógeno (µg/m3)
 NH3 = Amoniaco (µg/m3)
 PM10 = Partículas en suspensión PM10 < 10um (µg/m3)
 PM25 (PM2,5) = Particulas en suspensión < 2,5um (µg/m3)

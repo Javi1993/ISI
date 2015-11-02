@@ -1,6 +1,9 @@
 package com.isi.master.DATOS;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,8 +36,9 @@ public class Personas {
 		formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
-		collection = database.getCollection("ciudadanos");//tomamos la coleccion
-		collectionTwitter = database.getCollection("twitter");//tomamos la coleccion
+		collection = database.getCollection("ciudadanos");//tomamos la coleccion de avisos
+		collectionTwitter = database.getCollection("twitter");//tomamos la coleccion de tweets
+		//conexion a API de twitter
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("z4mU2gFl8tACEun7mzkwKaMI8", "s2srh0iCA1HoifFldrQNYutAKFKBy7xRfmpnb5gUwPEyCy6ACB");
 		twitter.setOAuthAccessToken(new AccessToken("375340426-qTNlY4mtFZZ6NdhY5x67UQAkQGOeTYs51Rwu7RqM", "9p5qKgtaKSoALFu7ZCfNZ2joaYaecI96UTMu1ZqACr3LM"));
@@ -46,7 +50,7 @@ public class Personas {
 	private void avisosMadrid()
 	{
 		String ciudad = "MADRID";//poner ciudad
-		String rutaViejo = ".\\documentos\\Ciudadanos_\\avisos-madrid.csv";
+		String rutaViejo = ".\\documentos\\Personas_\\avisos-madrid.csv";
 
 		//Cambio de formato fecha y se aniade la ciudad
 		try {
@@ -83,14 +87,15 @@ public class Personas {
 	 * Almacena en la DB las quejas de los ciudadanos por twitter en lo referente al medio ambiente
 	 * True: User, False: hashtag
 	 */
-	private void quejasTwitter(String hashtagUser, boolean hashUser){
+	private void quejasTwitter(String hashtagUser){
 		try {
 			Query query = new Query(hashtagUser);
 			query.setSince("2015-01-01");
+			query.setUntil("2016-01-01");
 			QueryResult result = twitter.search(query);
 			
 			String hashtag="";
-			if(hashUser)
+			if(hashtagUser.startsWith("#"))
 			{
 				hashtag = hashtagUser;
 			}
@@ -119,21 +124,51 @@ public class Personas {
 		}
 	}
 
+	private List<String> getListHashUsers(){
+		File twitter = null;
+		FileReader fr = null;  
+		BufferedReader br = null;
+		List<String> hashUser = null;//lista con los usuarios y hashtags de twitter
+		try {
+			// Apertura del fichero y creacion de BufferedReader para poder
+			twitter = new File(".\\documentos\\Personas_\\twitter.txt");
+			fr = new FileReader (twitter);
+			br = new BufferedReader(fr);
+			hashUser = new ArrayList<String>();
+
+			// Lectura del fichero
+			String linea;
+			while((linea=br.readLine())!=null)
+				hashUser.add(linea);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{                    
+				if( null != fr ){  
+					fr.close();
+				}                  
+			}catch (Exception e2){ 
+				e2.printStackTrace();
+			}
+		}
+		return hashUser;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-		test.collection.drop();//vaciamos la coleccion de quejas ciudadanas AYU MADRID
-		test.avisosMadrid();
-		
-		//METER TODOS LOS  HASTTAG Y SUUARIOS EN UNA LISTA (DOCUMENTO CON ELLOS PARA GENERAR) Y LLAMAR SOLO 1 VEZ AL METODO
-		test.quejasTwitter("#contaminacionmadrid",false);
-		test.quejasTwitter("#contaminacion",false);
-		test.quejasTwitter("#calidadaire",false);
-		test.quejasTwitter("#ruidoMadrid",false);
-		test.quejasTwitter("#ruido",false);
-		test.quejasTwitter("ASURCAI",true);
-		test.quejasTwitter("FilterQueenES",true);
+//		test.collection.drop();//vaciamos la coleccion de quejas ciudadanas AYU MADRID
+//		test.avisosMadrid();//insertamos los avisos del AYU MADRID
+
+		test.quejasTwitter("#contaminacionmadrid");
+		test.quejasTwitter("#contaminacion");
+		test.quejasTwitter("#calidadaire");
+		test.quejasTwitter("#ruidoMadrid");
+		test.quejasTwitter("#ruido");
+		test.quejasTwitter("ASURCAI");
+		test.quejasTwitter("FilterQueenES");
 		test.client.close();//cerramos la conexion
 	}
 }

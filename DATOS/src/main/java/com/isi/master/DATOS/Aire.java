@@ -181,7 +181,7 @@ public class Aire {
 		Aire test = new Aire();
 
 		test.collection.drop();//vaciamos la coleccion
-		test.insertarEstaciones();		
+		test.insertarEstaciones();//insertamos todas las estaciones con sus medidas		
 		test.client.close();//cerramos la conexion
 	}
 }
