@@ -93,17 +93,19 @@ public class Personas {
 			List<Document> tweets = new ArrayList<Document>();
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				//				System.out.println(sCurrentLine.trim());
-				Query query = new Query(sCurrentLine.trim());
-				query.setSince("2015-01-01");
-				query.setUntil("2016-01-01");
-				QueryResult result = twitter.search(query);
-
+				Query query = null;
 				String hashtag="";
 				if(sCurrentLine.trim().startsWith("#"))
 				{
 					hashtag = sCurrentLine.trim();
+					query = new Query(hashtag);
+				}else{
+					query = new Query(sCurrentLine);
 				}
+				query.setSince("2015-01-01");
+				query.setUntil("2016-01-01");
+				QueryResult result = twitter.search(query);
+				
 				for (Status status : result.getTweets()) {
 					Document doc = new Document("_id", String.valueOf(status.getId()))
 							.append("usuario", status.getUser().getScreenName())

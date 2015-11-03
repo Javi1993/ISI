@@ -12,3 +12,14 @@ FilterQueenES
 #aireMadrid
 #aireBarcelona
 EPmedioambiente
+#basura
+#basuraMadrid
+recogida de basura
+contaminacion aire
+basura calles
+basura calle
+#desperdicios
+basura valencia
+basura madrid
+basura barcelona
+basura ciudad
