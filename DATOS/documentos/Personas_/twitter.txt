@@ -5,3 +5,10 @@
 #ruido
 ASURCAI
 FilterQueenES
+#medioambientemadrid
+#contaminaciobarcelona
+#contaminacionacustica
+#contaminacionatmosferica
+#aireMadrid
+#aireBarcelona
+EPmedioambiente

@@ -1,7 +1,6 @@
 package com.isi.master.DATOS;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -85,90 +84,66 @@ public class Personas {
 
 	/**
 	 * Almacena en la DB las quejas de los ciudadanos por twitter en lo referente al medio ambiente
-	 * True: User, False: hashtag
 	 */
-	private void quejasTwitter(String hashtagUser){
+	private void quejasTwitter(){
+		BufferedReader br = null;
 		try {
-			Query query = new Query(hashtagUser);
-			query.setSince("2015-01-01");
-			query.setUntil("2016-01-01");
-			QueryResult result = twitter.search(query);
-			
-			String hashtag="";
-			if(hashtagUser.startsWith("#"))
-			{
-				hashtag = hashtagUser;
-			}
-			
+			String sCurrentLine;
+			br = new BufferedReader(new FileReader(".\\documentos\\Personas_\\twitter.txt"));//cogemos los hashtags y usuarios
 			List<Document> tweets = new ArrayList<Document>();
-			for (Status status : result.getTweets()) {
-				Document doc = new Document("_id", String.valueOf(status.getId()))
-						.append("usuario", status.getUser().getScreenName())
-						.append("contenido", status.getText())
-						.append("localizacion", status.getUser().getLocation())
-						.append("hashtag", hashtag)
-						.append("fecha", status.getCreatedAt());
 
-				if(collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
+			while ((sCurrentLine = br.readLine()) != null) {
+				//				System.out.println(sCurrentLine.trim());
+				Query query = new Query(sCurrentLine.trim());
+				query.setSince("2015-01-01");
+				query.setUntil("2016-01-01");
+				QueryResult result = twitter.search(query);
+
+				String hashtag="";
+				if(sCurrentLine.trim().startsWith("#"))
 				{
-					tweets.add(doc);
+					hashtag = sCurrentLine.trim();
+				}
+				for (Status status : result.getTweets()) {
+					Document doc = new Document("_id", String.valueOf(status.getId()))
+							.append("usuario", status.getUser().getScreenName())
+							.append("contenido", status.getText())
+							.append("localizacion", status.getUser().getLocation())
+							.append("hashtag", hashtag)
+							.append("fecha", status.getCreatedAt());
+
+					if(collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
+					{//anadimos a la lista el tweet si no esta almacenado
+						tweets.add(doc);
+					}
 				}
 			}
 			if(tweets.size()>0)
-			{
+			{//metemos la lista de tweets a la DB
 				collectionTwitter.insertMany(tweets);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-
-	private List<String> getListHashUsers(){
-		File twitter = null;
-		FileReader fr = null;  
-		BufferedReader br = null;
-		List<String> hashUser = null;//lista con los usuarios y hashtags de twitter
-		try {
-			// Apertura del fichero y creacion de BufferedReader para poder
-			twitter = new File(".\\documentos\\Personas_\\twitter.txt");
-			fr = new FileReader (twitter);
-			br = new BufferedReader(fr);
-			hashUser = new ArrayList<String>();
-
-			// Lectura del fichero
-			String linea;
-			while((linea=br.readLine())!=null)
-				hashUser.add(linea);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try{                    
-				if( null != fr ){  
-					fr.close();
-				}                  
-			}catch (Exception e2){ 
-				e2.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
 		}
-		return hashUser;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-//		test.collection.drop();//vaciamos la coleccion de quejas ciudadanas AYU MADRID
-//		test.avisosMadrid();//insertamos los avisos del AYU MADRID
+		test.collection.drop();//vaciamos la coleccion de quejas ciudadanas AYU MADRID
+		test.avisosMadrid();//insertamos los avisos del AYU MADRID
 
-		test.quejasTwitter("#contaminacionmadrid");
-		test.quejasTwitter("#contaminacion");
-		test.quejasTwitter("#calidadaire");
-		test.quejasTwitter("#ruidoMadrid");
-		test.quejasTwitter("#ruido");
-		test.quejasTwitter("ASURCAI");
-		test.quejasTwitter("FilterQueenES");
+		test.quejasTwitter();
 		test.client.close();//cerramos la conexion
 	}
 }
