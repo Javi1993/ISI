@@ -114,7 +114,7 @@ public class Personas {
 							.append("hashtag", hashtag)
 							.append("fecha", status.getCreatedAt());
 
-					if(collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
+					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)&&(!tweets.contains(doc)))
 					{//anadimos a la lista el tweet si no esta almacenado
 						tweets.add(doc);
 					}
