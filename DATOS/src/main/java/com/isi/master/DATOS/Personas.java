@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import org.bson.Document;
 import com.csvreader.CsvReader;
 import com.isi.master.funciones.Funciones;
@@ -94,30 +96,35 @@ public class Personas {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				Query query = null;
-				String hashtag="";
+				List<String> hashtag=new ArrayList<String>();
+				String mainHashtag=null;
 				if(sCurrentLine.trim().startsWith("#"))
 				{
-					hashtag = sCurrentLine.trim();
-					query = new Query(hashtag);
-				}else{
-					query = new Query(sCurrentLine);
+					hashtag.add(sCurrentLine);
+					mainHashtag=sCurrentLine;
 				}
+
+				query = new Query(sCurrentLine);
 				query.setSince("2015-01-01");
 				query.setUntil("2016-01-01");
 				QueryResult result = twitter.search(query);
-				
+
 				for (Status status : result.getTweets()) {
+
+					List<String> aux = new ArrayList<String>(hashtags(status.getText(), hashtag));//lista auxiliar con todos los hashtags
 					Document doc = new Document("_id", String.valueOf(status.getId()))
 							.append("usuario", status.getUser().getScreenName())
 							.append("contenido", status.getText())
 							.append("localizacion", status.getUser().getLocation())
-							.append("hashtag", hashtag)
+							.append("hashtag", aux)
 							.append("fecha", status.getCreatedAt());
 
 					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)&&(!tweets.contains(doc)))
 					{//anadimos a la lista el tweet si no esta almacenado
 						tweets.add(doc);
 					}
+					hashtag.clear();
+					if(mainHashtag!=null){hashtag.add(mainHashtag);}//anadimos el hashtag principal que se uso en la Query	
 				}
 			}
 			if(tweets.size()>0)
@@ -136,6 +143,27 @@ public class Personas {
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * Lee un tweet por si hay mas hashtags en él y los guarda
+	 * @param tweet
+	 * @param hashtags
+	 * @return
+	 */
+	private List<String> hashtags(String tweet, List<String> hashtags){
+		StringTokenizer st = new StringTokenizer(tweet);
+		while (st.hasMoreElements()) {
+			String aux=(String) st.nextElement();
+			if(aux.startsWith("#"))
+			{
+				if(!hashtags.contains(aux.replaceAll("[,;.]+$", "").toLowerCase()))
+				{
+					hashtags.add(aux.replaceAll("[,;.]+$", "").toLowerCase());
+				}	
+			}	
+		}
+		return hashtags;
 	}
 
 	public static void main(String[] args) {
