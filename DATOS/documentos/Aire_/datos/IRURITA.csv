@@ -1,0 +1,312 @@
+Fecha;SO2;NO;NO2;O3;CO;PM10;PM25;BEN
+01/01/2015;6;18;33;13;0.5;34;31;1.8
+02/01/2015;7;42;47;8;0.6;Sense dades;Sense dades;Sense dades
+03/01/2015;7;38;43;10;0.7;65;58;Sense dades
+04/01/2015;6;20;32;11;0.5;Sense dades;Sense dades;Sense dades
+05/01/2015;4;18;25;7;0.5;38;34;Sense dades
+06/01/2015;3;10;23;9;0.4;Sense dades;Sense dades;Sense dades
+07/01/2015;3;10;25;10;0.3;41;22;0.4
+08/01/2015;3;7;25;17;0.3;Sense dades;Sense dades;Sense dades
+09/01/2015;3;6;19;16;0.2;22;20;Sense dades
+10/01/2015;3;7;19;9;0.3;Sense dades;Sense dades;Sense dades
+11/01/2015;3;12;22;7;0.4;20;19;Sense dades
+12/01/2015;3;18;33;7;0.4;Sense dades;Sense dades;Sense dades
+13/01/2015;4;46;41;6;0.6;40;35;Sense dades
+14/01/2015;3;25;34;4;0.5;Sense dades;Sense dades;Sense dades
+15/01/2015;3;29;31;4;0.5;35;29;Sense dades
+16/01/2015;3;23;28;21;0.4;Sense dades;Sense dades;Sense dades
+17/01/2015;3;10;26;33;0.3;17;15;0.4
+18/01/2015;5;11;31;15;0.4;Sense dades;Sense dades;Sense dades
+19/01/2015;4;10;28;26;0.3;18;14;0.4
+20/01/2015;4;17;30;28;0.3;Sense dades;Sense dades;Sense dades
+21/01/2015;4;24;35;11;0.5;35;30;Sense dades
+22/01/2015;3;11;29;28;0.3;Sense dades;Sense dades;Sense dades
+23/01/2015;3;14;22;39;0.3;18;12;Sense dades
+24/01/2015;2;5;16;42;0.3;Sense dades;Sense dades;Sense dades
+25/01/2015;2;4;11;55;0.2;13;7;Sense dades
+26/01/2015;4;18;39;24;0.4;Sense dades;Sense dades;Sense dades
+27/01/2015;4;43;49;15;0.6;45;30;1.4
+28/01/2015;4;17;30;23;0.4;Sense dades;Sense dades;Sense dades
+29/01/2015;4;24;35;18;0.4;Sense dades;20;Sense dades
+30/01/2015;2;5;15;51;0.2;Sense dades;Sense dades;Sense dades
+31/01/2015;1;3;10;58;0.2;Sense dades;3;Sense dades
+01/02/2015;1;1;5;68;0.2;Sense dades;Sense dades;Sense dades
+02/02/2015;2;13;34;33;0.3;Sense dades;11;Sense dades
+03/02/2015;2;6;29;35;0.3;Sense dades;Sense dades;Sense dades
+04/02/2015;2;6;25;44;0.3;8;5;Sense dades
+05/02/2015;2;5;18;48;0.2;Sense dades;Sense dades;Sense dades
+06/02/2015;2;8;25;35;0.3;14;9;Sense dades
+07/02/2015;3;9;28;24;0.4;Sense dades;Sense dades;Sense dades
+08/02/2015;3;5;22;38;0.3;26;22;0.3
+09/02/2015;4;19;44;23;0.4;Sense dades;Sense dades;Sense dades
+10/02/2015;5;42;59;15;0.5;55;42;1.2
+11/02/2015;6;55;70;9;0.6;Sense dades;Sense dades;Sense dades
+12/02/2015;6;64;71;7;0.7;72;56;Sense dades
+13/02/2015;4;62;66;13;0.6;Sense dades;Sense dades;Sense dades
+14/02/2015;4;24;37;28;0.4;34;24;Sense dades
+15/02/2015;2;8;22;34;0.3;Sense dades;Sense dades;Sense dades
+16/02/2015;3;14;42;36;0.3;18;12;Sense dades
+17/02/2015;4;25;51;19;0.4;Sense dades;Sense dades;Sense dades
+18/02/2015;2;15;37;33;0.3;19;13;Sense dades
+19/02/2015;4;36;56;17;0.5;Sense dades;Sense dades;Sense dades
+20/02/2015;4;16;53;32;0.4;52;37;Sense dades
+21/02/2015;2;8;30;43;0.3;Sense dades;Sense dades;Sense dades
+22/02/2015;2;6;17;63;0.2;5;3;0.1
+23/02/2015;3;16;32;35;0.3;Sense dades;Sense dades;Sense dades
+24/02/2015;2;7;12;65;0.2;8;3;0.1
+25/02/2015;2;8;16;57;0.2;Sense dades;Sense dades;Sense dades
+26/02/2015;2;17;27;39;0.2;24;6;Sense dades
+27/02/2015;1;2;13;65;0.2;Sense dades;Sense dades;Sense dades
+28/02/2015;2;3;19;49;0.2;14;6;Sense dades
+01/03/2015;3;2;23;33;0.3;Sense dades;Sense dades;Sense dades
+02/03/2015;2;3;19;32;0.2;16;8;Sense dades
+03/03/2015;2;9;30;30;0.3;Sense dades;Sense dades;Sense dades
+04/03/2015;1;4;24;45;0.3;32;13;Sense dades
+05/03/2015;1;1;6;64;0.2;Sense dades;Sense dades;Sense dades
+06/03/2015;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades;44;22;0.4
+07/03/2015;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades
+08/03/2015;Sense dades;Sense dades;Sense dades;Sense dades;Sense dades;44;25;Sense dades
+09/03/2015;3;Sense dades;Sense dades;42;0.4;Sense dades;Sense dades;Sense dades
+10/03/2015;3;Sense dades;Sense dades;40;0.4;69;40;0.5
+11/03/2015;4;Sense dades;Sense dades;43;0.4;Sense dades;Sense dades;Sense dades
+12/03/2015;3;10;37;43;0.4;78;55;Sense dades
+13/03/2015;2;5;21;49;0.3;Sense dades;Sense dades;Sense dades
+14/03/2015;1;5;13;63;0.2;15;4;Sense dades
+15/03/2015;2;5;17;49;0.3;Sense dades;Sense dades;Sense dades
+16/03/2015;2;5;19;50;0.3;33;16;Sense dades
+17/03/2015;3;8;27;44;0.3;Sense dades;Sense dades;Sense dades
+18/03/2015;2;7;30;41;0.3;30;12;Sense dades
+19/03/2015;2;7;35;40;0.3;Sense dades;Sense dades;Sense dades
+20/03/2015;2;10;35;30;0.4;40;23;0.3
+21/03/2015;1;5;15;59;0.3;Sense dades;Sense dades;Sense dades
+22/03/2015;1;5;16;42;0.3;14;6;Sense dades
+23/03/2015;1;4;11;51;0.3;Sense dades;Sense dades;Sense dades
+24/03/2015;1;6;27;46;0.3;23;7;0.1
+25/03/2015;1;6;10;62;0.2;Sense dades;Sense dades;Sense dades
+26/03/2015;1;5;12;55;0.2;10;3;Sense dades
+27/03/2015;1;5;11;62;0.2;Sense dades;Sense dades;Sense dades
+28/03/2015;1;4;7;48;0.2;12;3;Sense dades
+29/03/2015;1;3;5;59;0.2;Sense dades;Sense dades;Sense dades
+30/03/2015;1;3;6;64;0.2;17;5;0.1
+31/03/2015;1;3;10;54;0.2;Sense dades;Sense dades;Sense dades
+01/04/2015;1;3;10;64;0.2;Sense dades;Sense dades;Sense dades
+02/04/2015;2;4;21;50;0.2;28;12;Sense dades
+03/04/2015;2;3;16;42;0.2;Sense dades;Sense dades;Sense dades
+04/04/2015;2;2;9;55;0.2;10;3;Sense dades
+05/04/2015;2;2;8;54;0.2;Sense dades;Sense dades;Sense dades
+06/04/2015;2;2;11;64;0.2;24;13;Sense dades
+07/04/2015;2;4;22;60;0.3;Sense dades;Sense dades;Sense dades
+08/04/2015;2;5;23;64;0.3;29;16;Sense dades
+09/04/2015;3;5;26;63;0.3;Sense dades;Sense dades;Sense dades
+10/04/2015;2;5;26;62;0.3;26;8;0.1
+11/04/2015;2;2;19;65;0.2;Sense dades;Sense dades;Sense dades
+12/04/2015;2;2;17;67;0.3;30;13;Sense dades
+13/04/2015;2;8;30;56;0.3;Sense dades;Sense dades;Sense dades
+14/04/2015;2;6;31;58;0.2;40;14;Sense dades
+15/04/2015;2;5;35;52;0.3;Sense dades;Sense dades;Sense dades
+16/04/2015;3;4;26;52;0.2;28;12;Sense dades
+17/04/2015;3;19;21;54;0.2;Sense dades;Sense dades;Sense dades
+18/04/2015;3;Sense dades;Sense dades;68;0.2;19;5;0.1
+19/04/2015;3;Sense dades;Sense dades;68;0.2;Sense dades;Sense dades;Sense dades
+20/04/2015;3;Sense dades;Sense dades;67;0.2;22;6;0.1
+21/04/2015;3;1;23;59;0.2;Sense dades;Sense dades;Sense dades
+22/04/2015;2;5;33;53;0.3;22;13;Sense dades
+23/04/2015;2;3;23;58;0.2;Sense dades;Sense dades;Sense dades
+24/04/2015;3;3;22;68;0.2;32;15;Sense dades
+25/04/2015;2;2;17;65;0.2;Sense dades;Sense dades;Sense dades
+26/04/2015;2;2;14;47;0.2;16;24;Sense dades
+27/04/2015;1;2;9;64;0.2;Sense dades;Sense dades;Sense dades
+28/04/2015;2;2;12;71;0.2;26;14;0.1
+29/04/2015;2;4;22;45;0.2;Sense dades;Sense dades;Sense dades
+30/04/2015;2;3;19;59;0.2;35;19;Sense dades
+01/05/2015;2;2;16;44;0.2;Sense dades;Sense dades;Sense dades
+02/05/2015;2;2;14;44;0.2;Sense dades;Sense dades;Sense dades
+03/05/2015;2;2;18;43;0.2;Sense dades;Sense dades;Sense dades
+04/05/2015;2;6;34;36;0.3;44;26;Sense dades
+05/05/2015;2;4;25;52;0.2;Sense dades;Sense dades;Sense dades
+06/05/2015;2;3;18;57;0.2;34;29;Sense dades
+07/05/2015;2;3;17;66;0.2;Sense dades;Sense dades;Sense dades
+08/05/2015;2;3;14;67;0.2;28;24;0.1
+09/05/2015;2;2;15;60;0.2;Sense dades;Sense dades;Sense dades
+10/05/2015;2;2;12;69;0.2;42;25;Sense dades
+11/05/2015;2;3;14;80;0.2;Sense dades;Sense dades;Sense dades
+12/05/2015;3;2;19;76;0.2;55;29;Sense dades
+13/05/2015;3;3;28;66;0.2;Sense dades;Sense dades;Sense dades
+14/05/2015;2;5;23;62;0.2;46;29;Sense dades
+15/05/2015;1;3;4;82;0.2;Sense dades;Sense dades;Sense dades
+16/05/2015;2;3;6;75;0.2;16;9;0.1
+17/05/2015;2;2;5;65;0.2;Sense dades;Sense dades;Sense dades
+18/05/2015;2;4;12;66;0.2;14;7;Sense dades
+19/05/2015;2;4;11;52;0.2;Sense dades;Sense dades;Sense dades
+20/05/2015;1;5;7;66;0.2;18;11;Sense dades
+21/05/2015;2;4;9;68;0.2;Sense dades;Sense dades;Sense dades
+22/05/2015;2;5;10;67;0.2;19;12;0.1
+23/05/2015;2;3;7;66;0.2;Sense dades;Sense dades;Sense dades
+24/05/2015;2;3;7;65;0.2;26;13;Sense dades
+25/05/2015;2;3;12;57;0.2;Sense dades;Sense dades;Sense dades
+26/05/2015;2;3;7;59;0.2;29;24;Sense dades
+27/05/2015;2;2;8;68;0.2;Sense dades;Sense dades;Sense dades
+28/05/2015;2;2;14;67;0.2;31;20;Sense dades
+29/05/2015;2;2;14;74;0.2;Sense dades;Sense dades;Sense dades
+30/05/2015;4;1;8;72;0.2;Sense dades;22;Sense dades
+31/05/2015;2;1;8;68;0.2;20;Sense dades;0.1
+01/06/2015;2;2;15;74;0.2;38;14;Sense dades
+02/06/2015;3;6;19;67;0.3;Sense dades;Sense dades;Sense dades
+03/06/2015;2;7;21;68;0.3;32;20;Sense dades
+04/06/2015;2;7;20;68;0.3;Sense dades;Sense dades;Sense dades
+05/06/2015;3;7;20;68;0.3;35;16;0.1
+06/06/2015;3;6;17;73;0.3;Sense dades;Sense dades;Sense dades
+07/06/2015;2;7;15;78;0.3;31;20;Sense dades
+08/06/2015;2;8;20;74;0.3;Sense dades;Sense dades;Sense dades
+09/06/2015;2;8;17;72;0.3;26;13;0.1
+10/06/2015;1;8;20;63;0.3;Sense dades;Sense dades;Sense dades
+11/06/2015;1;9;20;71;0.3;25;14;Sense dades
+12/06/2015;1;11;17;63;0.2;Sense dades;Sense dades;Sense dades
+13/06/2015;1;9;16;62;0.2;22;9;Sense dades
+14/06/2015;1;6;8;68;0.2;Sense dades;Sense dades;Sense dades
+15/06/2015;2;14;12;66;0.2;17;9;0.1
+16/06/2015;1;15;11;58;0.2;Sense dades;Sense dades;Sense dades
+17/06/2015;2;21;11;74;0.2;19;10;Sense dades
+18/06/2015;2;22;14;79;0.2;Sense dades;Sense dades;Sense dades
+19/06/2015;2;34;11;64;0.2;22;13;Sense dades
+20/06/2015;2;32;10;63;0.2;Sense dades;Sense dades;Sense dades
+21/06/2015;2;27;11;69;0.2;22;15;Sense dades
+22/06/2015;3;28;17;72;0.3;Sense dades;Sense dades;Sense dades
+23/06/2015;2;31;18;76;0.2;29;18;Sense dades
+24/06/2015;2;20;9;71;0.2;Sense dades;Sense dades;Sense dades
+25/06/2015;2;18;17;72;0.2;20;15;Sense dades
+26/06/2015;1;42;20;80;0.3;Sense dades;Sense dades;Sense dades
+27/06/2015;2;Sense dades;Sense dades;89;0.2;28;20;0.1
+28/06/2015;1;Sense dades;Sense dades;87;0.3;Sense dades;Sense dades;Sense dades
+29/06/2015;1;Sense dades;Sense dades;83;0.3;24;17;0.1
+30/06/2015;1;Sense dades;Sense dades;80;0.3;Sense dades;Sense dades;Sense dades
+01/07/2015;2;Sense dades;Sense dades;93;0.2;34;22;Sense dades
+02/07/2015;2;1;27;76;0.2;Sense dades;Sense dades;Sense dades
+03/07/2015;1;6;25;81;0.2;39;23;Sense dades
+04/07/2015;1;3;20;87;0.2;Sense dades;Sense dades;Sense dades
+05/07/2015;2;16;19;96;0.2;31;19;Sense dades
+06/07/2015;2;6;21;89;0.2;Sense dades;Sense dades;Sense dades
+07/07/2015;2;42;30;89;0.2;47;25;Sense dades
+08/07/2015;1;4;13;67;0.2;Sense dades;11;Sense dades
+09/07/2015;1;2;15;69;0.2;32;Sense dades;Sense dades
+10/07/2015;2;4;21;69;0.2;Sense dades;Sense dades;Sense dades
+11/07/2015;1;3;13;69;0.2;34;17;Sense dades
+12/07/2015;1;1;9;74;0.2;Sense dades;Sense dades;Sense dades
+13/07/2015;1;8;17;79;0.2;33;16;Sense dades
+14/07/2015;1;4;18;75;0.2;Sense dades;Sense dades;Sense dades
+15/07/2015;2;16;22;72;0.2;38;21;Sense dades
+16/07/2015;2;6;25;78;0.2;Sense dades;Sense dades;Sense dades
+17/07/2015;2;14;26;80;0.2;40;25;0.1
+18/07/2015;1;2;18;76;0.2;Sense dades;Sense dades;Sense dades
+19/07/2015;2;8;19;78;0.2;23;14;Sense dades
+20/07/2015;1;7;19;71;0.2;Sense dades;Sense dades;Sense dades
+21/07/2015;2;16;22;77;0.2;35;26;Sense dades
+22/07/2015;1;3;15;88;0.2;Sense dades;Sense dades;Sense dades
+23/07/2015;1;7;17;68;0.2;19;11;Sense dades
+24/07/2015;2;6;19;74;0.2;Sense dades;Sense dades;Sense dades
+25/07/2015;1;2;11;70;0.2;20;11;0.1
+26/07/2015;2;1;12;75;0.2;Sense dades;Sense dades;Sense dades
+27/07/2015;2;11;18;59;0.2;30;19;Sense dades
+28/07/2015;1;2;12;75;0.2;Sense dades;Sense dades;Sense dades
+29/07/2015;2;14;16;66;0.2;33;18;0.1
+30/07/2015;1;2;11;52;0.2;Sense dades;Sense dades;Sense dades
+31/07/2015;1;3;19;59;0.2;Sense dades;Sense dades;Sense dades
+01/08/2015;1;2;13;71;0.2;Sense dades;Sense dades;Sense dades
+02/08/2015;1;3;15;76;0.2;Sense dades;Sense dades;Sense dades
+03/08/2015;1;4;23;67;0.2;Sense dades;Sense dades;Sense dades
+04/08/2015;1;8;16;81;0.2;Sense dades;Sense dades;Sense dades
+05/08/2015;1;4;20;74;0.2;Sense dades;Sense dades;Sense dades
+06/08/2015;2;13;22;85;0.2;Sense dades;Sense dades;Sense dades
+07/08/2015;2;7;22;70;0.2;Sense dades;Sense dades;Sense dades
+08/08/2015;1;2;13;37;0.2;Sense dades;Sense dades;Sense dades
+09/08/2015;1;1;8;61;0.2;Sense dades;Sense dades;Sense dades
+10/08/2015;1;2;16;68;0.2;Sense dades;Sense dades;Sense dades
+11/08/2015;2;3;20;75;0.2;Sense dades;Sense dades;Sense dades
+12/08/2015;2;10;17;68;0.2;Sense dades;Sense dades;Sense dades
+13/08/2015;1;2;14;63;0.2;Sense dades;Sense dades;Sense dades
+14/08/2015;1;2;10;66;0.2;Sense dades;Sense dades;Sense dades
+15/08/2015;1;2;9;56;0.2;Sense dades;Sense dades;Sense dades
+16/08/2015;1;1;11;55;0.2;Sense dades;Sense dades;Sense dades
+17/08/2015;2;3;15;61;0.2;Sense dades;Sense dades;Sense dades
+18/08/2015;1;2;14;60;0.2;Sense dades;Sense dades;Sense dades
+19/08/2015;1;2;17;57;0.2;Sense dades;Sense dades;Sense dades
+20/08/2015;2;4;18;63;0.2;Sense dades;Sense dades;Sense dades
+21/08/2015;1;2;17;59;0.2;Sense dades;Sense dades;Sense dades
+22/08/2015;1;4;9;60;0.2;Sense dades;Sense dades;Sense dades
+23/08/2015;1;5;7;62;0.2;Sense dades;Sense dades;Sense dades
+24/08/2015;1;2;7;58;0.2;Sense dades;Sense dades;Sense dades
+25/08/2015;5;3;9;58;0.2;Sense dades;Sense dades;Sense dades
+26/08/2015;2;7;9;57;0.2;Sense dades;Sense dades;Sense dades
+27/08/2015;1;5;8;65;0.2;Sense dades;Sense dades;Sense dades
+28/08/2015;2;7;10;67;0.2;Sense dades;Sense dades;Sense dades
+29/08/2015;2;3;8;62;0.2;Sense dades;Sense dades;Sense dades
+30/08/2015;2;6;7;65;0.2;Sense dades;Sense dades;Sense dades
+31/08/2015;1;6;9;59;0.2;Sense dades;Sense dades;Sense dades
+01/09/2015;1;4;16;53;0.2;Sense dades;Sense dades;Sense dades
+02/09/2015;1;2;18;51;0.2;Sense dades;Sense dades;Sense dades
+03/09/2015;1;2;15;60;0.2;Sense dades;Sense dades;Sense dades
+04/09/2015;1;2;16;47;0.2;Sense dades;Sense dades;Sense dades
+05/09/2015;2;1;16;54;0.2;Sense dades;Sense dades;Sense dades
+06/09/2015;2;2;20;52;0.2;Sense dades;Sense dades;Sense dades
+07/09/2015;2;2;19;54;0.2;Sense dades;Sense dades;Sense dades
+08/09/2015;2;3;22;51;0.2;Sense dades;Sense dades;Sense dades
+09/09/2015;2;5;24;56;0.2;Sense dades;Sense dades;Sense dades
+10/09/2015;2;2;25;54;0.2;Sense dades;Sense dades;Sense dades
+11/09/2015;1;1;15;53;0.2;Sense dades;Sense dades;Sense dades
+12/09/2015;1;1;15;70;0.2;Sense dades;Sense dades;Sense dades
+13/09/2015;1;2;20;52;0.2;Sense dades;Sense dades;Sense dades
+14/09/2015;2;3;20;46;0.2;Sense dades;Sense dades;Sense dades
+15/09/2015;2;3;23;53;0.2;Sense dades;Sense dades;Sense dades
+16/09/2015;2;5;19;49;0.2;Sense dades;Sense dades;Sense dades
+17/09/2015;2;2;11;64;0.2;Sense dades;Sense dades;Sense dades
+18/09/2015;2;3;20;47;0.2;Sense dades;Sense dades;Sense dades
+19/09/2015;2;2;19;47;0.2;Sense dades;Sense dades;Sense dades
+20/09/2015;2;2;16;55;0.2;Sense dades;Sense dades;Sense dades
+21/09/2015;2;6;30;47;0.3;Sense dades;Sense dades;Sense dades
+22/09/2015;2;3;19;54;0.2;Sense dades;Sense dades;Sense dades
+23/09/2015;2;2;10;62;0.2;Sense dades;Sense dades;Sense dades
+24/09/2015;2;10;26;Sense dades;0.3;Sense dades;Sense dades;Sense dades
+25/09/2015;3;14;33;Sense dades;0.3;Sense dades;Sense dades;Sense dades
+26/09/2015;2;1;17;Sense dades;0.2;Sense dades;Sense dades;Sense dades
+27/09/2015;2;1;13;Sense dades;0.2;Sense dades;Sense dades;Sense dades
+28/09/2015;2;3;19;83;0.2;Sense dades;Sense dades;Sense dades
+29/09/2015;2;3;19;51;0.2;Sense dades;Sense dades;Sense dades
+30/09/2015;2;6;30;39;0.3;Sense dades;Sense dades;Sense dades
+01/10/2015;2;4;21;48;0.2;Sense dades;Sense dades;Sense dades
+02/10/2015;1;3;24;58;0.2;Sense dades;Sense dades;Sense dades
+03/10/2015;1;4;25;49;0.2;Sense dades;Sense dades;Sense dades
+04/10/2015;1;5;30;31;0.3;Sense dades;Sense dades;Sense dades
+05/10/2015;1;42;52;11;0.4;Sense dades;Sense dades;Sense dades
+06/10/2015;1;11;27;33;0.2;Sense dades;Sense dades;Sense dades
+07/10/2015;1;2;18;51;0.2;Sense dades;Sense dades;Sense dades
+08/10/2015;1;13;29;31;0.3;Sense dades;Sense dades;Sense dades
+09/10/2015;1;6;31;30;0.3;Sense dades;Sense dades;Sense dades
+10/10/2015;1;8;33;37;0.3;Sense dades;Sense dades;Sense dades
+11/10/2015;1;1;23;46;0.2;Sense dades;Sense dades;Sense dades
+12/10/2015;1;1;18;50;0.2;Sense dades;Sense dades;Sense dades
+13/10/2015;1;2;19;40;0.3;Sense dades;Sense dades;Sense dades
+14/10/2015;1;1;18;57;0.2;Sense dades;Sense dades;Sense dades
+15/10/2015;1;8;30;47;0.3;Sense dades;Sense dades;Sense dades
+16/10/2015;2;13;40;28;0.4;Sense dades;Sense dades;Sense dades
+17/10/2015;2;3;29;39;0.3;Sense dades;Sense dades;Sense dades
+18/10/2015;1;3;29;36;0.3;Sense dades;Sense dades;Sense dades
+19/10/2015;1;5;36;25;0.3;Sense dades;Sense dades;Sense dades
+20/10/2015;1;2;26;32;0.3;Sense dades;Sense dades;Sense dades
+21/10/2015;1;5;22;50;0.3;Sense dades;Sense dades;Sense dades
+22/10/2015;1;5;24;46;0.3;Sense dades;Sense dades;Sense dades
+23/10/2015;2;17;41;23;0.4;Sense dades;Sense dades;Sense dades
+24/10/2015;2;9;42;22;0.4;Sense dades;Sense dades;Sense dades
+25/10/2015;2;2;26;38;0.3;Sense dades;Sense dades;Sense dades
+26/10/2015;1;5;34;34;0.3;Sense dades;Sense dades;Sense dades
+27/10/2015;1;3;26;42;0.2;Sense dades;Sense dades;Sense dades
+28/10/2015;1;3;30;41;0.3;Sense dades;Sense dades;Sense dades
+29/10/2015;2;11;39;26;0.3;Sense dades;Sense dades;Sense dades
+30/10/2015;2;7;37;30;0.3;Sense dades;Sense dades;Sense dades
+31/10/2015;1;2;30;44;0.3;Sense dades;Sense dades;Sense dades
+01/11/2015;1;1;27;44;0.3;Sense dades;Sense dades;Sense dades
+02/11/2015;1;5;30;48;0.3;Sense dades;Sense dades;Sense dades
+03/11/2015;1;15;38;27;0.3;Sense dades;Sense dades;Sense dades
+04/11/2015;1;32;41;19;0.4;Sense dades;Sense dades;Sense dades
+05/11/2015;1;36;43;15;0.4;Sense dades;Sense dades;Sense dades
+06/11/2015;1;38;44;14;0.4;Sense dades;Sense dades;Sense dades
+07/11/2015;1;16;29;2;0.3;Sense dades;Sense dades;Sense dades
