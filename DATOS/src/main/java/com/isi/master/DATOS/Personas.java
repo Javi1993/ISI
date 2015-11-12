@@ -106,12 +106,23 @@ public class Personas {
 					{//anadimos las hashtags del mensaje si los hay
 						aux.add(he[i].getText());
 					}
+					Document place = null;
+					if(status.getPlace()!=null)
+					{
+						place = new Document()
+								.append("ciudad", status.getPlace().getName())
+								.append("pais", status.getPlace().getCountry());
+					}
 					Document doc = new Document("_id", String.valueOf(status.getId()))
 							.append("usuario", status.getUser().getScreenName())
 							.append("contenido", status.getText())
-							.append("localizacion", status.getUser().getLocation())
 							.append("hashtag", aux)
-							.append("fecha", status.getCreatedAt());
+							.append("fecha", status.getCreatedAt())
+							.append("lang", status.getLang());
+
+					//insertamos valores de localizacion si no son nulos
+					if(place!=null){doc.append("place",place);}
+					if(!status.getUser().getLocation().equals("")){doc.append("localizacion", status.getUser().getLocation());}
 
 					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)&&(!tweets.contains(doc)))
 					{//anadimos a la lista el tweet si no esta almacenado
