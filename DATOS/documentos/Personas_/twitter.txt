@@ -1,36 +1,38 @@
-#contaminacionmadrid
-#calidadaire
-#ruidomadrid
-#ruido
-#medioambientemadrid
-#contaminaciobarcelona
-#contaminacionacustica
-calles limpias
-#contaminacionatmosferica
-#aireMadrid
-#aireBarcelona
-#contaminacion
+#airemadrid
+#airebarcelona
 #basura
-#basuraMadrid
-recogida de basura
-contaminacion aire
-basura calles
-basura calle
+#basuramadrid
+#calidadaire
+#contaminaciobarcelona
+#contaminacion
+#contaminacionacustica
+#contaminacionatmosferica
+#contaminacionmadrid
 #desperdicios
-basura valencia
-basura madrid
+#madridsincontaminacion 
+#medioambientemadrid
+#ruido
+#ruidomadrid
+alergia contaminacion
 basura barcelona
+basura calle
+basura calles
 basura ciudad
-limpieza madrid
-papeleras madrid
-papeleras barcelona
-reciclaje
-vertederos
+basura madrid
+basura valencia
 basureros
-puntos limpios
-suciedad
+calles limpias
+contaminacion aire
+contaminacion atmosferica
 huelga recogida basura
-#MadridSinContaminacion 
+limpieza madrid
+papeleras barcelona
+papeleras madrid
+puntos limpios
+reciclaje
+recogida de basura
+suciedad
+vertederos
 ASURCAI
-FilterQueenES
 EPmedioambiente
+FilterQueenES
