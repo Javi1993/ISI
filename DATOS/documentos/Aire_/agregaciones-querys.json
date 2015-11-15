@@ -23,3 +23,9 @@ db.aire.aggregate(
 );
 
 db.twitter.find({$and:[{place:{$ne:null}},{place:{$exists:true}}]}).pretty();
+
+db.twitter.remove({$and:[{'lang':{$ne:'es'}},{'lang':{$ne:'und'}},{'lang':{$exists:true}}]});
+
+db.twitter.update({$and:[{'place':null},{'place':{$exists:true}}]},{$unset:{'place':''}},{multi:true});
+
+

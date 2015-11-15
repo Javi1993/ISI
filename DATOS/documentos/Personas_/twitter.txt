@@ -22,17 +22,22 @@ basura madrid
 basura valencia
 basureros
 calles limpias
+CO2
 contaminacion aire
 contaminacion atmosferica
 huelga recogida basura
 limpieza madrid
+NO2
+PM10
 papeleras barcelona
 papeleras madrid
 puntos limpios
 reciclaje
 recogida de basura
+SO2
 suciedad
 vertederos
 ASURCAI
+ecogestos
 EPmedioambiente
 FilterQueenES
