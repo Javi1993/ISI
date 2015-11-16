@@ -124,7 +124,8 @@ public class Personas {
 					if(place!=null){doc.append("place",place);}
 					if(!status.getUser().getLocation().equals("")){doc.append("localizacion", status.getUser().getLocation());}
 
-					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)&&(!tweets.contains(doc)))
+					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
+							&&(!tweets.contains(doc))&&(doc.getString("lang").equals("es")||doc.getString("lang").equals("und")))
 					{//anadimos a la lista el tweet si no esta almacenado
 						tweets.add(doc);
 					}
