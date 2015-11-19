@@ -11,6 +11,10 @@
 #desperdicios
 #madridsincontaminacion 
 #medioambientemadrid
+#malolorbcn
+#pestebcn 
+#pudorbcn
+#pudorbarcelona
 #ruido
 #ruidomadrid
 alergia contaminacion
