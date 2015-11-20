@@ -86,6 +86,7 @@ public class Personas {
 	/**
 	 * Almacena en la DB las quejas de los ciudadanos por twitter en lo referente al medio ambiente
 	 */
+	@SuppressWarnings("serial")
 	private void quejasTwitter(){
 		BufferedReader br = null;
 		try {
@@ -106,13 +107,7 @@ public class Personas {
 					{//anadimos las hashtags del mensaje si los hay
 						aux.add(he[i].getText());
 					}
-					Document place = null;
-					if(status.getPlace()!=null)
-					{
-						place = new Document()
-								.append("ciudad", status.getPlace().getName())
-								.append("pais", status.getPlace().getCountry());
-					}
+
 					Document doc = new Document("_id", String.valueOf(status.getId()))
 							.append("usuario", status.getUser().getScreenName())
 							.append("contenido", status.getText())
@@ -121,9 +116,19 @@ public class Personas {
 							.append("lang", status.getLang());
 
 					//insertamos valores de localizacion si no son nulos
-					if(place!=null){doc.append("place",place);}
+					if(status.getPlace()!=null){//si hay place se añade
+						doc.append("place",new Document()
+								.append("ciudad", status.getPlace().getName())
+								.append("pais", status.getPlace().getCountry()));
+					}
+					//si hay localizacion se añade
 					if(!status.getUser().getLocation().equals("")){doc.append("localizacion", status.getUser().getLocation());}
-
+					if(status.getGeoLocation()!=null){//si hay geolocation la añadimos
+						final double lon = status.getGeoLocation().getLongitude();
+						final double lat = status.getGeoLocation().getLatitude();
+						doc.append("geo",new Document("type","Point")
+								.append("coordinates",new ArrayList<Double>(){{add(lon);add(lat);}}));
+					}
 					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
 							&&(!tweets.contains(doc))&&(doc.getString("lang").equals("es")||doc.getString("lang").equals("und")))
 					{//anadimos a la lista el tweet si no esta almacenado
