@@ -5,7 +5,6 @@
 #calidadaire
 #contaminaciobarcelona
 #contaminacion
-#contaminacionacustica
 #contaminacionatmosferica
 #contaminacionmadrid
 #desperdicios
@@ -13,10 +12,6 @@
 #medioambientemadrid
 #malolorbcn
 #pestebcn 
-#pudorbcn
-#pudorbarcelona
-#ruido
-#ruidomadrid
 alergia contaminacion
 basura barcelona
 basura calle
@@ -41,7 +36,7 @@ recogida de basura
 SO2
 suciedad
 vertederos
-ASURCAI
-ecogestos
-EPmedioambiente
-FilterQueenES
+from:ASURCAI
+from:ecogestos
+from:EPmedioambiente
+from:FilterQueenES

@@ -28,4 +28,7 @@ db.twitter.remove({$and:[{'lang':{$ne:'es'}},{'lang':{$ne:'und'}},{'lang':{$exis
 
 db.twitter.update({$and:[{'place':null},{'place':{$exists:true}}]},{$unset:{'place':''}},{multi:true});
 
+db.twitter.remove({'contenido':{'$regex':'^RT '}});
+
+
 

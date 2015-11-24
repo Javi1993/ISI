@@ -95,7 +95,7 @@ public class Personas {
 			List<Document> tweets = new ArrayList<Document>();
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				Query query = new Query(sCurrentLine);
+				Query query = new Query(sCurrentLine+" -filter:retweets");
 				query.setSince("2015-01-01");
 				query.setUntil("2016-01-01");
 				QueryResult result = twitter.search(query);
