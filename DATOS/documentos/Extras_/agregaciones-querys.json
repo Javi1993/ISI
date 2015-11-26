@@ -30,5 +30,9 @@ db.twitter.update({$and:[{'place':null},{'place':{$exists:true}}]},{$unset:{'pla
 
 db.twitter.remove({'contenido':{'$regex':'^RT '}});
 
+PARA LIMPIAR TWEETS AGRUPAR POR 'CONTENIDO? y borrar los repetidos salvo los q tengan loc, place o geo
+
+db.twitter.remove({$and:[{'place.pais':{'$ne':'España'}},{place:{$exists:'true'}}]});
+
 
 

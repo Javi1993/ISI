@@ -1,0 +1,9 @@
+Elemento;Nombre;Limite;Muy Alto;Alto;Medio;Bajo;Muy Bajo;Unidades
+SO2;Dioxido de azufre;20;20;16;12;8;4;ug/m3
+NO;Monoxido de nitrogeno;40;40;32;24;16;8;ug/m3
+NO2;Dioxido de nitrogeno;40;40;32;24;16;8;ug/m3
+NOX;Oxidos de nitrogeno;40;40;32;24;16;8;ug/m3
+PM10;Particulas en suspension;50;50;40;30;20;10;ug/m3
+CO;Monoxido de carbono;0.8;0.8;0.64;0.48;0.32;0.16;mg/m3
+O3;Ozono;110;110;88;66;44;22;ug/m3
+SH2;Sulfuro de hidrogeno;40;40;32;24;16;8;mg/m3

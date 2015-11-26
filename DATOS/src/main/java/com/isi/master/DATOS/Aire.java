@@ -21,14 +21,19 @@ public class Aire {
 	private MongoClient client;
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
+	private MongoCollection<Document> limits;
 	private List<String> excluidos;
+	private List<Document> limites;
 
 	@SuppressWarnings("serial")
 	public Aire(){
 		formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
-		collection = database.getCollection("aire");//tomamos la coleccion
+		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
+		limits = database.getCollection("limites");//tomamos la coleccion de contaminantes
+		insertarLimites();//insertamos los limites de ciertos contaminantes en la base de datos
+		limites = limits.find(new Document()).into(new ArrayList<Document>());
 		//lista de elementos excluidos para categorizar
 		excluidos = new ArrayList<String>(){{
 			add("PST");
@@ -69,6 +74,40 @@ public class Aire {
 	}
 
 	/**
+	 * Inserta en una coleccion de mongoDB los limites de ciertos contaminantes
+	 */
+	private void insertarLimites()
+	{
+		try {
+			CsvReader limites = new CsvReader(".\\documentos\\Aire_\\limites.csv", ';');
+			limites.readHeaders();
+
+			limits.drop();
+
+			List<Document> lm = new ArrayList<Document>();
+			while (limites.readRecord())
+			{
+				lm.add(new Document("_id",limites.get("Elemento"))
+						.append("Nombre", limites.get("Nombre"))
+						.append("MA", Float.parseFloat(limites.get("Muy Alto")))
+						.append("A", Float.parseFloat(limites.get("Alto")))
+						.append("M", Float.parseFloat(limites.get("Medio")))
+						.append("B", Float.parseFloat(limites.get("Bajo")))
+						.append("MB", Float.parseFloat(limites.get("Muy Bajo")))
+						.append("Unidades", limites.get("Unidades")));
+			}
+			limits.insertMany(lm);
+			limites.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Coloca las medidas del array en el CSV recibido para la estacion actual
 	 * @param file - Archivo CSV
 	 * @param mediciones -- Medidas de una estacion
@@ -85,8 +124,34 @@ public class Aire {
 					file.write(aux[1]);//escribimos el valor exacto del elemento
 					if(!excluidos.contains(aux[0])&&!aux[1].equals("")&&aux[1]!=null)
 					{
-						//PONER FORMULA DE SI(X;X;X) PARA VALOR ALTO MEDIO BAJO ETC
-						file.write(String.valueOf((int)(Math.random() * ((5-1)+1)) + 1));//expresion de prueba
+						Document doc = null;
+						for(Document lm : limites)
+						{
+							if(lm.get("_id").equals(aux[0]))
+							{
+								doc = lm;
+								break;
+							}
+						}
+						if(doc!=null)
+						{//categorizamos los datos de los contaminantes
+							if(Double.parseDouble(aux[1])>=doc.getDouble("MA")){
+								file.write("MUY ALTO");
+							}else if((Double.parseDouble(aux[1])<doc.getDouble("MA"))
+									&&(Double.parseDouble(aux[1])>=doc.getDouble("A"))){
+								file.write("ALTO");
+							}else if((Double.parseDouble(aux[1])<doc.getDouble("A"))
+									&&(Double.parseDouble(aux[1])>=doc.getDouble("M"))){
+								file.write("MEDIO");
+							}else if((Double.parseDouble(aux[1])<doc.getDouble("M"))
+									&&(Double.parseDouble(aux[1])>=doc.getDouble("B"))){
+								file.write("BAJO");
+							}else{
+								file.write("MUY BAJO");
+							}
+						}else{//ese valor no se categoriza
+							file.write(String.valueOf((int)(Math.random() * ((5-1)+1)) + 1));//expresion de prueba
+						}
 					}
 				}else
 				{//si no tiene valor para ese elemnto insentamos vacio
@@ -257,7 +322,7 @@ public class Aire {
 	/**
 	 * Crea un unico CSV con todas las estaciones almacenadas y sus respectivas medidas
 	 */
-	public void CSVgrande(){
+	private void CSVgrande(){
 		try {
 			//fichero de estaciones
 			final CsvReader estaciones = new CsvReader(".\\documentos\\Aire_\\estaciones.csv", ';');
@@ -266,7 +331,6 @@ public class Aire {
 			//fichero que recogera las estaciones y sus medidas
 			CsvWriter csvOutput = new CsvWriter(new FileWriter(".\\documentos\\Aire_\\estaciones-medidas.csv", false), ';');
 			cogerCabeceras(csvOutput);
-
 			while (estaciones.readRecord())
 			{	
 				//fichero con las medidas de la estacion X
@@ -291,20 +355,20 @@ public class Aire {
 
 					//creamos el documeto con la fecha y hora por defecto
 					csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]);
-					
-//					VER PROBLEMA CUANDO HAY HORAS!! NO DEJA MARCARLAS COMO DATE EN EL CARTODB
-//					String hora = medidas.get("Hora");
-//					Document medida = new Document();
-//					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
-//					if(hora.equals(""))
-//					{
-//						//creamos el documeto con la fecha y hora por defecto
-//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" 23:00:00"));
-//					}else{
-//						//creamos el documeto con la fecha y hora correcta
-//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+medidas.get("Hora")));
-//					}
-					
+
+					//					VER PROBLEMA CUANDO HAY HORAS!! NO DEJA MARCARLAS COMO DATE EN EL CARTODB
+					//					String hora = medidas.get("Hora");
+					//					Document medida = new Document();
+					//					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
+					//					if(hora.equals(""))
+					//					{
+					//						//creamos el documeto con la fecha y hora por defecto
+					//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" 23:00:00"));
+					//					}else{
+					//						//creamos el documeto con la fecha y hora correcta
+					//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+medidas.get("Hora")));
+					//					}
+
 					cogerMedidasCSV(csvOutput, parametrosMedicion(medidas));
 					csvOutput.endRecord();
 				}
@@ -351,13 +415,13 @@ public class Aire {
 
 	public static void main(String[] args) {
 		//Años 2014-2015
-		//HACERSE GUI PARA ELEGIR OPCION!
+		//HACERSE GUI EN UNA CLASE APARTE PARA ELEGIR OPCION INDEXAR ESTACIONES, RECOLECTAR TWEETS ETC!
 		Aire test = new Aire();
 
 		test.CSVgrande();//genera un CSV con todas las estaciones y sus medidas
 
-		//test.collection.drop();//vaciamos la coleccion de estaciones de aire
-		//test.insertarEstaciones();//insertamos todas las estaciones con sus medidas		
+		test.collection.drop();//vaciamos la coleccion de estaciones de aire
+		test.insertarEstaciones();//insertamos todas las estaciones con sus medidas		
 
 		test.client.close();//cerramos la conexion
 	}

@@ -130,7 +130,7 @@ public class Personas {
 								.append("coordinates",new ArrayList<Double>(){{add(lon);add(lat);}}));
 					}
 					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
-							&&(!tweets.contains(doc))&&(doc.getString("lang").equals("es")||doc.getString("lang").equals("und")))
+							&&(!tweets.contains(doc))&&(status.getLang().equals("es")))
 					{//anadimos a la lista el tweet si no esta almacenado
 						tweets.add(doc);
 					}
