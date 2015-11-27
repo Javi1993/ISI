@@ -6,4 +6,9 @@ NOX;Oxidos de nitrogeno;40;40;32;24;16;8;ug/m3
 PM10;Particulas en suspension;50;50;40;30;20;10;ug/m3
 CO;Monoxido de carbono;0.8;0.8;0.64;0.48;0.32;0.16;mg/m3
 O3;Ozono;110;110;88;66;44;22;ug/m3
-SH2;Sulfuro de hidrogeno;40;40;32;24;16;8;mg/m3
+SH2;Sulfuro de hidrogeno;8;8;6.4;4.8;3.2;1.6;mg/m3
+BEN;Benceno;1.6;1.6;1.28;0.96;0.64;0.32;ug/m3
+TOL;Tolueno;8;8;6.4;4.8;3.2;1.6;mg/m3
+XIL;Xileno;12;12;9.6;7.2;4.8;2.4;ug/m3
+OXL;OrtoXileno;8;8;6.4;4.8;3.2;1.6;ug/m3
+PM25;Particulas en suspension 2.5;10;10;8;6;4;2;ug/m3
