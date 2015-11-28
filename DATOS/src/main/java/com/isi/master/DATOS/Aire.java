@@ -22,27 +22,16 @@ public class Aire {
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
 	private MongoCollection<Document> limits;
-	private List<String> excluidos;
 	private List<Document> limites;
 
-	@SuppressWarnings("serial")
 	public Aire(){
 		formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
-		limits = database.getCollection("limites");//tomamos la coleccion de contaminantes
+		limits = database.getCollection("contaminantes");//tomamos la coleccion de contaminantes
 		insertarLimites();//insertamos los limites de ciertos contaminantes en la base de datos
 		limites = limits.find(new Document()).into(new ArrayList<Document>());
-		//lista de elementos excluidos para categorizar
-		excluidos = new ArrayList<String>(){{
-			add("PST");
-			add("dd");
-			add("vv");
-			add("HR");
-			add("PRB");
-			add("LL");
-		}};
 	}
 
 	/**
@@ -74,12 +63,12 @@ public class Aire {
 	}
 
 	/**
-	 * Inserta en una coleccion de mongoDB los limites de ciertos contaminantes
+	 * Inserta en una coleccion de mongoDB los limites de los contaminantes
 	 */
 	private void insertarLimites()
 	{
 		try {
-			CsvReader limites = new CsvReader(".\\documentos\\Aire_\\limites.csv", ';');
+			CsvReader limites = new CsvReader(".\\documentos\\Aire_\\contaminantes-limites.csv", ';');
 			limites.readHeaders();
 
 			limits.drop();
@@ -120,45 +109,38 @@ public class Aire {
 				mediciones[i] = mediciones[i].trim();
 				aux = mediciones[i].split(":");
 				if(aux.length>1&&Funciones.isNumeric(aux[1],aux[0]))
-				{
-					file.write(aux[1]);//escribimos el valor exacto del elemento
-					if(!excluidos.contains(aux[0])&&!aux[1].equals("")&&aux[1]!=null)
+				{//el dato es valido
+					if(!aux[1].equals("")&&aux[1]!=null)
 					{
 						Document doc = null;
 						for(Document lm : limites)
 						{
 							if(lm.get("_id").equals(aux[0]))
 							{
-								doc = lm;
+								doc = lm;//cogemos el doc con los limites para ese contaminate
 								break;
 							}
 						}
 						if(doc!=null)
 						{//categorizamos los datos de los contaminantes
 							if(Double.parseDouble(aux[1])>=doc.getDouble("MA")){
-								file.write("MUY ALTO");
+								file.write("1. MUY ALTO");
 							}else if((Double.parseDouble(aux[1])<doc.getDouble("MA"))
 									&&(Double.parseDouble(aux[1])>=doc.getDouble("A"))){
-								file.write("ALTO");
+								file.write("2. ALTO");
 							}else if((Double.parseDouble(aux[1])<doc.getDouble("A"))
 									&&(Double.parseDouble(aux[1])>=doc.getDouble("M"))){
-								file.write("MEDIO");
+								file.write("3. MEDIO");
 							}else if((Double.parseDouble(aux[1])<doc.getDouble("M"))
 									&&(Double.parseDouble(aux[1])>=doc.getDouble("B"))){
-								file.write("BAJO");
+								file.write("4. BAJO");
 							}else{
-								file.write("MUY BAJO");
+								file.write("5. MUY BAJO");
 							}
-						}else{//ese valor no se categoriza
-							file.write(String.valueOf((int)(Math.random() * ((5-1)+1)) + 1));//expresion de prueba
 						}
 					}
 				}else
 				{//si no tiene valor para ese elemnto insentamos vacio
-					if(!excluidos.contains(aux[0]))
-					{
-						file.write("");	
-					}
 					file.write("");		
 				}
 			}
@@ -177,11 +159,8 @@ public class Aire {
 	{
 		try{
 			String[] mediciones = {"SO2:"+medidas.get("SO2"),"NO:"+medidas.get("NO"),"NO2:"+medidas.get("NO2"),"NOX:"+medidas.get("NOX"),
-					"NH3:"+medidas.get("NH3"),"PM10:"+medidas.get("PM10"),"PM25:"+medidas.get("PM25"),"PST:"+medidas.get("PST"),
-					"CO:"+medidas.get("CO"),"CH4:"+medidas.get("CH4"),"O3:"+medidas.get("O3"),"SH2:"+medidas.get("SH2"),"BEN:"+medidas.get("BEN"),
-					"EBN:"+medidas.get("EBN"),"TOL:"+medidas.get("TOL"),"XIL:"+medidas.get("XIL"),"OXL:"+medidas.get("OXL"),"dd:"+medidas.get("dd"),
-					"vv:"+medidas.get("vv"),"TMP:"+medidas.get("TMP"),"HR:"+medidas.get("HR"),"PRB:"+medidas.get("PRB"),"RS:"+medidas.get("RS"),
-					"RUV:"+medidas.get("RUV"),"LL:"+medidas.get("LL")};
+					"PM10:"+medidas.get("PM10"),"PM25:"+medidas.get("PM25"),"CO:"+medidas.get("CO"),"O3:"+medidas.get("O3"),
+					"SH2:"+medidas.get("SH2"),"BEN:"+medidas.get("BEN"),"TOL:"+medidas.get("TOL"),"XIL:"+medidas.get("XIL"),"OXL:"+medidas.get("OXL")};
 			return mediciones;
 		}catch(IOException e)
 		{
@@ -269,49 +248,18 @@ public class Aire {
 			file.write("Latitud");
 			file.write("Fecha");
 			file.write("SO2");
-			file.write("SO2_categorizado");
 			file.write("NO");
-			file.write("NO_categorizado");
 			file.write("NO2");
-			file.write("NO2_categorizado");
 			file.write("NOX");
-			file.write("NOX_categorizado");
-			file.write("NH3");
-			file.write("NH3_categorizado");
 			file.write("PM10");
-			file.write("PM10_categorizado");
 			file.write("PM25");
-			file.write("PM25_categorizado");
-			file.write("PST");
 			file.write("CO");
-			file.write("CO_categorizado");
-			file.write("CH4");
-			file.write("CH4_categorizado");
 			file.write("O3");
-			file.write("O3_categorizado");
 			file.write("SH2");
-			file.write("SH2_categorizado");
 			file.write("BEN");
-			file.write("BEN_categorizado");
-			file.write("EBN");
-			file.write("EBN_categorizado");
 			file.write("TOL");
-			file.write("TOL_categorizado");
 			file.write("XIL");
-			file.write("XIL_categorizado");
 			file.write("OXL");
-			file.write("OXL_categorizado");
-			file.write("dd");
-			file.write("vv");
-			file.write("TMP");
-			file.write("TMP_categorizado");
-			file.write("HR");
-			file.write("PRB");
-			file.write("RS");
-			file.write("RS_categorizado");
-			file.write("RUV");
-			file.write("RUV_categorizado");
-			file.write("LL");
 			file.endRecord();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -351,24 +299,25 @@ public class Aire {
 					csvOutput.write(estaciones.get("Longitud"));
 					csvOutput.write(estaciones.get("Latitud"));
 
-					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
+
 
 					//creamos el documeto con la fecha y hora por defecto
-					csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]);
 
-					//					VER PROBLEMA CUANDO HAY HORAS!! NO DEJA MARCARLAS COMO DATE EN EL CARTODB
-					//					String hora = medidas.get("Hora");
-					//					Document medida = new Document();
+					//					USAR ESTAS 2 LINEAS EN CASO DE NO ARREGLAR LO DE LAS HORAS
 					//					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
-					//					if(hora.equals(""))
-					//					{
-					//						//creamos el documeto con la fecha y hora por defecto
-					//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" 23:00:00"));
-					//					}else{
-					//						//creamos el documeto con la fecha y hora correcta
-					//						medida.append("Fecha", formatoFecha.parse(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+medidas.get("Hora")));
-					//					}
+					//					csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]);
 
+					//					********************************
+					//VER PROBLEMA CUANDO HAY HORAS!! NO DEJA MARCARLAS COMO DATE EN EL CARTODB
+					String hora = medidas.get("Hora");
+					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
+					if(hora.equals(""))
+					{
+						csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]);
+					}else{
+						csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+hora);
+					}
+					//					*******************************
 					cogerMedidasCSV(csvOutput, parametrosMedicion(medidas));
 					csvOutput.endRecord();
 				}
