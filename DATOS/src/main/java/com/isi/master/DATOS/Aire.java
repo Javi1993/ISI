@@ -299,16 +299,6 @@ public class Aire {
 					csvOutput.write(estaciones.get("Longitud"));
 					csvOutput.write(estaciones.get("Latitud"));
 
-
-
-					//creamos el documeto con la fecha y hora por defecto
-
-					//					USAR ESTAS 2 LINEAS EN CASO DE NO ARREGLAR LO DE LAS HORAS
-					//					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
-					//					csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]);
-
-					//					********************************
-					//VER PROBLEMA CUANDO HAY HORAS!! NO DEJA MARCARLAS COMO DATE EN EL CARTODB
 					String hora = medidas.get("Hora");
 					String[] fechaFormato = medidas.get("Fecha").split("/");//damos formato a la fecha
 					if(hora.equals(""))
@@ -317,7 +307,7 @@ public class Aire {
 					}else{
 						csvOutput.write(fechaFormato[2]+"-"+fechaFormato[1]+"-"+fechaFormato[0]+" "+hora);
 					}
-					//					*******************************
+
 					cogerMedidasCSV(csvOutput, parametrosMedicion(medidas));
 					csvOutput.endRecord();
 				}
