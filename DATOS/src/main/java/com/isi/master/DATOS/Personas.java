@@ -43,7 +43,7 @@ public class Personas {
 		BufferedReader br = null;
 		try {
 			String sCurrentLine;
-			br = new BufferedReader(new FileReader(".\\documentos\\Personas_\\twitter.txt"));//cogemos los hashtags y usuarios
+			br = new BufferedReader(new FileReader("./documentos/Personas_/twitter.txt"));//cogemos los hashtags y usuarios
 			List<Document> tweets = new ArrayList<Document>();
 
 			while ((sCurrentLine = br.readLine()) != null) {

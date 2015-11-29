@@ -175,7 +175,7 @@ public class Aire {
 	private void insertarEstaciones()
 	{
 		try {
-			final CsvReader estaciones = new CsvReader(".\\documentos\\Aire_\\estaciones.csv", ';');
+			final CsvReader estaciones = new CsvReader("./documentos/Aire_/estaciones.csv", ';');
 			estaciones.readHeaders();
 
 			List<Document> registros = new ArrayList<Document>();//lista con las estaciones y sus medidas
@@ -198,7 +198,7 @@ public class Aire {
 						.append("Provincia", Funciones.quitarTildes(cpp[1]))
 						.append("Pais", Funciones.quitarTildes(cpp[2]));
 
-				CsvReader medidas = new CsvReader(".\\documentos\\Aire_\\datos\\"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
+				CsvReader medidas = new CsvReader("./documentos/Aire_/datos/"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
 				medidas.readHeaders();
 
 				List<Document> valores = new ArrayList<Document>();//lista con las medidas de una estacion
@@ -273,16 +273,16 @@ public class Aire {
 	private void CSVgrande(){
 		try {
 			//fichero de estaciones
-			final CsvReader estaciones = new CsvReader(".\\documentos\\Aire_\\estaciones.csv", ';');
+			final CsvReader estaciones = new CsvReader("./documentos/Aire_/estaciones.csv", ';');
 			estaciones.readHeaders();
 
 			//fichero que recogera las estaciones y sus medidas
-			CsvWriter csvOutput = new CsvWriter(new FileWriter(".\\documentos\\Aire_\\estaciones-medidas.csv", false), ';');
+			CsvWriter csvOutput = new CsvWriter(new FileWriter("./documentos/Aire_/estaciones-medidas.csv", false), ';');
 			cogerCabeceras(csvOutput);
 			while (estaciones.readRecord())
 			{	
 				//fichero con las medidas de la estacion X
-				CsvReader medidas = new CsvReader(".\\documentos\\Aire_\\datos\\"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
+				CsvReader medidas = new CsvReader("./documentos/Aire_/datos/"+Funciones.quitarTildes(estaciones.get("Nombre"))+".csv", ';');
 				medidas.readHeaders();
 
 				String ciudad = Funciones.obtenerCiudad(Double.valueOf(estaciones.get("Latitud")), Double.valueOf(estaciones.get("Longitud")));
