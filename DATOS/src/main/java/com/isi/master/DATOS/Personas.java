@@ -26,7 +26,7 @@ public class Personas {
 	private Twitter twitter;
 
 	public Personas(){
-		client = new MongoClient("localhost", 17017);//conectamos
+		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collectionTwitter = database.getCollection("twitter");//tomamos la coleccion de tweets
 		//conexion a API de twitter

@@ -26,7 +26,7 @@ public class Aire {
 
 	public Aire(){
 		formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		client = new MongoClient("localhost", 17017);//conectamos
+		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
 		limits = database.getCollection("contaminantes");//tomamos la coleccion de contaminantes
