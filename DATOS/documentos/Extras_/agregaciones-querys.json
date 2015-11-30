@@ -1,3 +1,4 @@
+/*----------AIRE----------*/
 db.aire.aggregate(
    [
       {
@@ -22,6 +23,21 @@ db.aire.aggregate(
    ]
 );
 
+/*Ejemplo de calculo de medias para una provincia*/
+db.aire.aggregate([
+	{"$match":{"Provincia":"MADRID"}},
+	{"$unwind":"$Medidas"},
+	{"$group":
+		{"_id":"$Estacion",
+		"average_NO2":{"$avg":"$Medidas.NO2"},
+		"average_CO2":{"$avg":"$Medidas.CO2"},
+		"average_BEN":{"$avg":"$Medidas.BEN"}
+		/*continuar*/
+		}	
+	}
+]);
+
+/*----------TWITTER----------*/
 db.twitter.find({$and:[{place:{$ne:null}},{place:{$exists:true}}]}).pretty();
 
 db.twitter.remove({$and:[{'lang':{$ne:'es'}},{'lang':{$ne:'und'}},{'lang':{$exists:true}}]});
@@ -30,9 +46,6 @@ db.twitter.update({$and:[{'place':null},{'place':{$exists:true}}]},{$unset:{'pla
 
 db.twitter.remove({'contenido':{'$regex':'^RT '}});
 
-PARA LIMPIAR TWEETS AGRUPAR POR 'CONTENIDO? y borrar los repetidos salvo los q tengan loc, place o geo
+/*PARA LIMPIAR TWEETS AGRUPAR POR 'CONTENIDO? y borrar los repetidos salvo los q tengan loc, place o geo*/
 
 db.twitter.remove({$and:[{'place.pais':{'$ne':'España'}},{place:{$exists:'true'}}]});
-
-
-
