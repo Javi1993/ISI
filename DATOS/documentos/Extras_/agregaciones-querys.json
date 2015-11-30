@@ -23,7 +23,7 @@ db.aire.aggregate(
    ]
 );
 
-/*Ejemplo de calculo de medias para una provincia*/
+/*Ejemplo de calculo de medias de etaciones para una provincia*/
 db.aire.aggregate([
 	{"$match":{"Provincia":"MADRID"}},
 	{"$unwind":"$Medidas"},
@@ -35,6 +35,22 @@ db.aire.aggregate([
 		/*continuar*/
 		}	
 	}
+]);
+
+/*Ejemplo de calculo de medias para una provincia por mes*/
+db.aire.aggregate([
+	{"$match":{"Provincia":"MADRID"}},
+	{"$unwind":"$Medidas"},
+	{"$group":
+		{"_id":{
+			"month":{"$month":"$Medidas.Fecha"},
+			"year":{"$year":"$Medidas.Fecha"},
+		},
+		"average_NO2":{"$avg":"$Medidas.NO2"},
+		/*continuar*/
+		}	
+	},
+	{"$sort":{"_id.year":1,"_id.month":1}}
 ]);
 
 /*----------TWITTER----------*/
