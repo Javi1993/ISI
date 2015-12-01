@@ -46,6 +46,10 @@ public class Personas {
 			br = new BufferedReader(new FileReader("./documentos/Personas_/twitter.txt"));//cogemos los hashtags y usuarios
 			List<Document> tweets = new ArrayList<Document>();
 
+			List<String> hashId = new ArrayList<String>();
+			for(Document id : collectionTwitter.find().projection(new Document("_id",1)).into(new ArrayList<Document>())){
+				hashId.add(id.getString("_id"));
+			}
 			while ((sCurrentLine = br.readLine()) != null) {
 				Query query = new Query(sCurrentLine+" -filter:retweets");
 				query.setSince("2015-01-01");
@@ -81,8 +85,8 @@ public class Personas {
 						doc.append("geo",new Document("type","Point")
 								.append("coordinates",new ArrayList<Double>(){{add(lon);add(lat);}}));
 					}
-					if((collectionTwitter.find(new Document("_id",doc.getString("_id"))).first()==null)
-							&&(!tweets.contains(doc))&&(status.getLang().equals("es")))
+					if((!tweets.contains(doc))&&(status.getLang().equals("es"))
+							&&(hashId.contains(doc.getString("_id"))))
 					{//anadimos a la lista el tweet si no esta almacenado
 						tweets.add(doc);
 					}
