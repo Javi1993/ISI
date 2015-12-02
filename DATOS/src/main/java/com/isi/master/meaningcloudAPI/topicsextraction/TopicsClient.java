@@ -1,17 +1,17 @@
 package com.isi.master.meaningcloudAPI.topicsextraction;
 /**
- * Topics Extraction 1.2 starting client for Java.
+ * Topics Extraction 2.0 starting client for Java.
  *
  * In order to run this example, the license key must be included in the key variable.
  * If you don't know your key, check your personal area at MeaningCloud (https://www.meaningcloud.com/developer/account/licenses)
  *
  * Once you have the key, edit the parameters and call "javac *.java; java TopicsClient"
  *
- * You can find more information at http://www.meaningcloud.com/developer/topics-extraction/doc/1.2
+ * You can find more information at http://www.meaningcloud.com/developer/topics-extraction/doc/2.0
  *
  * @author     MeaningCloud
- * @contact    http://www.meaningcloud.com (http://www.daedalus.es)
- * @copyright  Copyright (c) 2015, DAEDALUS S.A. All rights reserved.
+ * @contact    http://www.meaningcloud.com 
+ * @copyright  Copyright (c) 2015, MeaningCloud LLC All rights reserved.
  */
 
 import java.io.IOException;
@@ -131,14 +131,27 @@ public class TopicsClient {
             String name = info_quotation.getNodeName();
             if(name.equals("form"))
               form = info_quotation.getTextContent();
-            else if(name.equals("who"))  
-              who = info_quotation.getTextContent();
-            else if(name.equals("who_lemma")) 
-              who_lemma = info_quotation.getTextContent();
-            else if(name.equals("verb")) 
-              verb = info_quotation.getTextContent();
-            else if(name.equals("verb_lemma")) 
-              verb_lemma = info_quotation.getTextContent();
+            else if(name.equals("who")) { 
+              NodeList childWho = info_quotation.getChildNodes();
+              for(int k=0; k<childWho.getLength();k++) {
+                Node infoWho = childWho.item(k);
+                String nameWho = infoWho.getNodeName();
+                if(nameWho.equals("form"))
+                  who = infoWho.getTextContent();
+                else if(nameWho.equals("lemma"))
+                  who_lemma = infoWho.getTextContent();
+              }
+            } else if(name.equals("verb")) {
+              NodeList childVerb = info_quotation.getChildNodes();
+              for(int k=0; k<childVerb.getLength();k++) {
+                Node infoVerb = childVerb.item(k);
+                String nameVerb = infoVerb.getNodeName();
+                if(nameVerb.equals("form"))
+                  verb = infoVerb.getTextContent();
+                else if(nameVerb.equals("lemma"))
+                  verb_lemma = infoVerb.getTextContent();
+              }
+            }
           }
           output += " - " + form;
           output += "\n";
@@ -251,15 +264,16 @@ public class TopicsClient {
         
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
       // We define the variables needed to call the API
-      String api = "http://api.meaningcloud.com/topics-1.2";
-      String key = "<<<your license key>>>";
-      String txt = "<<<your text>>>";
+      String api = "http://api.meaningcloud.com/topics-2.0";
+      String key = "67d2d31e37c2ba1d032188b1233f19bf";
+      String txt = "Mamá es de Jaén, Pepe de Cuenca, Pepe de Lugo y Javi de Villaverde";
       String lang = "es"; // es/en/fr/it/pt/ca
 
       Post post = new Post (api);
       post.addParameter("key", key);
       post.addParameter("txt", txt);
       post.addParameter("lang", lang);
+      post.addParameter("cont", "City");
       post.addParameter("tt", "a");
       post.addParameter("of", "xml");
       String response = post.getResponse();
@@ -289,38 +303,34 @@ public class TopicsClient {
           output += "Entities:\n";
           output += "=============\n";
           output += printInfoEntityConcept(response_node, "entity");
-          output += "\n";
-          output += "Concepts:\n";
-          output += "============\n";
-          output += printInfoEntityConcept(response_node, "concept");
-          output += "\n";
-          output += "Time expressions:\n";
-          output += "==========\n";
-          output += printInfoGeneral(response_node, "time_expression");
-          output += "\n";
-          output += "Money expressions:\n";
-          output += "===========\n";
-          output += printInfoGeneral(response_node, "money_expression");
-          output += "\n";
-          output += "URIs:\n";
-          output += "============\n";
-          output += printInfoGeneral(response_node, "uri");
-          output += "\n";
-          output += "Phone expressions:\n";
-          output += "======================\n";
-          output += printInfoGeneral(response_node, "phone_expression");
-          output += "\n";
-          output += "Other expressions:\n";
-          output += "====================\n";
-          output += printInfoGeneral(response_node, "other_expression");
-          output += "\n";
-          output += "Quotations:\n";
-          output += "====================\n";
-          output += printInfoQuotes(response_node);
-          output += "\n";
-          output += "Relations:\n";
-          output += "====================\n";
-          output += printInfoRelation(response_node);
+//          output += "\n";
+//          output += "Concepts:\n";
+//          output += "============\n";
+//          output += printInfoEntityConcept(response_node, "concept");
+//          output += "\n";
+//          output += "Time expressions:\n";
+//          output += "==========\n";
+//          output += printInfoGeneral(response_node, "time_expression");
+//          output += "\n";
+//          output += "Money expressions:\n";
+//          output += "===========\n";
+//          output += printInfoGeneral(response_node, "money_expression");
+//          output += "\n";
+//          output += "Quantity expressions:\n";
+//          output += "======================\n";
+//          output += printInfoGeneral(response_node, "quantity_expression");
+//          output += "\n";
+//          output += "Other expressions:\n";
+//          output += "====================\n";
+//          output += printInfoGeneral(response_node, "other_expression");
+//          output += "\n";
+//          output += "Quotations:\n";
+//          output += "====================\n";
+//          output += printInfoQuotes(response_node);
+//          output += "\n";
+//          output += "Relations:\n";
+//          output += "====================\n";
+//          output += printInfoRelation(response_node);
           output += "\n";
           if(output.isEmpty())
             System.out.println("Not found");

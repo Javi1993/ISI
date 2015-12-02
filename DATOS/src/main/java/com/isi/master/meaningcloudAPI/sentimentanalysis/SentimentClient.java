@@ -1,5 +1,4 @@
 package com.isi.master.meaningcloudAPI.sentimentanalysis;
-
 /**
  * Sentiment Analysis 2.0 starting client for Java.
  *
@@ -11,8 +10,8 @@ package com.isi.master.meaningcloudAPI.sentimentanalysis;
  * You can find more information at http://www.meaningcloud.com/developer/sentiment-analysis/doc/2.0
  *
  * @author     MeaningCloud
- * @contact    http://www.meaningcloud.com (http://www.daedalus.es)
- * @copyright  Copyright (c) 2015, DAEDALUS S.A. All rights reserved.
+ * @contact    http://www.meaningcloud.com 
+ * @copyright  Copyright (c) 2015, MeaningCloud LLC All rights reserved.
  */
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
@@ -70,14 +69,15 @@ public class SentimentClient {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
       // We define the variables needed to call the API
       String api = "http://api.meaningcloud.com/sentiment-2.0";
-      String key = "<<<your license key>>>";
-      String txt = "<<<your text>>>";
+      String key = "67d2d31e37c2ba1d032188b1233f19bf";
+      String txt = "La contaminación en Madrid es excesiva";
       String model = "general_es"; // general_es / general_en / general_fr
       
       Post post = new Post (api);
       post.addParameter("key", key);
       post.addParameter("txt", txt);
       post.addParameter("model", model);
+      post.addParameter("cont", "City");
       post.addParameter("of", "xml");
       String response = post.getResponse();
       

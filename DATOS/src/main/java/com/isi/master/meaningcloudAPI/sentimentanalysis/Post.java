@@ -1,5 +1,4 @@
 package com.isi.master.meaningcloudAPI.sentimentanalysis;
-
 /**
  * Sentiment Analysis 2.0 starting client for Java.
  *
@@ -11,8 +10,8 @@ package com.isi.master.meaningcloudAPI.sentimentanalysis;
  * You can find more information at http://www.meaningcloud.com/developer/sentiment-analysis/doc/2.0
  *
  * @author     MeaningCloud
- * @contact    http://www.meaningcloud.com (http://www.daedalus.es)
- * @copyright  Copyright (c) 2015, DAEDALUS S.A. All rights reserved.
+ * @contact    http://www.meaningcloud.com 
+ * @copyright  Copyright (c) 2015, MeaningCloud LLC All rights reserved.
  */
 
 import java.io.BufferedReader;

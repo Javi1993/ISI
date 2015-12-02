@@ -1,17 +1,17 @@
 package com.isi.master.meaningcloudAPI.topicsextraction;
 /**
- * Topics Extraction 1.2 starting client for Java.
+ * Topics Extraction 2.0 starting client for Java.
  *
  * In order to run this example, the license key must be included in the key variable.
  * If you don't know your key, check your personal area at MeaningCloud (https://www.meaningcloud.com/developer/account/licenses)
  *
  * Once you have the key, edit the parameters and call "javac *.java; java TopicsClient"
  *
- * You can find more information at http://www.meaningcloud.com/developer/topics-extraction/doc/1.2
+ * You can find more information at http://www.meaningcloud.com/developer/topics-extraction/doc/2.0
  *
  * @author     MeaningCloud
- * @contact    http://www.meaningcloud.com (http://www.daedalus.es)
- * @copyright  Copyright (c) 2015, DAEDALUS S.A. All rights reserved.
+ * @contact    http://www.meaningcloud.com 
+ * @copyright  Copyright (c) 2015, MeaningCloud LLC All rights reserved.
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class Post {
  
   public String getResponse() throws IOException {
     // management internal parameter
-    this.addParameter("src", "sdk-java-1.2");
+    this.addParameter("src", "sdk-java-2.0");
     String response = ""; 
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setDoOutput(true);
