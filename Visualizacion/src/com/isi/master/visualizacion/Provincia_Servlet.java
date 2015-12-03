@@ -42,28 +42,14 @@ public class Provincia_Servlet extends HttpServlet {
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
 		
-		System.out.println("NUMERO "+request.getParameter("num"));
-		//guardarValor de la seleccion en variable a devolver, valor en url?=etc
-		//devolver lista de provincias, usar agregacion hecha
-		List<Document> pipeline = asList(new Document("$group", new Document("_id","$Provincia")));
+		List<Document> pipeline = asList(new Document("$group", new Document("_id","$Provincia")), 
+				new Document("$sort", new Document("_id",1)));
 		List<Document> provincias = collection.aggregate(pipeline).into(new ArrayList<Document>());
-		for(Document prov:provincias)
-		{
-			System.out.println(prov.toJson());
-		}
-		//		db.aire.aggregate(
-//				   [
-//				      {
-//				        $group : {
-//				           _id : "$Provincia",
-//				           count: { $sum: 1 }
-//				        }
-//				      },
-//					  { $sort : { count : -1 } }
-//				   ]
-//				);
+		request.setAttribute("provincias", provincias);
+		request.setAttribute("op", request.getParameter("num"));
 		
 		client.close();//cerramos la conexion
+		request.getRequestDispatcher("/provincia.jsp").forward(request, response);
 	}
 
 }

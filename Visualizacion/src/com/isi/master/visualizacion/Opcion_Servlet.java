@@ -14,8 +14,8 @@ import com.mongodb.client.MongoDatabase;
 /**
  * Servlet implementation class Opcion3_Servlet
  */
-@WebServlet("/opcion3")
-public class Opcion3_Servlet extends HttpServlet {
+@WebServlet("/opcion")
+public class Opcion_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MongoClient client;
 	private MongoDatabase database;
@@ -24,7 +24,7 @@ public class Opcion3_Servlet extends HttpServlet {
     /**
      * Default constructor. 
      */
-    public Opcion3_Servlet() {
+    public Opcion_Servlet() {
         // TODO Auto-generated constructor stub
     }
 
@@ -37,12 +37,17 @@ public class Opcion3_Servlet extends HttpServlet {
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		
-		//recuperar provincia del request.getParameter!!
-		//buscar en base de datos los mapas de esa provicnia
+		if(request.getParameter("num").equals("3"))
+		{
+			//first en este caso que solo hay un mapa, hacerlo escalar
+			Document map = collection.find(new Document("_id", request.getParameter("provincia"))).first();
+			request.setAttribute("NO2", ((Document)map.get("Mapas")).get("NO2").toString());
+		}
 		//devolver Document en la response con cada mapa y su elemento correspondiente
-		//devolver medias anuales de todos los elementos en la resposne (agregacion collection aire)
+		//devolver medias mensuales de todos los elementos en la resposne (agregacion collection aire)
 		
 		client.close();//cerramos la conexion
+		request.getRequestDispatcher("/no-sidebar.jsp").forward(request, response);
 	}
 
 }

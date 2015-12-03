@@ -65,3 +65,11 @@ db.twitter.remove({'contenido':{'$regex':'^RT '}});
 /*PARA LIMPIAR TWEETS AGRUPAR POR 'CONTENIDO? y borrar los repetidos salvo los q tengan loc, place o geo*/
 
 db.twitter.remove({$and:[{'place.pais':{'$ne':'España'}},{place:{$exists:'true'}}]});
+
+/*----------CARTODB----------*/
+db.cartodb.insert({
+	"_id":"BARCELONA",
+	"Mapas":{
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/d2bdf8da-9565-11e5-be60-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+	}
+});
