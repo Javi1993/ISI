@@ -6,18 +6,49 @@
 -->
 <html>
 	<head>
-		<title>ISI | Grupo 2</title>
+		<title>No Sidebar - ZeroFour by HTML5 UP</title>
 		<meta charset="utf-8" />
+           <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Month', 'Barcelona', 'Vizcaya'],
+          ['ENE',  100,      40],
+          ['FEB',  117,      46],
+          ['MAR',  66,       112],
+		  ['ABR',  150,      80],
+          ['MAY',  180,      60],
+          ['JUN',  200,       52],
+		  ['JUL',  220,      40],
+          ['AGO',  180,      46],
+          ['SEP',  170,       72],
+		  ['OCT',  140,      80],
+          ['NOV',  158,      96],
+          ['DIC',  150,       112]
+        ]);
+
+        var options = {
+          title: 'Evolucion de contaminantes',
+          hAxis: {title: 'A\xf1o',  titleTextStyle: {color: '#333'}},
+          vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
-	<body class="homepage">
+	<body class="no-sidebar">
 		<div id="page-wrapper">
 
-			<!-- Header -->
+			<!-- Header Wrapper -->
 				<div id="header-wrapper">
 					<div class="container">
 
@@ -26,12 +57,12 @@
 								<div class="inner">
 
 									<!-- Logo -->
-								  <h1><a href="index.html" id="logo">GRUPO 2 | ISI</a></h1>
+									<h1><a href="index.html" id="logo">Grupo 2 | isi</a></h1>
 									<!-- Nav -->
 										<nav id="nav">
 											<ul>
-											  <li class="current_page_item"><a href="index.html">HOme</a></li>
-											  <li>
+												<li><a href="index.html">Home</a></li>
+												<li>
 													<a href="#">Dropdown</a>
 													<ul>
 														<li><a href="#">Lorem ipsum dolor</a></li>
@@ -50,106 +81,40 @@
 												</li>
 												<li><a href="left-sidebar.html">Left Sidebar</a></li>
 												<li><a href="right-sidebar.html">Right Sidebar</a></li>
-												<li><a href="no-sidebar.html">No Sidebar</a></li>
+												<li class="current_page_item"><a href="no-sidebar.html">No Sidebar</a></li>
 											</ul>
 										</nav>
 
 								</div>
 							</header>
 
-						<!-- Banner -->
-							<div id="banner">
-							  <h2><strong>atmosphspain:</strong> consulta datos SOBRE LOS DIFERENTES CONTAMINANTES del aire español usando herramientas de visualización <br>
-						      </h2>
-							  <p>ver los niveles por provincias, mostar las opiniones de sus habitantes, comparar, ...</p>
-							  <a href="#level2" class="button big icon fa-check-circle">empezar</a></div>
-
 					</div>
 				</div>
 
 			<!-- Main Wrapper -->
 				<div id="main-wrapper">
-					<div class="wrapper style1">
-						<div class="inner">
-
-							<!-- Feature 1 -->
-								<section id="level2" class="container box feature1" >
-									<div class="row">
-										<div class="12u">
-											<header class="first major">
-											  <h2>Elija un método de visualización</h2>
-											  <p>DISPONE DE DIVERSAS MANERAS DE VER LOS DATOS DE CONTAMINACIÓN EN SU PROVINCIA: MAPAS, GRÁFICOS, OPINIÓN SOCIAL,...</p>
-											</header>
-										</div>
-									</div>
-									<div class="row">
-										<div class="4u 12u(mobile)">
-											<section>
-												<a href="#" class="image featured"><img src="images/pic01_b.jpg" alt=""/></a>
-												<header class="second icon fa-user">
-												  <h3>OPINIÓN SOCIAL</h3>
-												  <p>TWEETS VS MAPAS DE CONTAMINACIÓN</p>
-												</header>
-											</section>
-										</div>
-										<div class="4u 12u(mobile)">
-											<section>
-												<a href="no-sidebar_b.html" class="image featured"><img src="images/pic02_b.jpg" alt="" /></a>
-												<header class="second icon fa-cog">
-												  <h3>COMPARAR PROVINCIAS</h3>
-												  <p>COMPARE PROVINCIAS CON MAPAS Y GRÁFICOS</p>
-												</header>
-											</section>
-										</div>
-										<div class="4u 12u(mobile)">
-											<section>
-												<a href="no-sidebar.html" class="image featured"><img src="images/pic03_b.jpg" alt="" /></a>
-												<header class="second icon fa-bar-chart-o">
-												  <h3>GRÁFICOS</h3>
-												  <p>GRÁFICOS Y MAPAS DE CONTAMINACIÓN</p>
-												</header>
-											</section>
-										</div>
-									</div>
-									<div class="row">
-										<div class="12u">
-										  <p>Estas formas de visualización proporcionan al usuario la opción de consultar los datos sobre la contaminación atmosférica en la provincia de España seleccionada. Esta información podrá ser visualizada desde dos puntos de vista diferentes, la opinión de los habitantes y los datos reales recopilados por las estaciones de calidad del aire de las provincias de estas personas. </p>
-										</div>
-									</div>
-								</section>
-
-						</div>
-					</div>
 					<div class="wrapper style2">
 						<div class="inner">
+							<div class="container">
+								<div id="content">
 
-							<!-- Feature 2 -->
-								<section class="container box feature2">
-									<div class="row">
-										<div class="6u 12u(mobile)">
-											<section>
-												<header class="major">
-												  <h2>DESCARGUE LOS DATASHEET</h2>
-												  <p>LAS MEDICIONES EXACTAS DE LAS ESTACIONES DE CALIDAD DE AIRE UTILIZADAS</p>
-												</header>
-												<p>ATMOSPHSPAIN le da la oportunidad de descargar los datasheets con los datos reales de los contaminantes medidos por las estaciones de calidad del aire ubicadas en cada una de las provincias de España</p>
-												<footer><a href="#" class="button medium icon fa-arrow-circle-right">ver datasheets</a></footer>
-											</section>
-										</div>
-										<div class="6u 12u(mobile)">
-											<section>
-												<header class="major">
-												  <h2>numerosos contaminantes</h2>
-												  <p>informese sobre los contaminantes mostrados</p>
-												</header>
-												<p>ATMOSPHSPAIN le proporciona varias herramientas de visualización en la que podrá analizar la contaminación de una provincia en base a ciertos contaminantes. Infórmese sobre los riesgos para la salud de estos contaminantes atmosfericos.</p>
-												<footer><a href="#" class="button medium alt icon fa-info-circle">INFORMACIÓN DE CONTAMINANTES</a></footer>
-											</section>
-										</div>
-									</div>
-								</section>
+									<!-- Content -->
 
+										<article>
+											<header class="major">
+											  <h2>Barcelona VS vizcaya</h2>
+											  <p>evolución del dióxido de nitrógeno (NO2) en la provincia de barcelona y vizcaya</p>
+											</header>
+
+											<span><iframe width='100%' height='400' frameborder='0' src='https://100290698.cartodb.com/viz/d2bdf8da-9565-11e5-be60-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+                                            <iframe width='100%' height='400' frameborder='0' src='https://100290698.cartodb.com/viz/e5bc1de6-9695-11e5-af66-0e98b61680bf/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe></span>
+											<p>Texto sobre el mapa o poner con JS la opción de cmabiar de NO2 a otro tipo de contaminante.</p>
+                                            <h3>Gráfico de evolución mensual del 'CONTAMINATE' Provincia1VsProvincia2</h3>
+											<div id="chart_div" style="width: 100%; height: 520px;"></div>
+										</article>
+								</div>
 							</div>
+						</div>
 					</div>
 				</div>
 
@@ -255,7 +220,7 @@
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; ATMOSPHSPAIN. All rights reserved</li><li>ISI | GRUPO 2</li>
+										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 									</ul>
 								</div>
 							</div>
