@@ -68,7 +68,7 @@ public class Aire {
 	private void insertarLimites()
 	{
 		try {
-			CsvReader limites = new CsvReader(".\\documentos\\Aire_\\contaminantes-limites.csv", ';');
+			CsvReader limites = new CsvReader("./documentos/Aire_/contaminantes-limites.csv", ';');
 			limites.readHeaders();
 
 			limits.drop();
