@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" import="java.util.List, org.bson.Document"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -8,28 +8,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
+    <%
+    List<Document> medias=(List<Document>)request.getAttribute("medias");
+    %>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Month', 'NO2', 'NO', 'SO2'],
-          ['ENE',  100,      40,	20],
-          ['FEB',  117,      46,	25],
-          ['MAR',  66,       112,	10],
-		  ['ABR',  150,      80,	20],
-          ['MAY',  180,      60,	25],
-          ['JUN',  200,       52,	16],
-		  ['JUL',  220,      40,	20],
-          ['AGO',  180,      46,	28],
-          ['SEP',  170,       72,	30],
-		  ['OCT',  140,      80,	25],
-          ['NOV',  158,      96,	20],
-          ['DIC',  150,       112,	16]
+          ['MEDIAS', 'NO2'],
+        <%for(Document med:medias){%>
+          ['<%=((Document)med.get("_id")).get("month").toString()%>/<%=((Document)med.get("_id")).get("year").toString()%>',  <%=med.get("average_NO2")%>],
+		<%}%>
         ]);
 
         var options = {
           title: 'Evolucion de contaminantes',
-          hAxis: {title: 'A\xf1o',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Mes/A\xf1o',  titleTextStyle: {color: '#333'}},
           vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
         };
 
