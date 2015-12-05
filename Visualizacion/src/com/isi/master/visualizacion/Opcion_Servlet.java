@@ -47,11 +47,40 @@ public class Opcion_Servlet extends HttpServlet {
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
 
-		if(request.getParameter("num").equals("3"))
-		{
-			//first en este caso que solo hay un mapa, hacerlo escalar
+		String nextPage="";
+		switch (request.getParameter("num")) {
+		case "1":
+
+			break;
+		case "2":
+
+			break;		
+		case "3":
+			opcion3(request);
+			nextPage="/no-sidebar.jsp";
+			break;
+		default:
+			nextPage="/index.html";
+			System.out.println("La opción elegida de visualización no es valida");
+			break;
+		}
+
+
+		client.close();//cerramos la conexion
+		request.setAttribute("provincia",request.getParameter("provincia"));//guardamos la provincia
+		request.getRequestDispatcher(nextPage).forward(request, response);
+	}
+
+	/**
+	 * Opcion 3- Visualizacion de mapa+grafico de medias una provincia
+	 * @param request - Parametros de la peticion
+	 */
+	private void opcion3(HttpServletRequest request){
+		//en este caso que solo hay un mapa, hacerlo escalar
+		try{
 			Document map = collection.find(new Document("_id", request.getParameter("provincia"))).first();
-			request.setAttribute("NO2", ((Document)map.get("Mapas")).get("NO2").toString());
+			request.setAttribute("NO2", ((Document)map.get("Mapas")).getString("NO2"));
+			//obtenemos las medias mensuales de los contaminantes que se miden por ug/m3
 			List<Document> pipeline = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),
 					new Document("$unwind","$Medidas"),
 					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
@@ -62,16 +91,22 @@ public class Opcion_Servlet extends HttpServlet {
 					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
 			List<Document> medias = collectionAire.aggregate(pipeline).into(new ArrayList<Document>());
 			request.setAttribute("medias",limpiarMedias(medias));
+			//obtenemos las medias mensuales de los contaminantes que se miden por mg/m3
+			List<Document> pipeline2 = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),
+					new Document("$unwind","$Medidas"),
+					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
+							.append("average_CO", new Document("$avg","$Medidas.CO")).append("average_SH2", new Document("$avg","$Medidas.SH2")).append("average_TOL", new Document("$avg","$Medidas.TOL"))), 
+					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
+			List<Document> medias2 = collectionAire.aggregate(pipeline2).into(new ArrayList<Document>());
+			request.setAttribute("medias2",limpiarMedias2(medias2));
+		}catch(NullPointerException e){
+			System.err.println("Error: Se esta accediendo a un elemento nulo");
+			e.printStackTrace();
 		}
-		//EN LA AGREGACION FALTA A�ADIR LOS 3 ELEMENTOS DE MG/M3, hacer otro grafico y agregacion para ellos
-		client.close();//cerramos la conexion
-
-		request.setAttribute("provincia",request.getParameter("provincia"));
-		request.getRequestDispatcher("/no-sidebar.jsp").forward(request, response);
 	}
 
 	/**
-	 * Dada una lista de documentos de medias mensuales elimina los contaminantes sin media
+	 * Dada una lista de documentos de medias mensuales elimina los contaminantes sin media (ug/m3)
 	 * @param sucia - lista con posibles contaminantes sin media
 	 * @return lista con contaminantes con medias
 	 */
@@ -110,7 +145,43 @@ public class Opcion_Servlet extends HttpServlet {
 	}
 
 	/**
-	 * Map de contaminantes y su ID
+	 * Dada una lista de documentos de medias mensuales elimina los contaminantes sin media (mg/m3)
+	 * @param sucia - lista con posibles contaminantes sin media
+	 * @return lista con contaminantes con medias
+	 */
+	private List<Document> limpiarMedias2(List<Document> sucia)
+	{
+		//0-CO,1-SH2,2-TOL
+		double[] contaminantes = new double[3];
+		Map<Integer, String> lista = mapContaminates2();
+		for(Document doc:sucia)
+		{//vemos los contaminantes de los que no se han tomado medidas
+			contaminantes[0]+= doc.getDouble("average_CO"); contaminantes[1]+= doc.getDouble("average_SH2");
+			contaminantes[2]+= doc.getDouble("average_TOL");
+		}
+		Map<String, Double> listaBorrar = new HashMap<String, Double>();
+		for(int i = 0; i<contaminantes.length; i++)
+		{//identificamos esos contaminantes en un Map
+			if(contaminantes[i]==0.0)
+			{
+				listaBorrar.put("average_"+lista.get(i), 0.0);
+			}
+		}
+		List<Document> limpia = new ArrayList<Document>();
+		for(Document doc:sucia)
+		{//borramos de la lista esos contaminantes de los documentos
+			Iterator<String> it = listaBorrar.keySet().iterator();
+			while(it.hasNext()){
+				String key = (String) it.next();
+				doc.remove(key);
+			}
+			limpia.add(doc);
+		}
+		return limpia;
+	}
+
+	/**
+	 * Map de contaminantes y su ID (ug/m3)
 	 * @return Map de los contaminantes y sus medias
 	 */
 	private Map<Integer, String> mapContaminates(){
@@ -120,6 +191,17 @@ public class Opcion_Servlet extends HttpServlet {
 		lista.put(2, "NOX");		lista.put(7, "BEN");
 		lista.put(3, "SO2");		lista.put(8, "XIL");
 		lista.put(4, "PM10");		lista.put(9, "OXL");
+		return lista;
+	}
+
+	/**
+	 * Map de contaminantes y su ID (mg/m3)
+	 * @return Map de los contaminantes y sus medias
+	 */
+	private Map<Integer, String> mapContaminates2(){
+		Map<Integer, String> lista = new HashMap<Integer, String>();
+		lista.put(0, "CO");		lista.put(1, "SH2");
+		lista.put(2, "TOL");
 		return lista;
 	}
 }

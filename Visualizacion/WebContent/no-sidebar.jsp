@@ -10,7 +10,7 @@
 <script type="text/javascript">
     <%
     List<Document> medias=(List<Document>)request.getAttribute("medias");
-    if(medias!=null){
+    if(medias!=null&&medias.size()>0){
     	String contaminantes[] = new String[medias.get(0).keySet().size()];
     	contaminantes = medias.get(0).keySet().toArray(contaminantes);
     %>
@@ -32,6 +32,36 @@
         };
 
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        document.getElementById('chart_div').style.display = "block";
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+    <%
+    List<Document> medias2=(List<Document>)request.getAttribute("medias2");
+    if(medias2!=null&&medias2.size()>0){
+    	String contaminantes[] = new String[medias2.get(0).keySet().size()];
+    	contaminantes = medias2.get(0).keySet().toArray(contaminantes);
+    %>
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+		['FECHA'<%for(int i = 0; i<contaminantes.length-1; i++){%>,'<%=contaminantes[i+1].replace("average_", "")%>'<%}%>],
+		<%for(Document med:medias2){%>
+          ['<%=((Document)med.get("_id")).get("month")%>/<%=((Document)med.get("_id")).get("year")%>'<%for(int j = 0; j<contaminantes.length-1; j++){%>,<%=med.get(contaminantes[j+1])%><%}%>],
+		<%}
+		}%>
+        ]);
+
+        var options = {
+          title: 'Media de la contaminacion (mg/m3)',
+          hAxis: {title: 'Mes/A\xf1o',  titleTextStyle: {color: '#333'}},
+          vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
+        document.getElementById('chart_div2').style.display = "block";
         chart.draw(data, options);
       }
     </script>
@@ -105,7 +135,8 @@
 								<p>Texto sobre el mapa o poner con JS la opción de cmabiar
 									de NO2 a otro tipo de contaminante.</p>
 								<h3>Gráfico de evolución mensual</h3>
-								<div id="chart_div" style="width: 100%; height: 520px;"></div>
+								<div id="chart_div" style="width: 100%; height: 520px; display:none;"></div>
+								<div id="chart_div2" style="width: 100%; height: 520px; display:none;"></div>
 							</article>
 
 						</div>
