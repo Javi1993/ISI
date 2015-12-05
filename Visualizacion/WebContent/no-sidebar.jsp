@@ -257,12 +257,14 @@
 
 							<article>
 							<%Document mapas = (Document)request.getAttribute("maps");
+							String elem="NO2";//default
+							if(mapas!=null){
 							String contaminantes3[] = new String[mapas.keySet().size()];
 							contaminantes3 = mapas.keySet().toArray(contaminantes3);
+							elem=contaminantes3[0];
 							%>
 								<header class="major">
-									<h2><%=request.getAttribute("provincia")%></h2>
-							<%if(mapas!=null){ %>		
+									<h2><%=request.getAttribute("provincia")%></h2>	
 									<p>
 										evolución del <span id="elemento"><%=contaminantes3[0]%></span> en la
 										provincia de
@@ -450,7 +452,7 @@ $( ".graph" ).click(function() {
 	});
 	
 $( ".carto" ).css("display","none");
-$( '#emap<%=contaminantes3[0]%>' ).css('display','inline');
+$( '#emap<%=elem%>' ).css('display','inline');
 $( ".igraph" ).css("display","none");
 $('#img-column').css("border","2px solid yellow");
 $( '#column_1' ).css("display","block");
