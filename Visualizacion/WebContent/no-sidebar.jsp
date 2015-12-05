@@ -7,64 +7,183 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<%List<Document> medias = (List<Document>) request.getAttribute("medias");
+	if (medias != null && medias.size() > 0) {
+		String contaminantes[] = new String[medias.get(0).keySet().size()];
+		contaminantes = medias.get(0).keySet().toArray(contaminantes);%>
 <script type="text/javascript">
-    <%
-    List<Document> medias=(List<Document>)request.getAttribute("medias");
-    if(medias!=null&&medias.size()>0){
-    	String contaminantes[] = new String[medias.get(0).keySet().size()];
-    	contaminantes = medias.get(0).keySet().toArray(contaminantes);
-    %>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-		['FECHA'<%for(int i = 0; i<contaminantes.length-1; i++){%>,'<%=contaminantes[i+1].replace("average_", "")%>'<%}%>],
-		<%for(Document med:medias){%>
-          ['<%=((Document)med.get("_id")).get("month")%>/<%=((Document)med.get("_id")).get("year")%>'<%for(int j = 0; j<contaminantes.length-1; j++){%>,<%=med.get(contaminantes[j+1])%><%}%>],
+		['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+		<%for (Document med : medias) {%>
+          ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
 		<%}
-		}%>
+		%>
         ]);
 
         var options = {
-          title: 'Media de la contaminacion (ug/m3)',
-          hAxis: {title: 'Mes/A\xf1o',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
           vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
         };
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        document.getElementById('chart_div').style.display = "block";
+        var chart = new google.visualization.AreaChart(document.getElementById('area_1'));
         chart.draw(data, options);
       }
+
+      google.load("visualization", "1.1", {packages:["bar"]});
+      google.setOnLoadCallback(drawChart1);
+      function drawChart1() {
+        var data = google.visualization.arrayToDataTable([
+          ['ug/m3(y) - Fecha(x)'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+  		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
+		<%}
+		%>
+        ]);
+
+        var options = {
+        	vAxis: {title: 'ug/m3'}
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('column_1'));
+        chart.draw(data, options);
+      }
+      
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart2);
+      function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+  		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
+		<%}
+		%>
+        ]);
+
+        var options = {
+          hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+          vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},
+          isStacked: true
+        };
+
+        var chart = new google.visualization.SteppedAreaChart(document.getElementById('escalon_1'));
+        chart.draw(data, options);
+      }
+      
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart3);
+      function drawChart3() {
+        var data = google.visualization.arrayToDataTable([
+          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+    		<%for (Document med : medias) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
+    		<%}
+    		%>
+        ]);
+
+	var options = {
+		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+		vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
+		legend: { position: 'right' }
+        };
+
+   var chart = new google.visualization.LineChart(document.getElementById('lineal_1'));
+
+        chart.draw(data, options);
+
+      }
     </script>
-    <script type="text/javascript">
-    <%
-    List<Document> medias2=(List<Document>)request.getAttribute("medias2");
-    if(medias2!=null&&medias2.size()>0){
-    	String contaminantes[] = new String[medias2.get(0).keySet().size()];
-    	contaminantes = medias2.get(0).keySet().toArray(contaminantes);
-    %>
+<%} 
+	List<Document> medias2 = (List<Document>) request.getAttribute("medias2");
+		if (medias2 != null && medias2.size() > 0) {
+			String contaminantes2[] = new String[medias2.get(0).keySet().size()];
+			contaminantes2 = medias2.get(0).keySet().toArray(contaminantes2);%>
+<script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-		['FECHA'<%for(int i = 0; i<contaminantes.length-1; i++){%>,'<%=contaminantes[i+1].replace("average_", "")%>'<%}%>],
-		<%for(Document med:medias2){%>
-          ['<%=((Document)med.get("_id")).get("month")%>/<%=((Document)med.get("_id")).get("year")%>'<%for(int j = 0; j<contaminantes.length-1; j++){%>,<%=med.get(contaminantes[j+1])%><%}%>],
-		<%}
-		}%>
+		['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+		<%for (Document med : medias2) {%>
+          ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+		<%}%>
         ]);
 
         var options = {
-          title: 'Media de la contaminacion (mg/m3)',
-          hAxis: {title: 'Mes/A\xf1o',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
+          hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
+          vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0}
         };
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
-        document.getElementById('chart_div2').style.display = "block";
+        var chart = new google.visualization.AreaChart(document.getElementById('area_2'));
         chart.draw(data, options);
       }
+
+    google.load("visualization", "1.1", {packages:["bar"]});
+    google.setOnLoadCallback(drawChart1);
+    function drawChart1() {
+      var data = google.visualization.arrayToDataTable([
+        ['mg/m3(y) - Fecha(x)'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+		<%for (Document med : medias2) {%>
+      ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+		<%}
+		%>
+      ]);
+
+      var options = {
+      	vAxis: {title: 'mg/m3'}
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('column_2'));
+      chart.draw(data, options);
+    }
+    
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart2);
+    function drawChart2() {
+      var data = google.visualization.arrayToDataTable([
+        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+		<%for (Document med : medias2) {%>
+      ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+		<%}
+		%>
+      ]);
+
+      var options = {
+        hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+        vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},
+        isStacked: true
+      };
+
+      var chart = new google.visualization.SteppedAreaChart(document.getElementById('escalon_2'));
+      chart.draw(data, options);
+    }
+    
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart3);
+    function drawChart3() {
+      var data = google.visualization.arrayToDataTable([
+        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+  		<%for (Document med : medias2) {%>
+          ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+  		<%}
+  		%>
+      ]);
+
+	var options = {
+		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+		vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
+		legend: { position: 'right' }
+      };
+
+ var chart = new google.visualization.LineChart(document.getElementById('lineal_2'));
+
+      chart.draw(data, options);
+
+    }
     </script>
+    <%} %>
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -126,19 +245,34 @@
 
 							<article>
 								<header class="major">
-									<h2><%=request.getAttribute("provincia") %></h2>
-									<p>evolución del dióxido de nitrógeno (NO2-hacer dinamico) en la provincia
-										de <%=request.getAttribute("provincia")%></p>
+									<h2><%=request.getAttribute("provincia")%></h2>
+									<p>
+										evolución del dióxido de nitrógeno (NO2-hacer dinamico) en la
+										provincia de
+										<%=request.getAttribute("provincia")%></p>
 								</header>
 
-								<span><%= request.getAttribute("NO2")%></span>
+								<span><%=request.getAttribute("NO2")%></span>
 								<p>Texto sobre el mapa o poner con JS la opción de cmabiar
 									de NO2 a otro tipo de contaminante.</p>
-								<h3>Gráfico de evolución mensual</h3>
-								<div id="chart_div" style="width: 100%; height: 520px; display:none;"></div>
-								<div id="chart_div2" style="width: 100%; height: 520px; display:none;"></div>
+								<h3>Gráficos de medias mensuales</h3>
+								<div class="overflow-element">
+									<img id="img-area" title="Gráfico de área" src="images/area.jpg"
+										style="cursor: pointer;"> <img id="img-column"
+										title="Gráfico de barras" src="images/column.jpg"
+										style="cursor: pointer;"> <img id="img-escalon" src="images/stepped.jpg"
+										title="Gráfico escalonado" style="cursor: pointer;"> <img src="images/line.jpg"
+										id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
+								</div>
+								<div id="area_1" style="width: 100%; height: 520px;"></div>
+								<div id="area_2" style="width: 100%; height: 520px;"></div>
+								<div id="column_1" style="width: 100%; height: 520px;"></div>
+								<div id="column_2" style="width: 100%; height: 520px;"></div>
+								<div id="escalon_1" style="width: 100%; height: 520px;"></div>
+								<div id="escalon_2" style="width: 100%; height: 520px;"></div>
+								<div id="lineal_1" style="width: 100%; height: 520px;"></div>
+								<div id="lineal_2" style="width: 100%; height: 520px;"></div>
 							</article>
-
 						</div>
 					</div>
 				</div>
@@ -279,6 +413,76 @@
 	<script src="assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
-
 </body>
+<script>
+$( "#img-area" ).click(function() {
+	$( "#column_1" ).css("display","none");
+	$( "#column_2" ).css("display","none");
+	$( "#escalon_1" ).css("display","none");
+	$( "#escalon_2" ).css("display","none");
+	$( "#lineal_1" ).css("display","none");
+	$( "#lineal_2" ).css("display","none");
+	$( "#area_1" ).css("display","block");
+	$( "#area_2" ).css("display","block");
+	$( "#img-lineal" ).css("border","none");
+	$( "#img-column" ).css("border","none");
+	$( "#img-escalon" ).css("border","none");
+	$( "#img-area" ).css("border","2px solid yellow");
+	});
+$( "#img-column" ).click(function() {
+	$( "#area_1" ).css("display","none");
+	$( "#area_2" ).css("display","none");
+	$( "#escalon_1" ).css("display","none");
+	$( "#escalon_2" ).css("display","none");
+	$( "#lineal_1" ).css("display","none");
+	$( "#lineal_2" ).css("display","none");
+	$( "#column_1" ).css("display","block");
+	$( "#column_2" ).css("display","block");
+	$( "#img-area" ).css("border","none");
+	$( "#img-escalon" ).css("border","none");
+	$( "#img-lineal" ).css("border","none");
+	$( "#img-column" ).css("border","2px solid yellow");
+	});
+$( "#img-escalon" ).click(function() {
+	$( "#area_1" ).css("display","none");
+	$( "#area_2" ).css("display","none");
+	$( "#column_1" ).css("display","none");
+	$( "#column_2" ).css("display","none");
+	$( "#lineal_1" ).css("display","none");
+	$( "#lineal_2" ).css("display","none");
+	$( "#escalon_1" ).css("display","block");
+	$( "#escalon_2" ).css("display","block");
+	$( "#img-area" ).css("border","none");
+	$( "#img-column" ).css("border","none");
+	$( "#img-lineal" ).css("border","none");
+	$( "#img-escalon" ).css("border","2px solid yellow");
+	});
+$( "#img-lineal" ).click(function() {
+	$( "#area_1" ).css("display","none");
+	$( "#area_2" ).css("display","none");
+	$( "#column_1" ).css("display","none");
+	$( "#column_2" ).css("display","none");
+	$( "#escalon_1" ).css("display","none");
+	$( "#escalon_2" ).css("display","none");
+	$( "#lineal_1" ).css("display","block");
+	$( "#lineal_2" ).css("display","block");
+	$( "#img-area" ).css("border","none");
+	$( "#img-column" ).css("border","none");
+	$( "#img-escalon" ).css("border","none");
+	$( "#img-lineal" ).css("border","2px solid yellow");
+	});
+</script>
+<style>
+.overflow-element {
+	border: 10px solid #404248;
+	background-color: #404248;
+	border-radius: 25px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+	margin: 20px;
+	border-radius: 25px;
+}
+</style>
 </html>
