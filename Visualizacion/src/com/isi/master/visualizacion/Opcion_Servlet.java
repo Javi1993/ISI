@@ -42,7 +42,7 @@ public class Opcion_Servlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		client = new MongoClient("localhost", 17017);//conectamos
+		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
@@ -63,9 +63,9 @@ public class Opcion_Servlet extends HttpServlet {
 			List<Document> medias = collectionAire.aggregate(pipeline).into(new ArrayList<Document>());
 			request.setAttribute("medias",limpiarMedias(medias));
 		}
-		//EN LA AGREGACION FALTA AÑADIR LOS 3 ELEMENTOS DE MG/M3, hacer otro grafico y agregacion para ellos
+		//EN LA AGREGACION FALTA Aï¿½ADIR LOS 3 ELEMENTOS DE MG/M3, hacer otro grafico y agregacion para ellos
 		client.close();//cerramos la conexion
-		
+
 		request.setAttribute("provincia",request.getParameter("provincia"));
 		request.getRequestDispatcher("/no-sidebar.jsp").forward(request, response);
 	}
@@ -78,7 +78,7 @@ public class Opcion_Servlet extends HttpServlet {
 	private List<Document> limpiarMedias(List<Document> sucia)
 	{
 		//0-NO2,1-NO,2-NOX,3-SO2,4-PM10,5-PM25,6-O3,7-BEN,8-XIL,9-OXL
-		int[] contaminantes = new int[10];
+		double[] contaminantes = new double[10];
 		Map<Integer, String> lista = mapContaminates();
 		for(Document doc:sucia)
 		{//vemos los contaminantes de los que no se han tomado medidas
@@ -102,8 +102,7 @@ public class Opcion_Servlet extends HttpServlet {
 			Iterator<String> it = listaBorrar.keySet().iterator();
 			while(it.hasNext()){
 				String key = (String) it.next();
-				doc.remove(key,listaBorrar.get(key));
-
+				doc.remove(key);
 			}
 			limpia.add(doc);
 		}
