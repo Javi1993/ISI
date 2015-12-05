@@ -76,10 +76,9 @@ public class Opcion_Servlet extends HttpServlet {
 	 * @param request - Parametros de la peticion
 	 */
 	private void opcion3(HttpServletRequest request){
-		//en este caso que solo hay un mapa, hacerlo escalar
 		try{
 			Document map = collection.find(new Document("_id", request.getParameter("provincia"))).first();
-			request.setAttribute("NO2", ((Document)map.get("Mapas")).getString("NO2"));
+			request.setAttribute("maps", map.get("Mapas"));
 			//obtenemos las medias mensuales de los contaminantes que se miden por ug/m3
 			List<Document> pipeline = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),
 					new Document("$unwind","$Medidas"),

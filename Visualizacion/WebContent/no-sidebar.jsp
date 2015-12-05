@@ -24,6 +24,8 @@
         ]);
 
         var options = {
+        		width: 1200,
+        		  height: 520,
           hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
           vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
         };
@@ -63,6 +65,8 @@
         ]);
 
         var options = {
+        		width: 1200,
+        		height: 520,
           hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
           vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},
           isStacked: true
@@ -84,6 +88,8 @@
         ]);
 
 	var options = {
+			width: 1200,
+			height: 520,
 		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
 		vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
 		legend: { position: 'right' }
@@ -112,6 +118,8 @@
         ]);
 
         var options = {
+        		width: 1200,
+        		height: 520,
           hAxis: {title: 'Fecha',  titleTextStyle: {color: '#333'}},
           vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0}
         };
@@ -151,6 +159,8 @@
       ]);
 
       var options = {
+    		  width: 1200,
+    		  height: 520,
         hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
         vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},
         isStacked: true
@@ -172,6 +182,8 @@
       ]);
 
 	var options = {
+			width: 1200,
+			height: 520,
 		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
 		vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
 		legend: { position: 'right' }
@@ -244,34 +256,40 @@
 							<!-- Content -->
 
 							<article>
+							<%Document mapas = (Document)request.getAttribute("maps");
+							String contaminantes3[] = new String[mapas.keySet().size()];
+							contaminantes3 = mapas.keySet().toArray(contaminantes3);
+							%>
 								<header class="major">
 									<h2><%=request.getAttribute("provincia")%></h2>
+							<%if(mapas!=null){ %>		
 									<p>
-										evolución del dióxido de nitrógeno (NO2-hacer dinamico) en la
+										evolución del <span id="elemento"><%=contaminantes3[0]%></span> en la
 										provincia de
 										<%=request.getAttribute("provincia")%></p>
+								<p><span class="overflow-element">
+									<span title="<%=contaminantes3[0]%>" class="map" id="map<%=contaminantes3[0]%>" style="color:white;cursor:pointer;"><%=contaminantes3[0]%></span><%for(int i = 1; i<contaminantes3.length; i++){%>&nbsp;&nbsp;<span title="<%=contaminantes3[i]%>" class="map" id="map<%=contaminantes3[i]%>" style="cursor:pointer;"><%=contaminantes3[i]%></span><%}%>
+								</span></p>
 								</header>
-
-								<span><%=request.getAttribute("NO2")%></span>
-								<p>Texto sobre el mapa o poner con JS la opción de cmabiar
-									de NO2 a otro tipo de contaminante.</p>
+								<span class="carto" id="emap<%=contaminantes3[0]%>"><%=mapas.get(contaminantes3[0]) %></span>
+								<%for(int i = 1; i<contaminantes3.length; i++){ %>
+								<span class="carto" id="emap<%=contaminantes3[i]%>"><%=mapas.get(contaminantes3[i]) %></span>
+								<%} }%>
 								<h3>Gráficos de medias mensuales</h3>
 								<div class="overflow-element">
-									<img id="img-area" title="Gráfico de área" src="images/area.jpg"
-										style="cursor: pointer;"> <img id="img-column"
-										title="Gráfico de barras" src="images/column.jpg"
-										style="cursor: pointer;"> <img id="img-escalon" src="images/stepped.jpg"
-										title="Gráfico escalonado" style="cursor: pointer;"> <img src="images/line.jpg"
-										id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
+									 <img class="graph" id="img-column" title="Gráfico de barras" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
+									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
+									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
 								</div>
-								<div id="area_1" style="width: 100%; height: 520px;"></div>
-								<div id="area_2" style="width: 100%; height: 520px;"></div>
-								<div id="column_1" style="width: 100%; height: 520px;"></div>
-								<div id="column_2" style="width: 100%; height: 520px;"></div>
-								<div id="escalon_1" style="width: 100%; height: 520px;"></div>
-								<div id="escalon_2" style="width: 100%; height: 520px;"></div>
-								<div id="lineal_1" style="width: 100%; height: 520px;"></div>
-								<div id="lineal_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="area_1" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="area_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="column_1" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="column_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="escalon_1" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="escalon_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph"id="lineal_1" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="lineal_2" style="width: 100%; height: 520px;"></div>
 							</article>
 						</div>
 					</div>
@@ -415,62 +433,28 @@
 	<script src="assets/js/main.js"></script>
 </body>
 <script>
-$( "#img-area" ).click(function() {
-	$( "#column_1" ).css("display","none");
-	$( "#column_2" ).css("display","none");
-	$( "#escalon_1" ).css("display","none");
-	$( "#escalon_2" ).css("display","none");
-	$( "#lineal_1" ).css("display","none");
-	$( "#lineal_2" ).css("display","none");
-	$( "#area_1" ).css("display","block");
-	$( "#area_2" ).css("display","block");
-	$( "#img-lineal" ).css("border","none");
-	$( "#img-column" ).css("border","none");
-	$( "#img-escalon" ).css("border","none");
-	$( "#img-area" ).css("border","2px solid yellow");
+$( ".map" ).click(function() {
+	$( ".carto" ).css("display","none");
+	$('#e'+$(this).attr('id')).css("display","inline");
+	$('.map').css("color","#7b818c");
+	$('#'+$(this).attr('id')).css("color","white");
+	$('#elemento').html($(this).attr('id').substring(3));
+	
 	});
-$( "#img-column" ).click(function() {
-	$( "#area_1" ).css("display","none");
-	$( "#area_2" ).css("display","none");
-	$( "#escalon_1" ).css("display","none");
-	$( "#escalon_2" ).css("display","none");
-	$( "#lineal_1" ).css("display","none");
-	$( "#lineal_2" ).css("display","none");
-	$( "#column_1" ).css("display","block");
-	$( "#column_2" ).css("display","block");
-	$( "#img-area" ).css("border","none");
-	$( "#img-escalon" ).css("border","none");
-	$( "#img-lineal" ).css("border","none");
-	$( "#img-column" ).css("border","2px solid yellow");
+$( ".graph" ).click(function() {
+	$( ".igraph" ).css("display","none");
+	$( ".graph" ).css("border","none");
+	$('#'+$(this).attr('id')).css("border","2px solid yellow");
+	$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","block");
+	$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","block");
 	});
-$( "#img-escalon" ).click(function() {
-	$( "#area_1" ).css("display","none");
-	$( "#area_2" ).css("display","none");
-	$( "#column_1" ).css("display","none");
-	$( "#column_2" ).css("display","none");
-	$( "#lineal_1" ).css("display","none");
-	$( "#lineal_2" ).css("display","none");
-	$( "#escalon_1" ).css("display","block");
-	$( "#escalon_2" ).css("display","block");
-	$( "#img-area" ).css("border","none");
-	$( "#img-column" ).css("border","none");
-	$( "#img-lineal" ).css("border","none");
-	$( "#img-escalon" ).css("border","2px solid yellow");
-	});
-$( "#img-lineal" ).click(function() {
-	$( "#area_1" ).css("display","none");
-	$( "#area_2" ).css("display","none");
-	$( "#column_1" ).css("display","none");
-	$( "#column_2" ).css("display","none");
-	$( "#escalon_1" ).css("display","none");
-	$( "#escalon_2" ).css("display","none");
-	$( "#lineal_1" ).css("display","block");
-	$( "#lineal_2" ).css("display","block");
-	$( "#img-area" ).css("border","none");
-	$( "#img-column" ).css("border","none");
-	$( "#img-escalon" ).css("border","none");
-	$( "#img-lineal" ).css("border","2px solid yellow");
-	});
+	
+$( ".carto" ).css("display","none");
+$( '#emap<%=contaminantes3[0]%>' ).css('display','inline');
+$( ".igraph" ).css("display","none");
+$('#img-column').css("border","2px solid yellow");
+$( '#column_1' ).css("display","block");
+$( '#column_2' ).css("display","block");
 </script>
 <style>
 .overflow-element {
