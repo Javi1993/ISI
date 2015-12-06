@@ -38,7 +38,7 @@
       google.setOnLoadCallback(drawChart1);
       function drawChart1() {
         var data = google.visualization.arrayToDataTable([
-          ['ug/m3(y) - Fecha(x)'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
   		<%for (Document med : medias) {%>
         ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
 		<%}
@@ -46,6 +46,9 @@
         ]);
 
         var options = {
+      		  chart: {
+  	            subtitle: '(ug/m3)',
+  	          },
         	vAxis: {title: 'ug/m3'}
         };
 
@@ -100,6 +103,32 @@
         chart.draw(data, options);
 
       }
+      
+	    google.load("visualization", "1", {packages:["corechart"]});
+	    google.setOnLoadCallback(drawChart4);
+	    function drawChart4() {
+	      var data = google.visualization.arrayToDataTable([
+	        ["Fecha"<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+    		<%for (Document med : medias) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
+    		<%}
+    		%>
+	      ]);
+
+	      var view = new google.visualization.DataView(data);
+
+
+	      var options = {
+			width: 1200,
+			height: 750,
+	        bar: {groupWidth: "75%"},
+			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+			hAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},		
+	        legend: { position: "right" }
+	      };
+	      var chart = new google.visualization.BarChart(document.getElementById("bar_1"));
+	      chart.draw(view, options);
+	    }
     </script>
 <%} 
 	List<Document> medias2 = (List<Document>) request.getAttribute("medias2");
@@ -132,7 +161,7 @@
     google.setOnLoadCallback(drawChart1);
     function drawChart1() {
       var data = google.visualization.arrayToDataTable([
-        ['mg/m3(y) - Fecha(x)'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
 		<%for (Document med : medias2) {%>
       ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
 		<%}
@@ -140,6 +169,10 @@
       ]);
 
       var options = {
+    		  chart: {
+    	            subtitle: '(mg/m3)',
+    	          },
+    	title: " (mg/m3)",
       	vAxis: {title: 'mg/m3'}
       };
 
@@ -189,10 +222,35 @@
 		legend: { position: 'right' }
       };
 
- var chart = new google.visualization.LineChart(document.getElementById('lineal_2'));
+ 	var chart = new google.visualization.LineChart(document.getElementById('lineal_2'));
 
       chart.draw(data, options);
 
+    }
+
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart4);
+    function drawChart4() {
+      var data = google.visualization.arrayToDataTable([
+        ["Fecha"<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+		<%for (Document med : medias2) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+		<%}
+		%>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+
+      var options = {
+		width: 1200,
+		height: 750,
+        bar: {groupWidth: "75%"},
+		vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+		hAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},		
+        legend: { position: "right" }
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("bar_2"));
+      chart.draw(view, options);
     }
     </script>
     <%} %>
@@ -252,9 +310,7 @@
 				<div class="inner">
 					<div class="container">
 						<div id="content">
-
 							<!-- Content -->
-
 							<article>
 							<%Document mapas = (Document)request.getAttribute("maps");
 							String elem="NO2";//default
@@ -262,13 +318,12 @@
 							String contaminantes3[] = new String[mapas.keySet().size()];
 							contaminantes3 = mapas.keySet().toArray(contaminantes3);
 							elem=contaminantes3[0];
-							%>
-								<header class="major">
-									<h2><%=request.getAttribute("provincia")%></h2>	
+							%><header class="major">
+								<h2><%=request.getAttribute("provincia")%></h2>	
 									<p>
 										evolución del <span id="elemento"><%=contaminantes3[0]%></span> en la
 										provincia de
-										<%=request.getAttribute("provincia")%> desde <%=((Document) medias.get(0).get("_id")).get("month")+"/"+((Document) medias.get(0).get("_id")).get("year")%> hasta <%=((Document) medias.get(medias.size()-1).get("_id")).get("month")+"/"+((Document) medias.get(medias.size()-1).get("_id")).get("year")%></p>
+										<%=request.getAttribute("provincia")%> desde el <%=((Document) medias.get(0).get("_id")).get("month")+"/"+((Document) medias.get(0).get("_id")).get("year")%> hasta <%=((Document) medias.get(medias.size()-1).get("_id")).get("month")+"/"+((Document) medias.get(medias.size()-1).get("_id")).get("year")%></p>
 								<p><span class="overflow-element">
 									<span title="<%=contaminantes3[0]%>" class="map" id="map<%=contaminantes3[0]%>" style="color:white;cursor:pointer;"><%=contaminantes3[0]%></span><%for(int i = 1; i<contaminantes3.length; i++){%>&nbsp;&nbsp;<span title="<%=contaminantes3[i]%>" class="map" id="map<%=contaminantes3[i]%>" style="cursor:pointer;"><%=contaminantes3[i]%></span><%}%>
 								</span></p>
@@ -279,10 +334,12 @@
 								<%} }%>
 								<h3>Gráficos de medias mensuales</h3>
 								<div class="overflow-element">
-									 <img class="graph" id="img-column" title="Gráfico de barras" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" id="img-column" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gráfico de barras horizontal" style="cursor: pointer;">									
+									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
 									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
 									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
-									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
+									 
 								</div>
 								<div class="igraph" id="area_1" style="width: 100%; height: 520px;"></div>
 								<div class="igraph" id="area_2" style="width: 100%; height: 520px;"></div>
@@ -292,6 +349,8 @@
 								<div class="igraph" id="escalon_2" style="width: 100%; height: 520px;"></div>
 								<div class="igraph"id="lineal_1" style="width: 100%; height: 520px;"></div>
 								<div class="igraph" id="lineal_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph"id="bar_1" style="width: 100%; height: 750px;"></div>
+								<div class="igraph" id="bar_2" style="width: 100%; height: 750px;"></div>
 							</article>
 						</div>
 					</div>
