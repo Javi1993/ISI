@@ -258,7 +258,7 @@
 							<article>
 							<%Document mapas = (Document)request.getAttribute("maps");
 							String elem="NO2";//default
-							if(mapas!=null){
+							if(mapas!=null && medias!=null && medias.size()>0){
 							String contaminantes3[] = new String[mapas.keySet().size()];
 							contaminantes3 = mapas.keySet().toArray(contaminantes3);
 							elem=contaminantes3[0];
@@ -268,7 +268,7 @@
 									<p>
 										evolución del <span id="elemento"><%=contaminantes3[0]%></span> en la
 										provincia de
-										<%=request.getAttribute("provincia")%></p>
+										<%=request.getAttribute("provincia")%> desde <%=((Document) medias.get(0).get("_id")).get("month")+"/"+((Document) medias.get(0).get("_id")).get("year")%> hasta <%=((Document) medias.get(medias.size()-1).get("_id")).get("month")+"/"+((Document) medias.get(medias.size()-1).get("_id")).get("year")%></p>
 								<p><span class="overflow-element">
 									<span title="<%=contaminantes3[0]%>" class="map" id="map<%=contaminantes3[0]%>" style="color:white;cursor:pointer;"><%=contaminantes3[0]%></span><%for(int i = 1; i<contaminantes3.length; i++){%>&nbsp;&nbsp;<span title="<%=contaminantes3[i]%>" class="map" id="map<%=contaminantes3[i]%>" style="cursor:pointer;"><%=contaminantes3[i]%></span><%}%>
 								</span></p>
