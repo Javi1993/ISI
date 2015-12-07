@@ -53,6 +53,7 @@ db.aire.aggregate([
 	{"$sort":{"_id.year":1,"_id.month":1}}
 ]);
 
+
 /*----------TWITTER----------*/
 db.twitter.find({$and:[{place:{$ne:null}},{place:{$exists:true}}]}).pretty();
 
@@ -68,9 +69,15 @@ db.twitter.remove({$and:[{'place.pais':{'$ne':'España'}},{place:{$exists:'true'
 
 /*----------CARTODB----------*/
 db.cartodb.update({
+	"_id":"MADRID"},
+	{"$set":{
+		"Mapas.PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/6ac3a0fc-9d28-11e5-bfa9-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"}
+});
+
+db.cartodb.update({
 	"_id":"BARCELONA"},
 	{"$set":{
-		"Mapas.PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/be0574d2-9b7c-11e5-9651-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"}
+		"Mapas.O3":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/4bf2d994-9d29-11e5-a685-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"}
 });
 
 db.cartodb.insert({

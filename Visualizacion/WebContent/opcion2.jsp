@@ -1,14 +1,16 @@
-<!DOCTYPE HTML>
-<!--
-	ZeroFour by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="java.util.List, org.bson.Document, java.util.Set, java.util.HashSet, java.util.Arrays"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<title>No Sidebar - ZeroFour by HTML5 UP</title>
 		<meta charset="utf-8" />
            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<%List<Document> medias = (List<Document>) request.getAttribute("medias");//prov1
+List<Document> mediasB = (List<Document>) request.getAttribute("mediasB");//prov2
+	if (medias != null && medias.size() > 0 && medias.get(0).size()>1) {
+		String contaminantes[] = new String[medias.get(0).keySet().size()];
+		contaminantes = medias.get(0).keySet().toArray(contaminantes);%>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -39,6 +41,7 @@
         chart.draw(data, options);
       }
     </script>
+    <%} %>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -97,19 +100,48 @@
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-
-									<!-- Content -->
-
-										<article>
-											<header class="major">
-											  <h2>Barcelona VS vizcaya</h2>
-											  <p>evoluci贸n del di贸xido de nitr贸geno (NO2) en la provincia de barcelona y vizcaya</p>
-											</header>
-
-											<span><iframe width='100%' height='400' frameborder='0' src='https://100290698.cartodb.com/viz/d2bdf8da-9565-11e5-be60-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-                                            <iframe width='100%' height='400' frameborder='0' src='https://100290698.cartodb.com/viz/e5bc1de6-9695-11e5-af66-0e98b61680bf/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe></span>
-											<p>Texto sobre el mapa o poner con JS la opci贸n de cmabiar de NO2 a otro tipo de contaminante.</p>
-                                            <h3>Gr谩fico de evoluci贸n mensual del 'CONTAMINATE' Provincia1VsProvincia2</h3>
+<!-- Content -->
+							<article>
+							<%Document[] mapas = (Document[])request.getAttribute("maps");
+							String elem="NO2";//default
+							if(mapas!=null){
+								String contaminantes1[] = new String[mapas[0].keySet().size()];
+								contaminantes1 = mapas[0].keySet().toArray(contaminantes1);
+								
+								String contaminantes2[] = new String[mapas[1].keySet().size()];
+								contaminantes2 = mapas[1].keySet().toArray(contaminantes2);
+								
+								Set<String> cont = new HashSet<String>(Arrays.asList(contaminantes1));
+								cont.addAll(Arrays.asList(contaminantes2));
+								
+								Object[] conta  = cont.toArray();
+								elem=(String)conta[0];
+							%><header class="major">
+								<h2><%=request.getAttribute("provincia")%> vs <%=request.getAttribute("provincia2")%></h2>	
+									<p>
+										evoluci髇 del <span id="elemento"><%=conta[0]%></span> en las
+										provincias de
+										<%=request.getAttribute("provincia")%> y <%=request.getAttribute("provincia2")%></p>
+								<p><span class="overflow-element">
+									<span title="<%=conta[0]%>" class="map" id="map<%=conta[0]%>" style="color:white;cursor:pointer;"><%=conta[0]%></span><%for(int i = 1; i<conta.length; i++){%>&nbsp;&nbsp;<span title="<%=conta[i]%>" class="map" id="map<%=conta[i]%>" style="cursor:pointer;"><%=conta[i]%></span><%}%>
+								</span></p>
+								</header>
+								<span class="carto" id="emap<%=conta[0]%>"><%=mapas[0].get(conta[0]) %></span>
+								<span class="carto" id="emap<%=conta[0]%>2"><%=mapas[1].get(conta[0]) %></span>
+								<%for(int i = 1; i<conta.length; i++){ %>
+								<span class="carto" id="emap<%=conta[i]%>"><%if(mapas[0].get(conta[i])!=null){%><%=mapas[0].get(conta[i])%><%}else{%><p style="color:red;">No hay datos de <%=conta[i]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[i]%>2"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay datos de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
+								<%}
+								}%>
+								
+                               <h3>Gr醘ico de comparativa de contaminante</h3>
+									<div class="overflow-element">
+									 <img class="graph" id="img-column" title="Gr醘ico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gr醘ico de barras horizontal" style="cursor: pointer;">									
+									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gr醘ico lineal" style="cursor: pointer;">
+									 <img class="graph" id="img-area" title="Gr醘ico de 醨ea" src="images/area.jpg" style="cursor: pointer;">
+									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gr醘ico escalonado" style="cursor: pointer;">
+								</div>
 											<div id="chart_div" style="width: 100%; height: 520px;"></div>
 										</article>
 								</div>
@@ -241,4 +273,43 @@
 			<script src="assets/js/main.js"></script>
 
 	</body>
+	<script>
+$( ".map" ).click(function() {
+	$( ".carto" ).css("display","none");
+	$('#e'+$(this).attr('id')).css("display","inline");
+	$('#e'+$(this).attr('id')+'2').css("display","inline");
+	$('.map').css("color","#7b818c");
+	$('#'+$(this).attr('id')).css("color","white");
+	$('#elemento').html($(this).attr('id').substring(3));
+	
+	});
+$( ".graph" ).click(function() {
+	$( ".igraph" ).css("display","none");
+	$( ".graph" ).css("border","none");
+	$('#'+$(this).attr('id')).css("border","2px solid yellow");
+	$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","block");
+	$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","block");
+	});
+	
+$( ".carto" ).css("display","none");
+$( '#emap<%=elem%>' ).css('display','inline');
+$( '#emap<%=elem%>'+'2' ).css('display','inline');
+$( ".igraph" ).css("display","none");
+$('#img-column').css("border","2px solid yellow");
+$( '#column_1' ).css("display","block");
+$( '#column_2' ).css("display","block");
+</script>
+<style>
+.overflow-element {
+	border: 10px solid #404248;
+	background-color: #404248;
+	border-radius: 25px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+	margin: 20px;
+	border-radius: 25px;
+}
+</style>
 </html>

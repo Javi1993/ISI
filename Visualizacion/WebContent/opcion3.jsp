@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <%List<Document> medias = (List<Document>) request.getAttribute("medias");
-	if (medias != null && medias.size() > 0) {
+	if (medias != null && medias.size() > 0 && medias.get(0).size()>1) {
 		String contaminantes[] = new String[medias.get(0).keySet().size()];
 		contaminantes = medias.get(0).keySet().toArray(contaminantes);%>
 <script type="text/javascript">
@@ -132,7 +132,7 @@
     </script>
 <%} 
 	List<Document> medias2 = (List<Document>) request.getAttribute("medias2");
-		if (medias2 != null && medias2.size() > 0) {
+		if (medias2 != null && medias2.size() > 0 && medias2.get(0).size()>1) {
 			String contaminantes2[] = new String[medias2.get(0).keySet().size()];
 			contaminantes2 = medias2.get(0).keySet().toArray(contaminantes2);%>
 <script type="text/javascript">

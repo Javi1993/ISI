@@ -181,7 +181,18 @@ db.cartodb.insert([{
 	},{
 	"_id":"ASTURIAS",
 	"Mapas":{
-		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/5f742cc0-9568-11e5-b625-0ef7f98ade21/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		"NO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/5f742cc0-9568-11e5-b625-0ef7f98ade21/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}]
+	},
+	{"_id":"ALICANTE",
+	"Mapas":{
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/9dd9a8e4-9d21-11e5-8b1d-0e3a376473ab/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		}
+	},
+		{"_id":"AVILA",
+	"Mapas":{
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/e642fd38-9d26-11e5-9f09-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		}
+	}
+	]
 );

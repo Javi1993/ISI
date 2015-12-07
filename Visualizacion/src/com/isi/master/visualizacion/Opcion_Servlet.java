@@ -53,13 +53,15 @@ public class Opcion_Servlet extends HttpServlet {
 
 			break;
 		case "2":
-			if(!request.getParameter("provincia1").equals(request.getParameter("provincia2"))){
-				
+			if(!request.getParameter("provincia").equals(request.getParameter("provincia2"))){
+				opcion2(request);
+				nextPage="/opcion2.jsp";
+				request.setAttribute("provincia2",request.getParameter("provincia2"));//guardamos la provincia
 			}
 			break;		
 		case "3":
 			opcion3(request);
-			nextPage="/no-sidebar.jsp";
+			nextPage="/opcion3.jsp";
 			break;
 		default:
 			nextPage="/index.html";
@@ -73,11 +75,71 @@ public class Opcion_Servlet extends HttpServlet {
 	}
 
 	/**
+	 * Opcion 2- Visualizacion de provincia VS provincia
+	 * @param request - Parametros de la peticion
+	 */
+	private void opcion2(HttpServletRequest request){
+		try{
+			//obtenemos los mapas de las provincias
+			Document map1 = collection.find(new Document("_id", request.getParameter("provincia"))).first();
+			Document map2 = collection.find(new Document("_id", request.getParameter("provincia2"))).first();
+			Document[] maps = new Document[2];
+			maps[0] = (Document) map1.get("Mapas");
+			maps[1] = (Document) map2.get("Mapas");
+			request.setAttribute("maps", maps);
+			//obtenemos las medias mensuales de los contaminantes que se miden por ug/m3
+			List<Document> pipeline = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),
+					new Document("$unwind","$Medidas"),
+					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
+							.append("average_NO2", new Document("$avg","$Medidas.NO2")).append("average_NO", new Document("$avg","$Medidas.NO")).append("average_NOX", new Document("$avg","$Medidas.NOX"))
+							.append("average_SO2", new Document("$avg","$Medidas.SO2")).append("average_PM10", new Document("$avg","$Medidas.PM10")).append("average_PM25", new Document("$avg","$Medidas.PM25"))
+							.append("average_O3", new Document("$avg","$Medidas.O3")).append("average_BEN", new Document("$avg","$Medidas.BEN")).append("average_XIL", new Document("$avg","$Medidas.XIL"))
+							.append("average_OXL", new Document("$avg","$Medidas.OXL"))), 
+					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
+			List<Document> medias = collectionAire.aggregate(pipeline).into(new ArrayList<Document>());
+			request.setAttribute("medias",limpiarMedias(medias));
+			
+			//provincia2
+			List<Document> pipelineB = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia2"))),
+					new Document("$unwind","$Medidas"),
+					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
+							.append("average_NO2", new Document("$avg","$Medidas.NO2")).append("average_NO", new Document("$avg","$Medidas.NO")).append("average_NOX", new Document("$avg","$Medidas.NOX"))
+							.append("average_SO2", new Document("$avg","$Medidas.SO2")).append("average_PM10", new Document("$avg","$Medidas.PM10")).append("average_PM25", new Document("$avg","$Medidas.PM25"))
+							.append("average_O3", new Document("$avg","$Medidas.O3")).append("average_BEN", new Document("$avg","$Medidas.BEN")).append("average_XIL", new Document("$avg","$Medidas.XIL"))
+							.append("average_OXL", new Document("$avg","$Medidas.OXL"))), 
+					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
+			List<Document> mediasB = collectionAire.aggregate(pipelineB).into(new ArrayList<Document>());
+			request.setAttribute("mediasB",limpiarMedias(mediasB));
+			//obtenemos las medias mensuales de los contaminantes que se miden por mg/m3
+			List<Document> pipeline2 = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),
+					new Document("$unwind","$Medidas"),
+					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
+							.append("average_CO", new Document("$avg","$Medidas.CO")).append("average_SH2", new Document("$avg","$Medidas.SH2")).append("average_TOL", new Document("$avg","$Medidas.TOL"))), 
+					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
+			List<Document> medias2 = collectionAire.aggregate(pipeline2).into(new ArrayList<Document>());
+			request.setAttribute("medias2",limpiarMedias2(medias2));
+
+			//provincia2
+			List<Document> pipeline2B = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia2"))),
+					new Document("$unwind","$Medidas"),
+					new Document("$group", new Document("_id",new Document("month", new Document("$month","$Medidas.Fecha")).append("year", new Document("$year","$Medidas.Fecha")))
+							.append("average_CO", new Document("$avg","$Medidas.CO")).append("average_SH2", new Document("$avg","$Medidas.SH2")).append("average_TOL", new Document("$avg","$Medidas.TOL"))), 
+					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
+			List<Document> medias2B = collectionAire.aggregate(pipeline2B).into(new ArrayList<Document>());
+			request.setAttribute("medias2B",limpiarMedias2(medias2B));
+		}catch(NullPointerException e){
+			System.err.println("Error: Se esta accediendo a un elemento nulo");
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Opcion 3- Visualizacion de mapa+grafico de medias una provincia
 	 * @param request - Parametros de la peticion
 	 */
 	private void opcion3(HttpServletRequest request){
 		try{
+			//obtenemos los mapas para esa provincia
 			Document map = collection.find(new Document("_id", request.getParameter("provincia"))).first();
 			request.setAttribute("maps", map.get("Mapas"));
 			//obtenemos las medias mensuales de los contaminantes que se miden por ug/m3
