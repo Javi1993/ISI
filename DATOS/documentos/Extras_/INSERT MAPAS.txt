@@ -2,183 +2,183 @@ db.cartodb.insert([{
 	"_id":"VALLADOLID",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/cc5cfe82-9777-11e5-b121-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
-	}}],
-	[{
+	}},
+	{
 	"_id":"TERUEL",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/782f80ee-9779-11e5-9225-0ef24382571b/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"TARRAGONA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/020cf154-9778-11e5-a78b-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"SORIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/cc177c96-9776-11e5-9d25-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ZAMORA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/79e8448c-9776-11e5-becd-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LA CORUNA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/36c9aeca-9776-11e5-b3a1-0ef24382571b/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ZARAGOZA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/b8a34934-9775-11e5-bd2a-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"SANTA CRUZ DE TENERIFE",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/a651bfb0-9773-11e5-9fbc-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"SEGOVIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/9c19b394-9774-11e5-ae73-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"SALAMANCA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/ba0113ea-9772-11e5-9ac9-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"MURCIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/882eea58-975f-11e5-a765-0ef24382571b/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LA RIOJA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/560ab232-975a-11e5-9e79-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LERIDA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/14233e38-975b-11e5-b115-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"PONTEVEDRA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/68900804-9763-11e5-b397-0ef24382571b/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"PALENCIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/dd150316-9761-11e5-aa37-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"OURENSE",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/31c8aac6-9761-11e5-b7d2-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"NAVARRA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/8ee70c9e-9760-11e5-8e09-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LUGO",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/b1f7a0ec-975e-11e5-ba01-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LEON",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/f0262a34-975c-11e5-b96a-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"LAS PALMAS",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/569e8d34-975c-11e5-bd44-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"HUESCA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/b0eb433e-9759-11e5-8ec0-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"GERONA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/0e161da0-9759-11e5-880e-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"CASTELLON",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/5efce7ea-9758-11e5-bcd2-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"CANTABRIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/d80f9818-9757-11e5-8eab-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"BURGOS",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/acb3b0ec-9756-11e5-9931-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"TOLEDO",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/395a39c8-9755-11e5-a392-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"GUADALAJARA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/89dabfd6-9754-11e5-a2bf-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"CUENCA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/1324e728-9753-11e5-aeea-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ALBACETE",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/94632e8c-9751-11e5-beed-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"CIUDAD REAL",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/bb256bb8-974f-11e5-9e4b-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ALAVA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/bdac15ac-9697-11e5-a592-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"GUIPUZCOA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/e272230a-9696-11e5-92bb-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"VIZCAYA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/e5bc1de6-9695-11e5-af66-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"VALENCIA",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/6aad95d2-95c6-11e5-bd8a-0e98b61680bf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ISLAS BALEARES",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/8d92fe80-95c5-11e5-b509-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"MADRID",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/72944c46-9567-11e5-b523-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
-	}],[{
+	},{
 	"_id":"ASTURIAS",
 	"Mapas":{
 		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/5f742cc0-9568-11e5-b625-0ef7f98ade21/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
