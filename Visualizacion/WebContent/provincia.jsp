@@ -21,15 +21,30 @@
 			<div class="container">
 				<div id="banner">
 					<form method="post" action="/Visualizacion/opcion?num=<%=request.getAttribute("op")%>" id="provincia">
-						<h2>Elige una provincia</h2>
+						<%if(request.getAttribute("op").equals("2")){ %>
+						<h2>Elige dos provincias</h2>
 						<select name="provincia" form="provincia">
 							<% for(Document prov:provincias){%>
 							<option value="<%=prov.getString("_id")%>"><%=prov.getString("_id").toUpperCase()%></option>
 							<%} %>
-						</select> <br>
+						</select><br>
+												<select name="provincia2" form="provincia">
+							<% for(Document prov:provincias){%>
+							<option value="<%=prov.getString("_id")%>"><%=prov.getString("_id").toUpperCase()%></option>
+							<%} %>
+						</select>
+						<%}else{ %>
+												<h2>Elige una provincia</h2>
+						<select name="provincia" form="provincia">
+							<% for(Document prov:provincias){%>
+							<option value="<%=prov.getString("_id")%>"><%=prov.getString("_id").toUpperCase()%></option>
+							<%} %>
+						</select>
+						<%} %>
+						 <br>
 						<br> <input type="submit"><br>
+											</form>
 						<a href="javascript:history.back()">Volver</a>
-					</form>
 					<br>
 
 				</div>
