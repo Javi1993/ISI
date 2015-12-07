@@ -53,7 +53,9 @@ public class Opcion_Servlet extends HttpServlet {
 
 			break;
 		case "2":
-
+			if(!request.getParameter("provincia1").equals(request.getParameter("provincia2"))){
+				
+			}
 			break;		
 		case "3":
 			opcion3(request);
@@ -64,7 +66,6 @@ public class Opcion_Servlet extends HttpServlet {
 			System.out.println("La opción elegida de visualización no es valida");
 			break;
 		}
-
 
 		client.close();//cerramos la conexion
 		request.setAttribute("provincia",request.getParameter("provincia"));//guardamos la provincia

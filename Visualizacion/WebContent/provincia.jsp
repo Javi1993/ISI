@@ -23,7 +23,7 @@
 					<form method="post" action="/Visualizacion/opcion?num=<%=request.getAttribute("op")%>" id="provincia">
 						<%if(request.getAttribute("op").equals("2")){ %>
 						<h2>Elige dos provincias</h2>
-						<select name="provincia" form="provincia">
+						<select name="provincia1" form="provincia">
 							<% for(Document prov:provincias){%>
 							<option value="<%=prov.getString("_id")%>"><%=prov.getString("_id").toUpperCase()%></option>
 							<%} %>
