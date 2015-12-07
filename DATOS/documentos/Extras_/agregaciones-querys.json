@@ -79,3 +79,24 @@ db.cartodb.insert({
 		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/be0574d2-9b7c-11e5-9651-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
 });
+
+db.cartodb.insert({
+	"_id":"VALLADOLID",
+	"Mapas":{
+		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/cc5cfe82-9777-11e5-b121-0e3a376473ab/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+	}
+});
+
+db.cartodb.insert({
+	"_id":"TERUEL",
+	"Mapas":{
+		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/782f80ee-9779-11e5-9225-0ef24382571b/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+	}
+});
+
+db.cartodb.insert({
+	"_id":"TARRAGONA",
+	"Mapas":{
+		"NO2":"<iframe width="100%" height="520" frameborder="0" src="https://100290698.cartodb.com/viz/020cf154-9778-11e5-a78b-0e8c56e2ffdb/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+	}
+});
