@@ -6,42 +6,153 @@
 		<title>No Sidebar - ZeroFour by HTML5 UP</title>
 		<meta charset="utf-8" />
            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<%List<Document> medias = (List<Document>) request.getAttribute("medias");//prov1
-List<Document> mediasB = (List<Document>) request.getAttribute("mediasB");//prov2
+<%
+Document[] mapas = (Document[])request.getAttribute("maps");
+String elem="NO2";//default
+if(mapas!=null){
+	String contaminantes1[] = new String[mapas[0].keySet().size()];
+	contaminantes1 = mapas[0].keySet().toArray(contaminantes1);
+	
+	String contaminantes2[] = new String[mapas[1].keySet().size()];
+	contaminantes2 = mapas[1].keySet().toArray(contaminantes2);
+	
+	Set<String> cont = new HashSet<String>(Arrays.asList(contaminantes1));
+	cont.addAll(Arrays.asList(contaminantes2));
+	
+	Object[] conta  = cont.toArray();
+	List<Document> medias = (List<Document>) request.getAttribute("medias");//prov1
+
 	if (medias != null && medias.size() > 0 && medias.get(0).size()>1) {
-		String contaminantes[] = new String[medias.get(0).keySet().size()];
-		contaminantes = medias.get(0).keySet().toArray(contaminantes);%>
+		%>
     <script type="text/javascript">
+    <%for(int i = 0; i<conta.length; i++){%>
       google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
+      google.setOnLoadCallback(drawChart<%="Area"+conta[i]%>);
+      function drawChart<%="Area"+conta[i]%>() {
         var data = google.visualization.arrayToDataTable([
-          ['Month', 'Barcelona', 'Vizcaya'],
-          ['ENE',  100,      40],
-          ['FEB',  117,      46],
-          ['MAR',  66,       112],
-		  ['ABR',  150,      80],
-          ['MAY',  180,      60],
-          ['JUN',  200,       52],
-		  ['JUL',  220,      40],
-          ['AGO',  180,      46],
-          ['SEP',  170,       72],
-		  ['OCT',  140,      80],
-          ['NOV',  158,      96],
-          ['DIC',  150,       112]
+          ['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+  		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+		<%}
+		%>
         ]);
 
         var options = {
-          title: 'Evolucion de contaminantes',
+        		width: 1200,
+      		  height: 520,
           hAxis: {title: 'A\xf1o',  titleTextStyle: {color: '#333'}},
-          vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0}
+          vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0}
         };
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.AreaChart(document.getElementById('area<%=conta[i]%>'));
         chart.draw(data, options);
       }
+      
+      google.load("visualization", "1.1", {packages:["bar"]});
+      google.setOnLoadCallback(drawChart<%="Column"+conta[i]%>);
+      function drawChart<%="Column"+conta[i]%>() {
+        var data = google.visualization.arrayToDataTable([
+          ['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+    		<%for (Document med : medias) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+    		<%}
+    		%>
+        ]);
+
+        var options = {
+        		width: 1200,
+      		  height: 520,
+      		  chart: {
+  	            subtitle: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>'
+  	          },
+        	vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>'}
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('column<%=conta[i]%>'));
+        chart.draw(data, options);
+      }
+      
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart<%="Escalon"+conta[i]%>);
+      function drawChart<%="Escalon"+conta[i]%>() {
+        var data = google.visualization.arrayToDataTable([
+        ['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+		<%}
+		%>
+        ]);
+
+        var options = {
+        		width: 1200,
+        		height: 520,
+          hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+          vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},
+          isStacked: true
+        };
+
+        var chart = new google.visualization.SteppedAreaChart(document.getElementById('escalon<%=conta[i]%>'));
+        chart.draw(data, options);
+      }
+      
+      google.load("visualization", "1", {packages:["corechart"]})
+	    google.setOnLoadCallback(drawChart<%="Lineal"+conta[i]%>);
+      function drawChart<%="Lineal"+conta[i]%>() {
+          var data = google.visualization.arrayToDataTable([
+            ['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+    		<%for (Document med : medias) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+    		<%}
+    		%>
+          ]);
+
+  	var options = {
+  			width: 1200,
+  			height: 520,
+  		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+  		vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},			
+  		legend: { position: 'right' }
+          };
+
+     var chart = new google.visualization.LineChart(document.getElementById('lineal<%=conta[i]%>'));
+
+          chart.draw(data, options);
+
+        }
+      
+	    google.load("visualization", "1", {packages:["corechart"]});
+	    google.setOnLoadCallback(drawChart<%="Bar"+conta[i]%>);
+	      function drawChart<%="Bar"+conta[i]%>() {
+	      var data = google.visualization.arrayToDataTable([
+	        ["Fecha", '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+    		<%for (Document med : medias) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+    		<%}
+    		%>
+	      ]);
+
+	      var view = new google.visualization.DataView(data);
+
+
+	      var options = {
+			width: 1200,
+			height: 750,
+	        bar: {groupWidth: "75%"},
+			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+			hAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
+	        legend: { position: "right" }
+	      };
+	      var chart = new google.visualization.BarChart(document.getElementById('bar<%=conta[i]%>'));
+	      chart.draw(view, options);
+	    }
+      <%}%>
     </script>
-    <%} %>
+    <%} 	List<Document> medias2 = (List<Document>) request.getAttribute("medias2");//prov1
+
+	if (medias2 != null && medias2.size() > 0 && medias2.get(0).size()>1) {
+		%>
+		
+		<%} %>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -102,19 +213,7 @@ List<Document> mediasB = (List<Document>) request.getAttribute("mediasB");//prov
 								<div id="content">
 <!-- Content -->
 							<article>
-							<%Document[] mapas = (Document[])request.getAttribute("maps");
-							String elem="NO2";//default
-							if(mapas!=null){
-								String contaminantes1[] = new String[mapas[0].keySet().size()];
-								contaminantes1 = mapas[0].keySet().toArray(contaminantes1);
-								
-								String contaminantes2[] = new String[mapas[1].keySet().size()];
-								contaminantes2 = mapas[1].keySet().toArray(contaminantes2);
-								
-								Set<String> cont = new HashSet<String>(Arrays.asList(contaminantes1));
-								cont.addAll(Arrays.asList(contaminantes2));
-								
-								Object[] conta  = cont.toArray();
+							<%
 								elem=(String)conta[0];
 							%><header class="major">
 								<h2><%=request.getAttribute("provincia")%> vs <%=request.getAttribute("provincia2")%></h2>	
@@ -129,10 +228,10 @@ List<Document> mediasB = (List<Document>) request.getAttribute("mediasB");//prov
 								<span class="carto" id="emap<%=conta[0]%>"><%=mapas[0].get(conta[0]) %></span>
 								<span class="carto" id="emap<%=conta[0]%>2"><%=mapas[1].get(conta[0]) %></span>
 								<%for(int i = 1; i<conta.length; i++){ %>
-								<span class="carto" id="emap<%=conta[i]%>"><%if(mapas[0].get(conta[i])!=null){%><%=mapas[0].get(conta[i])%><%}else{%><p style="color:red;">No hay datos de <%=conta[i]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
-								<span class="carto" id="emap<%=conta[i]%>2"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay datos de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[i]%>"><%if(mapas[0].get(conta[i])!=null){%><%=mapas[0].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[i]%>2"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
 								<%}
-								}%>
+								%>
 								
                                <h3>Gráfico de comparativa de contaminante</h3>
 									<div class="overflow-element">
@@ -142,9 +241,16 @@ List<Document> mediasB = (List<Document>) request.getAttribute("mediasB");//prov
 									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
 									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
 								</div>
-											<div id="chart_div" style="width: 100%; height: 520px;"></div>
+										<%for(int i=0; i<conta.length; i++){ %>
+											<div class="igraph" id="area<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<div class="igraph" id="column<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<div class="igraph" id="escalon<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<div class="igraph" id="lineal<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<div class="igraph" id="bar<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<%} %>
 										</article>
 								</div>
+								<%} %>
 							</div>
 						</div>
 					</div>
@@ -281,14 +387,17 @@ $( ".map" ).click(function() {
 	$('.map').css("color","#7b818c");
 	$('#'+$(this).attr('id')).css("color","white");
 	$('#elemento').html($(this).attr('id').substring(3));
+	$( ".igraph" ).css("display","none");
+	$( ".graph" ).css("border","none");
+	$('#img-column').css("border","2px solid yellow");
+	$( '#column'+$(this).attr('id').substring(3)).css("display","inline");
 	
 	});
 $( ".graph" ).click(function() {
 	$( ".igraph" ).css("display","none");
 	$( ".graph" ).css("border","none");
 	$('#'+$(this).attr('id')).css("border","2px solid yellow");
-	$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","block");
-	$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","block");
+	$( '#'+$(this).attr('id').substring(4)+$('#elemento').text()).css("display","inline");
 	});
 	
 $( ".carto" ).css("display","none");
@@ -296,8 +405,7 @@ $( '#emap<%=elem%>' ).css('display','inline');
 $( '#emap<%=elem%>'+'2' ).css('display','inline');
 $( ".igraph" ).css("display","none");
 $('#img-column').css("border","2px solid yellow");
-$( '#column_1' ).css("display","block");
-$( '#column_2' ).css("display","block");
+$( '#column<%=elem%>' ).css("display","inline");
 </script>
 <style>
 .overflow-element {
