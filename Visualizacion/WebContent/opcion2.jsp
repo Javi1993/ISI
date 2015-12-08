@@ -35,8 +35,32 @@ if(mapas!=null){
 	if (medias != null && medias.size() > 0 && medias.get(0).size()>1) {
 		%>
     <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
     <%for(int i = 0; i<conta.length; i++){%>
-      google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart<%="Colum"+conta[i]%>);
+    function drawChart<%="Colum"+conta[i]%>() {
+      var data = google.visualization.arrayToDataTable([
+		['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
+  		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
+		<%}
+		%>
+      ]);
+
+      var view = new google.visualization.DataView(data);
+
+      var options = {
+  			width: 1200,
+			height: 750,
+	        bar: {groupWidth: "75%"},
+			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+			hAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
+	        legend: { position: "right" }
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById('colum<%=conta[i]%>'));
+      chart.draw(view, options);
+  }
+    
       google.setOnLoadCallback(drawChart<%="Area"+conta[i]%>);
       function drawChart<%="Area"+conta[i]%>() {
         var data = google.visualization.arrayToDataTable([
@@ -58,31 +82,6 @@ if(mapas!=null){
         chart.draw(data, options);
       }
       
-      google.load("visualization", "1.1", {packages:["bar"]});
-      google.setOnLoadCallback(drawChart<%="Column"+conta[i]%>);
-      function drawChart<%="Column"+conta[i]%>() {
-        var data = google.visualization.arrayToDataTable([
-          ['Fecha', '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>'],
-    		<%for (Document med : medias) {%>
-            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>],
-    		<%}
-    		%>
-        ]);
-
-        var options = {
-        		width: 1200,
-      		  height: 520,
-      		  chart: {
-  	            subtitle: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>'
-  	          },
-        	vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>'}
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('column<%=conta[i]%>'));
-        chart.draw(data, options);
-      }
-      
-      google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart<%="Escalon"+conta[i]%>);
       function drawChart<%="Escalon"+conta[i]%>() {
         var data = google.visualization.arrayToDataTable([
@@ -105,7 +104,6 @@ if(mapas!=null){
         chart.draw(data, options);
       }
       
-      google.load("visualization", "1", {packages:["corechart"]})
 	    google.setOnLoadCallback(drawChart<%="Lineal"+conta[i]%>);
       function drawChart<%="Lineal"+conta[i]%>() {
           var data = google.visualization.arrayToDataTable([
@@ -130,7 +128,6 @@ if(mapas!=null){
 
         }
       
-	    google.load("visualization", "1", {packages:["corechart"]});
 	    google.setOnLoadCallback(drawChart<%="Bar"+conta[i]%>);
 	      function drawChart<%="Bar"+conta[i]%>() {
 	      var data = google.visualization.arrayToDataTable([
@@ -157,12 +154,7 @@ if(mapas!=null){
 	    }
       <%}%>
     </script>
-    <%} 	List<Document> medias2 = (List<Document>) request.getAttribute("medias2");//prov1
-
-	if (medias2 != null && medias2.size() > 0 && medias2.get(0).size()>1) {
-		%>
-		
-		<%} %>
+    <%}%>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -245,15 +237,15 @@ if(mapas!=null){
 								
                                <h3>Gráfico de comparativa de contaminante</h3>
 									<div class="overflow-element">
-									 <img class="graph" id="img-column" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" id="img-colum" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
 									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gráfico de barras horizontal" style="cursor: pointer;">									
 									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
 									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
 									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
 								</div>
 										<%for(int i=0; i<conta.length; i++){ %>
+										<div class="igraph" id="colum<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="area<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
-											<div class="igraph" id="column<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="escalon<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="lineal<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="bar<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
@@ -399,8 +391,8 @@ $( ".map" ).click(function() {
 	$('#elemento').html($(this).attr('id').substring(3));
 	$( ".igraph" ).css("display","none");
 	$( ".graph" ).css("border","none");
-	$('#img-column').css("border","2px solid yellow");
-	$( '#column'+$(this).attr('id').substring(3)).css("display","inline");
+	$('#img-colum').css("border","2px solid yellow");
+	$( '#colum'+$(this).attr('id').substring(3)).css("display","inline");
 	
 	});
 $( ".graph" ).click(function() {
@@ -414,8 +406,8 @@ $( ".carto" ).css("display","none");
 $( '#emap<%=elem%>' ).css('display','inline');
 $( '#emap<%=elem%>'+'2' ).css('display','inline');
 $( ".igraph" ).css("display","none");
-$('#img-column').css("border","2px solid yellow");
-$( '#column<%=elem%>' ).css("display","inline");
+$('#img-colum').css("border","2px solid yellow");
+$( '#colum<%=elem%>' ).css("display","inline");
 </script>
 <style>
 .overflow-element {
