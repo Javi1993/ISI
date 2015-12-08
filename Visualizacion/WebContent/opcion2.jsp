@@ -225,8 +225,8 @@ if(mapas!=null){
 									<span title="<%=conta[0]%>" class="map" id="map<%=conta[0]%>" style="color:white;cursor:pointer;"><%=conta[0]%></span><%for(int i = 1; i<conta.length; i++){%>&nbsp;&nbsp;<span title="<%=conta[i]%>" class="map" id="map<%=conta[i]%>" style="cursor:pointer;"><%=conta[i]%></span><%}%>
 								</span></p>
 								</header>
-								<span class="carto" id="emap<%=conta[0]%>"><%=mapas[0].get(conta[0]) %></span>
-								<span class="carto" id="emap<%=conta[0]%>2"><%=mapas[1].get(conta[0]) %></span>
+								<span class="carto" id="emap<%=conta[0]%>"><%if(mapas[0].get(conta[0])!=null){%><%=mapas[0].get(conta[0])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[0]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[0]%>2"><%if(mapas[1].get(conta[0])!=null){%><%=mapas[1].get(conta[0])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[0]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
 								<%for(int i = 1; i<conta.length; i++){ %>
 								<span class="carto" id="emap<%=conta[i]%>"><%if(mapas[0].get(conta[i])!=null){%><%=mapas[0].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
 								<span class="carto" id="emap<%=conta[i]%>2"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
