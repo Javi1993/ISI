@@ -20,6 +20,16 @@ if(mapas!=null){
 	cont.addAll(Arrays.asList(contaminantes2));
 	
 	Object[] conta  = cont.toArray();
+	for(int i = 0;i<conta.length;i++)
+	{//colocamos el NO2 el primero de la lista para la visualizacion inicial
+		if(conta[i].equals("NO2"))
+		{
+			Object aux = conta[0];
+			conta[0] = conta[i];
+			conta[i] = aux;
+		}
+	}
+	
 	List<Document> medias = (List<Document>) request.getAttribute("medias");//prov1
 
 	if (medias != null && medias.size() > 0 && medias.get(0).size()>1) {
