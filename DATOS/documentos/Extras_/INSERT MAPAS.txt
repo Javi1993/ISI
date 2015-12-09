@@ -176,7 +176,16 @@ db.cartodb.insert([{
 	},{
 	"_id":"MADRID",
 	"Mapas":{
-		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/72944c46-9567-11e5-b523-0e8c56e2ffdb/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/72944c46-9567-11e5-b523-0e8c56e2ffdb/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/6ac3a0fc-9d28-11e5-bfa9-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+	}
+	},{
+	"_id":"BARCELONA",
+	"Mapas":{
+	 	"NO2" : "<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/d2bdf8da-9565-11e5-be60-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/be0574d2-9b7c-11e5-9651-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"O3" : "<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/4bf2d994-9d29-11e5-a685-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"CO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a755228a-9dbd-11e5-9172-0ecd1babdde5/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
 	},{
 	"_id":"ASTURIAS",

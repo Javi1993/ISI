@@ -1,15 +1,12 @@
 package com.isi.master.visualizacion;
 
 import static java.util.Arrays.asList;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -63,12 +60,6 @@ public class Opcion_Servlet extends HttpServlet {
 		case "3":
 			opcion3(request);
 			nextPage="/opcion3.jsp";
-			break;
-		case "4":
-			File folder = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos/");
-			File[] listOfFiles = folder.listFiles();
-			request.setAttribute("list",listOfFiles);
-		    nextPage="/datasheet.jsp";
 			break;
 		default:
 			nextPage="/index.html";
