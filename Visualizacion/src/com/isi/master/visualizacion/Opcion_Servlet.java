@@ -2,6 +2,7 @@ package com.isi.master.visualizacion;
 
 import static java.util.Arrays.asList;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +63,17 @@ public class Opcion_Servlet extends HttpServlet {
 		case "3":
 			opcion3(request);
 			nextPage="/opcion3.jsp";
+			break;
+		case "4":
+			File folder = new File("/");
+			File[] listOfFiles = folder.listFiles();
+		    for (int i = 0; i < listOfFiles.length; i++) {
+		        if (listOfFiles[i].isFile()) {
+		          System.out.println("File: " + listOfFiles[i].getName());
+		        } else if (listOfFiles[i].isDirectory()) {
+		          System.out.println("Directory: " + listOfFiles[i].getName());
+		        }
+		    }
 			break;
 		default:
 			nextPage="/index.html";
