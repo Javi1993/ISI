@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.List, org.bson.Document, java.util.Set, java.util.HashSet, java.util.Arrays"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.List, org.bson.Document, java.util.Set, java.util.HashSet, java.util.Arrays"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<title>No Sidebar - ZeroFour by HTML5 UP</title>
-		<meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <%
 Document[] mapas = (Document[])request.getAttribute("maps");
@@ -155,7 +156,6 @@ if(mapas!=null){
       <%}%>
     </script>
     <%}%>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -220,7 +220,7 @@ if(mapas!=null){
 							%><header class="major">
 								<h2><%=request.getAttribute("provincia")%> vs <%=request.getAttribute("provincia2")%></h2>	
 									<p>
-										evolución del <span id="elemento"><%=conta[0]%></span> en las
+										evoluciÃ³n del <span id="elemento"><%=conta[0]%></span> en las
 										provincias de
 										<%=request.getAttribute("provincia")%> y <%=request.getAttribute("provincia2")%></p>
 								<p><span class="overflow-element">
@@ -235,13 +235,13 @@ if(mapas!=null){
 								<%}
 								%>
 								
-                               <h3>Gráfico de comparativa de contaminante</h3>
+                               <h3>GrÃ¡fico de comparativa de contaminante</h3>
 									<div class="overflow-element">
-									 <img class="graph" id="img-colum" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
-									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gráfico de barras horizontal" style="cursor: pointer;">									
-									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
-									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
-									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
+									 <img class="graph" id="img-colum" title="GrÃ¡fico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" src="images/bar.jpg" id="img-bar" title="GrÃ¡fico de barras horizontal" style="cursor: pointer;">									
+									 <img class="graph" src="images/line.jpg" id="img-lineal" title="GrÃ¡fico lineal" style="cursor: pointer;">
+									 <img class="graph" id="img-area" title="GrÃ¡fico de Ã¡rea" src="images/area.jpg" style="cursor: pointer;">
+									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="GrÃ¡fico escalonado" style="cursor: pointer;">
 								</div>
 										<%for(int i=0; i<conta.length; i++){ %>
 										<div class="igraph" id="colum<%=conta[i]%>" style="width: 100%; height: 520px;"></div>

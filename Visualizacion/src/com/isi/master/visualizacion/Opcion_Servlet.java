@@ -65,15 +65,10 @@ public class Opcion_Servlet extends HttpServlet {
 			nextPage="/opcion3.jsp";
 			break;
 		case "4":
-			File folder = new File("/");
+			File folder = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos/");
 			File[] listOfFiles = folder.listFiles();
-		    for (int i = 0; i < listOfFiles.length; i++) {
-		        if (listOfFiles[i].isFile()) {
-		          System.out.println("File: " + listOfFiles[i].getName());
-		        } else if (listOfFiles[i].isDirectory()) {
-		          System.out.println("Directory: " + listOfFiles[i].getName());
-		        }
-		    }
+			request.setAttribute("list",listOfFiles);
+		    nextPage="/datasheet.jsp";
 			break;
 		default:
 			nextPage="/index.html";
@@ -296,7 +291,7 @@ public class Opcion_Servlet extends HttpServlet {
 						{
 							auxDoc.append(contaminantes[i+1], med.get(contaminantes[i+1]));
 						}
-						buena.add(auxDoc);//añadimos el documento fusionado
+						buena.add(auxDoc);//aï¿½adimos el documento fusionado
 						aux=1;
 					}
 				}
@@ -337,7 +332,7 @@ public class Opcion_Servlet extends HttpServlet {
 						{
 							auxDoc.append(contaminantes[i+1], med2.get(contaminantes[i+1]));
 						}
-						buena.add(auxDoc);//añadimos el documento fusionado
+						buena.add(auxDoc);//aï¿½adimos el documento fusionado
 						aux=1;
 					}
 				}
