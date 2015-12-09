@@ -16,7 +16,7 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-		['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+		['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
 		<%for (Document med : medias) {%>
           ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
 		<%}
@@ -38,7 +38,7 @@
       google.setOnLoadCallback(drawChart1);
       function drawChart1() {
         var data = google.visualization.arrayToDataTable([
-          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+          ['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
   		<%for (Document med : medias) {%>
         ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
 		<%}
@@ -60,7 +60,7 @@
       google.setOnLoadCallback(drawChart2);
       function drawChart2() {
         var data = google.visualization.arrayToDataTable([
-          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+          ['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
   		<%for (Document med : medias) {%>
         ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
 		<%}
@@ -83,7 +83,7 @@
       google.setOnLoadCallback(drawChart3);
       function drawChart3() {
         var data = google.visualization.arrayToDataTable([
-          ['Fecha'<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+          ['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
     		<%for (Document med : medias) {%>
             ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
     		<%}
@@ -108,7 +108,7 @@
 	    google.setOnLoadCallback(drawChart4);
 	    function drawChart4() {
 	      var data = google.visualization.arrayToDataTable([
-	        ["Fecha"<%for (int i = 0; i < contaminantes.length - 1; i++) {%>,'<%=contaminantes[i + 1].replace("average_", "")%>'<%}%>],
+	        ['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
     		<%for (Document med : medias) {%>
             ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
     		<%}
@@ -140,7 +140,7 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-		['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+		['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
 		<%for (Document med : medias2) {%>
           ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
 		<%}%>
@@ -161,7 +161,7 @@
     google.setOnLoadCallback(drawChart1);
     function drawChart1() {
       var data = google.visualization.arrayToDataTable([
-        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+        ['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
 		<%for (Document med : medias2) {%>
       ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
 		<%}
@@ -184,7 +184,7 @@
     google.setOnLoadCallback(drawChart2);
     function drawChart2() {
       var data = google.visualization.arrayToDataTable([
-        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+        ['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
 		<%for (Document med : medias2) {%>
       ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
 		<%}
@@ -207,7 +207,7 @@
     google.setOnLoadCallback(drawChart3);
     function drawChart3() {
       var data = google.visualization.arrayToDataTable([
-        ['Fecha'<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+        ['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
   		<%for (Document med : medias2) {%>
           ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
   		<%}
@@ -232,7 +232,7 @@
     google.setOnLoadCallback(drawChart4);
     function drawChart4() {
       var data = google.visualization.arrayToDataTable([
-        ["Fecha"<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>,'<%=contaminantes2[i + 1].replace("average_", "")%>'<%}%>],
+        ['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
 		<%for (Document med : medias2) {%>
         ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
 		<%}
@@ -341,16 +341,19 @@
 									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
 									 
 								</div>
-								<div class="igraph" id="area_1" style="width: 100%; height: 520px;"></div>
-								<div class="igraph" id="area_2" style="width: 100%; height: 520px;"></div>
+								<%if (medias != null && medias.size() > 0 && medias.get(0).size()>1) { %>
+								<div class="igraph" id="area_1" style="width: 100%; height: 520px;"></div>	
 								<div class="igraph" id="column_1" style="width: 100%; height: 520px;"></div>
-								<div class="igraph" id="column_2" style="width: 100%; height: 520px;"></div>
-								<div class="igraph" id="escalon_1" style="width: 100%; height: 520px;"></div>
-								<div class="igraph" id="escalon_2" style="width: 100%; height: 520px;"></div>
 								<div class="igraph"id="lineal_1" style="width: 100%; height: 520px;"></div>
-								<div class="igraph" id="lineal_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="escalon_1" style="width: 100%; height: 520px;"></div>
 								<div class="igraph"id="bar_1" style="width: 100%; height: 750px;"></div>
+								<%}if (medias2 != null && medias2.size() > 0 && medias2.get(0).size()>1) { %>
+								<div class="igraph" id="area_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="column_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="lineal_2" style="width: 100%; height: 520px;"></div>
+								<div class="igraph" id="escalon_2" style="width: 100%; height: 520px;"></div>
 								<div class="igraph" id="bar_2" style="width: 100%; height: 750px;"></div>
+								<%} %>
 							</article>
 						</div>
 					</div>
