@@ -89,6 +89,8 @@
 														<h2 id="prov"><%=provincia %></h2>
 														<p>Descargue las medidas realizadas por las siguientes estaciones de calidad del aire</p>
 													</header>
+													<span class="image featured"><img src="images/pic08.jpg" alt="" /></span>
+													<div class="column">
 													<%for (Document prov:listProv) {%>
 													<ul class="provincias" id='<%=prov.getString("_id").replaceAll("\\s+","")%>'>
 														<%for(String estaciones:(List<String>)prov.get("estaciones")){ %>
@@ -96,6 +98,7 @@
 													  <%} %>
 													</ul>
 													<%} %>
+													</div>
 												</article>
 
 										</div>
@@ -283,6 +286,11 @@ $( '#<%=provincia%>' ).css("display","inline");
 	color: #fff;
 	border: 2px solid #3b464c;
     border-radius: 25px;
+}
+.column {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
 }
 </style>
 </html>

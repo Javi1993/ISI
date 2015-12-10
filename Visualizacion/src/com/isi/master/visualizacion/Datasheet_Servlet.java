@@ -66,9 +66,9 @@ public class Datasheet_Servlet extends HttpServlet {
 
 	protected void dowmload(HttpServletRequest request, HttpServletResponse response, String csvName) throws ServletException, IOException {
 		response.setContentType("text/csv");//indicamos el tipo de archivo
-		response.setHeader("Content-Disposition", "attachment;filename="+csvName+".csv");//dialogo de descarga
+		response.setHeader("Content-Disposition", "attachment;filename="+csvName.replaceAll(" ", "_")+".csv");//dialogo de descarga
 		try{
-			File my_file = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos"+File.separator+csvName+".csv");//cogemos el archivo
+			File my_file = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos/"+csvName+".csv");//cogemos el archivo
 			//Realizamos la descarga
 			OutputStream out = response.getOutputStream();
 			FileInputStream in = new FileInputStream(my_file);
