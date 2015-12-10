@@ -109,9 +109,10 @@ $( '#map<%=provincia%>' ).css("display","inline");
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+	text-align: center;
 	width: 200px;
-	font-family: Arial, sans-serif;
-	font-size: 11pt;
+	font-size: 9pt;
+	font-weight: bold;
 }
 
 #menu ul li {
@@ -128,7 +129,6 @@ $( '#map<%=provincia%>' ).css("display","inline");
 	text-decoration: none;
 	text-transform: uppercase;
 	display: block;
-	padding: 10px 10px 10px 20px;
 }
 
 #menu ul li a:hover {
