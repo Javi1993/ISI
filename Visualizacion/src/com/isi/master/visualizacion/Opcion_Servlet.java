@@ -40,7 +40,7 @@ public class Opcion_Servlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		client = new MongoClient("localhost", 27017);//conectamos
+		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire

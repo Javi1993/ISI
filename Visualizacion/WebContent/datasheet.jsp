@@ -24,7 +24,7 @@
 
 					<!-- Logo -->
 					<h1>
-						<a href="index.html" id="logo">ZeroFour</a>
+						<a href="index.html" id="logo">GRUPO 2 | ISI</a>
 					</h1>
 
 					<!-- Nav -->
@@ -70,14 +70,36 @@
 									<div id="menu">
 										<ul>
 											<%	List<Document> listProv = (List<Document>)request.getAttribute("list");
+												String provincia = listProv.get(0).getString("_id");
 												for (Document prov:listProv) {%>
-											<li><a href="..."><%=prov.getString("_id")%></a></li>
+											<li><a class="selector" id='a<%=prov.getString("_id").replaceAll("\\s+","")%>' style="cursor:pointer;"><%=prov.getString("_id")%></a></li>
 											<%}%>
 										</ul>
 									</div>
 									</section>
 								</div>
 							</div>
+																<div class="8u 12u(mobile) important(mobile)">
+										<div id="content">
+
+											<!-- Content -->
+
+												<article>
+													<header class="major">
+														<h2 id="prov"><%=provincia %></h2>
+														<p>Descargue las medidas realizadas por las siguientes estaciones de calidad del aire</p>
+													</header>
+													<%for (Document prov:listProv) {%>
+													<ul class="provincias" id='<%=prov.getString("_id").replaceAll("\\s+","")%>'>
+														<%for(String estaciones:(List<String>)prov.get("estaciones")){ %>
+													  <li><a href="#"><%=estaciones+".csv" %></a></li>
+													  <%} %>
+													</ul>
+													<%} %>
+												</article>
+
+										</div>
+									</div>
 						</div>
 					</div>
 				</div>
@@ -218,6 +240,16 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
 </body>
+	<script>
+$( ".selector" ).click(function() {
+	$( ".provincias" ).css("display","none");
+	$('#'+$(this).attr('id').substring(1)).css("display","inline");
+	$('#prov').html($(this).attr('id').substring(1));
+	});
+	
+//$( ".provincias" ).css("display","none");
+$( '#<%=provincia%>' ).css("display","inline");
+</script>
 <style>
 #menu ul {
 	list-style-type: none;

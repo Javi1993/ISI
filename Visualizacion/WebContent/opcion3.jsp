@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>No Sidebar - ZeroFour by HTML5 UP</title>
+<title>ISI | Grupo 2</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>

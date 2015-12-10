@@ -45,7 +45,7 @@ public class Datashet_Servlet extends HttpServlet {
 //		File folder = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos/");
 //		File[] listOfFiles = folder.listFiles();
 		
-		client = new MongoClient("localhost", 27017);//conectamos
+		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de mapas de aire
 		

@@ -38,7 +38,7 @@ public class Provincia_Servlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		client = new MongoClient("localhost", 27017);//conectamos
+		client = new MongoClient("localhost", 17017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
 		
