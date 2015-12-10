@@ -92,7 +92,7 @@
 													<%for (Document prov:listProv) {%>
 													<ul class="provincias" id='<%=prov.getString("_id").replaceAll("\\s+","")%>'>
 														<%for(String estaciones:(List<String>)prov.get("estaciones")){ %>
-													  <li><a href="#"><%=estaciones+".csv" %></a></li>
+													  <li><a href="/Visualizacion/datasheet?csv=<%=estaciones%>"><%=estaciones+".csv" %></a></li>
 													  <%} %>
 													</ul>
 													<%} %>
