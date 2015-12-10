@@ -261,7 +261,6 @@
 </head>
 <body class="no-sidebar">
 	<div id="page-wrapper">
-
 		<!-- Header Wrapper -->
 		<div id="header-wrapper">
 			<div class="container">
@@ -270,7 +269,6 @@
 			<jsp:include page="./header.html" flush="true" />
 			</div>
 		</div>
-
 		<!-- Main Wrapper -->
 		<div id="main-wrapper">
 			<div class="wrapper style2">
@@ -301,11 +299,11 @@
 								<%} }%>
 								<h3>Gráficos de medias mensuales</h3>
 								<div class="overflow-element">
-									 <img class="graph" id="img-column" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
-									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gráfico de barras horizontal" style="cursor: pointer;">									
-									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
-									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
-									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
+									 <img class="graph" id="img-column" title="GrÃ¡fico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
+									 <img class="graph" src="images/bar.jpg" id="img-bar" title="GrÃ¡fico de barras horizontal" style="cursor: pointer;">									
+									 <img class="graph" src="images/line.jpg" id="img-lineal" title="GrÃ¡fico lineal" style="cursor: pointer;">
+									 <img class="graph" id="img-area" title="GrÃ¡fico de Ã¡rea" src="images/area.jpg" style="cursor: pointer;">
+									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="GrÃ¡fico escalonado" style="cursor: pointer;">
 									 
 								</div>
 								<%if (medias != null && medias.size() > 0 && medias.get(0).size()>1) { %>
@@ -329,9 +327,7 @@
 		</div>
 		<jsp:include page="./footer.html" flush="true" />
 	</div>
-
 	<!-- Scripts -->
-
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.dropotron.min.js"></script>
 	<script src="assets/js/skel.min.js"></script>
@@ -363,6 +359,7 @@ $( ".igraph" ).css("display","none");
 $('#img-column').css("border","2px solid yellow");
 $( '#column_1' ).css("display","block");
 $( '#column_2' ).css("display","block");
+$( "li#v" ).addClass( "current_page_item" );
 </script>
 <style>
 .overflow-element {

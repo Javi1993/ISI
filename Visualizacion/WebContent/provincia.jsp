@@ -48,8 +48,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Footer Wrapper -->
-		<jsp:include page="./footer.html" flush="true" />
 	</div>
 </body>
 </html>

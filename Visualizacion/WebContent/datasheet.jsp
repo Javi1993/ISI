@@ -13,16 +13,13 @@
 </head>
 <body class="left-sidebar">
 	<div id="page-wrapper">
-
 		<!-- Header Wrapper -->
 		<div id="header-wrapper">
 			<div class="container">
-
-				<!-- Header -->
+		<!-- Header -->
 		<jsp:include page="./header.html" flush="true" />
 			</div>
 		</div>
-
 		<!-- Main Wrapper -->
 		<div id="main-wrapper">
 			<div class="wrapper style2">
@@ -79,9 +76,7 @@
 		</div>
 		<jsp:include page="./footer.html" flush="true" />
 	</div>
-
 	<!-- Scripts -->
-
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.dropotron.min.js"></script>
 	<script src="assets/js/skel.min.js"></script>
@@ -103,6 +98,7 @@ $( ".map" ).css("display","none");
 $( ".provincias" ).css("display","none");
 $( '#<%=provincia%>' ).css("display","inline");
 $( '#map<%=provincia%>' ).css("display","inline");
+$( "li#d" ).addClass( "current_page_item" );
 </script>
 <style>
 #menu ul {
@@ -113,15 +109,16 @@ $( '#map<%=provincia%>' ).css("display","inline");
 	width: 200px;
 	font-size: 9pt;
 	font-weight: bold;
+		border: 2px solid #3b464c;
+    border-radius: 25px;
+    background-color: #2b2e35;
 }
 
 #menu ul li {
-	background-color: #2b2e35;
+	
 	inset: 0px 0px 0px 1px rgba(0,0,0,0.45), inset 0px 2px 1px 0px rgba(255,255,255,0.15);
 	border-bottom: 1px solid;
 	text-shadow: -1px -1px 0px rgba(0,0,0,0.5);
-	border: 2px solid #3b464c;
-    border-radius: 25px;
 }
 
 #menu ul li a {
@@ -133,10 +130,7 @@ $( '#map<%=provincia%>' ).css("display","inline");
 
 #menu ul li a:hover {
 	background: #28292e;
-	border-left: 10px solid #333;
 	color: #fff;
-	border: 2px solid #3b464c;
-    border-radius: 25px;
 }
 .column {
     -webkit-column-count: 3; /* Chrome, Safari, Opera */

@@ -5,8 +5,8 @@
 	<head>
 		<title>ISI | Grupo 2</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-           <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <%
 Document[] mapas = (Document[])request.getAttribute("maps");
 String elem="NO2";//default
@@ -163,23 +163,19 @@ if(mapas!=null){
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
-
 			<!-- Header Wrapper -->
 				<div id="header-wrapper">
 					<div class="container">
-
-						<!-- Header -->
 					<jsp:include page="./header.html" flush="true" />
 					</div>
 				</div>
-
 			<!-- Main Wrapper -->
 				<div id="main-wrapper">
 					<div class="wrapper style2">
 						<div class="inner">
 							<div class="container">
 								<div id="content">
-<!-- Content -->
+				<!-- Content -->
 							<article>
 							<%
 								elem=(String)conta[0];
@@ -225,9 +221,7 @@ if(mapas!=null){
 				</div>
 		<jsp:include page="./footer.html" flush="true" />
 		</div>
-
 		<!-- Scripts -->
-
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
@@ -235,7 +229,6 @@ if(mapas!=null){
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
 	</body>
 	<script>
 $( ".map" ).click(function() {
@@ -264,6 +257,7 @@ $( '#emap<%=elem%>'+'2' ).css('display','inline');
 $( ".igraph" ).css("display","none");
 $('#img-colum').css("border","2px solid yellow");
 $( '#colum<%=elem%>' ).css("display","inline");
+$( "li#v" ).addClass( "current_page_item" );
 </script>
 <style>
 .overflow-element {
