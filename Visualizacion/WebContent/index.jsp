@@ -13,9 +13,12 @@
 </head>
 	<body class="homepage">
 		<div id="page-wrapper">
-
+		<div id="header-wrapper">
+			<div class="container">
 			<!-- Header -->
 			<jsp:include page="./header.html" flush="true" />
+			</div>
+			</div>
 			<!-- Main Wrapper -->
 				<div id="main-wrapper">
 					<div class="wrapper style1">
