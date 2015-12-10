@@ -144,7 +144,7 @@ $( '#map<%=provincia%>' ).css("display","inline");
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
 }
-.column {
+.column2 {
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
