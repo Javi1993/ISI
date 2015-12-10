@@ -19,8 +19,7 @@
 			<div class="container">
 
 				<!-- Header -->
-<jsp:include page="./header.html" flush="true" />
-
+		<jsp:include page="./header.html" flush="true" />
 			</div>
 		</div>
 
@@ -34,7 +33,7 @@
 								<div id="sidebar">
 									<!-- Sidebar -->
 									<section>
-									<div id="menu" class="column2">
+									<div id="menu">
 										<ul>
 											<%	List<Document> listProv = (List<Document>)request.getAttribute("list");
 												String provincia = listProv.get(0).getString("_id");
@@ -143,11 +142,6 @@ $( '#map<%=provincia%>' ).css("display","inline");
     -webkit-column-count: 3; /* Chrome, Safari, Opera */
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
-}
-.column2 {
-    -webkit-column-count: 2; /* Chrome, Safari, Opera */
-    -moz-column-count: 2; /* Firefox */
-    column-count: 2;
 }
 </style>
 </html>
