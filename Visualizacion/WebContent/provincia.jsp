@@ -45,7 +45,6 @@
 											</form>
 						<a href="javascript:history.back()">Volver</a>
 					<br>
-
 				</div>
 			</div>
 		</div>
