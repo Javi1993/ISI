@@ -89,7 +89,10 @@
 														<h2 id="prov"><%=provincia %></h2>
 														<p>Descargue las medidas realizadas por las siguientes estaciones de calidad del aire</p>
 													</header>
-													<span class="image featured"><img src="images/pic08.jpg" alt="" /></span>
+													<%	List<Document> geoList = (List<Document>)request.getAttribute("geo");
+														for(Document geo:geoList){ %>
+													<span class="map" id="map<%=geo.getString("_id").replaceAll("\\s+","")%>"><%if(geo.get("Geo")==null){%><p style="color:red;">No hay mapa de geolocalización de estaciones para <%=geo.getString("_id")%></p><%}else{%><%=geo.get("Geo")%><%}%></span>
+													<%} %>
 													<div class="column">
 													<%for (Document prov:listProv) {%>
 													<ul class="provincias" id='<%=prov.getString("_id").replaceAll("\\s+","")%>'>
@@ -246,12 +249,16 @@
 	<script>
 $( ".selector" ).click(function() {
 	$( ".provincias" ).css("display","none");
+	$( ".map" ).css("display","none");
 	$('#'+$(this).attr('id').substring(1)).css("display","inline");
+	$('#map'+$(this).attr('id').substring(1)).css("display","inline");
 	$('#prov').html($(this).attr('name'));
 	});
-	
+
+$( ".map" ).css("display","none");
 $( ".provincias" ).css("display","none");
 $( '#<%=provincia%>' ).css("display","inline");
+$( '#map<%=provincia%>' ).css("display","inline");
 </script>
 <style>
 #menu ul {

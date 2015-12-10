@@ -31,6 +31,7 @@ public class Datasheet_Servlet extends HttpServlet {
 	private MongoClient client;
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
+	private MongoCollection<Document> collectionCarto;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,12 +50,15 @@ public class Datasheet_Servlet extends HttpServlet {
 			client = new MongoClient("localhost", 27017);//conectamos
 			database = client.getDatabase("test");//elegimos bbdd
 			collection = database.getCollection("aire");//tomamos la coleccion de mapas de aire
+			collectionCarto = database.getCollection("cartodb");//tomamos la coleccion de mapas de aire
 			List<Document> pipeline = asList(
 					new Document("$group", new Document("_id", "$Provincia")
 							.append("estaciones", new Document("$addToSet","$Estacion"))), 
 					new Document("$sort", new Document("_id",1)));
 			List<Document> prov_estaciones = collection.aggregate(pipeline).into(new ArrayList<Document>());
-
+			List<Document> geo = collectionCarto.find().projection(new Document("Geo",1)).into(new ArrayList<Document>());//lista con mapa geo de estaciones
+			
+			request.setAttribute("geo", geo);
 			request.setAttribute("list", prov_estaciones);
 			request.getRequestDispatcher("/datasheet.jsp").forward(request, response);
 		}else if(request.getParameter("op").equals("2")){
