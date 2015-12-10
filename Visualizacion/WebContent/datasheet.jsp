@@ -19,40 +19,7 @@
 			<div class="container">
 
 				<!-- Header -->
-				<header id="header">
-				<div class="inner">
-
-					<!-- Logo -->
-					<h1>
-						<a href="index.html" id="logo">GRUPO 2 | ISI</a>
-					</h1>
-
-					<!-- Nav -->
-					<nav id="nav">
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="#">Dropdown</a>
-							<ul>
-								<li><a href="#">Lorem ipsum dolor</a></li>
-								<li><a href="#">Magna phasellus</a></li>
-								<li><a href="#">Phasellus consequat</a>
-									<ul>
-										<li><a href="#">Lorem ipsum dolor</a></li>
-										<li><a href="#">Phasellus consequat</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam dolore nisl</a></li>
-									</ul></li>
-								<li><a href="#">Veroeros feugiat</a></li>
-							</ul></li>
-						<li class="current_page_item"><a href="left-sidebar.html">Left
-								Sidebar</a></li>
-						<li><a href="right-sidebar.html">Right Sidebar</a></li>
-						<li><a href="no-sidebar.html">No Sidebar</a></li>
-					</ul>
-					</nav>
-
-				</div>
-				</header>
+<jsp:include page="./header.html" flush="true" />
 
 			</div>
 		</div>
