@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -56,28 +57,33 @@ public class Datasheet_Servlet extends HttpServlet {
 
 			request.setAttribute("list", prov_estaciones);
 			request.getRequestDispatcher("/datasheet.jsp").forward(request, response);
-		}else{
+		}else if(request.getParameter("op").equals("2")){
 			dowmload(request, response, request.getParameter("csv"));
+		}else{
+			request.getRequestDispatcher("/index.html").forward(request, response);
 		}
-
 	}
 
 	protected void dowmload(HttpServletRequest request, HttpServletResponse response, String csvName) throws ServletException, IOException {
 		response.setContentType("text/csv");//indicamos el tipo de archivo
 		response.setHeader("Content-Disposition", "attachment;filename="+csvName+".csv");//dialogo de descarga
-
-		File my_file = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos"+File.separator+csvName+".csv");
-
-		//Realizamos la descarga
-		OutputStream out = response.getOutputStream();
-		FileInputStream in = new FileInputStream(my_file);
-		byte[] buffer = new byte[4096];
-		int length;
-		while ((length = in.read(buffer)) > 0){
-			out.write(buffer, 0, length);
+		try{
+			File my_file = new File("/home/isi/git/ISI/DATOS/documentos/Aire_/datos"+File.separator+csvName+".csv");//cogemos el archivo
+			//Realizamos la descarga
+			OutputStream out = response.getOutputStream();
+			FileInputStream in = new FileInputStream(my_file);
+			byte[] buffer = new byte[4096];
+			int length;
+			while ((length = in.read(buffer)) > 0){
+				out.write(buffer, 0, length);
+			}
+			in.close();
+			out.flush();
+		}catch(FileNotFoundException e)
+		{
+			System.err.println("ERROR: No se encuentra el archivo "+csvName);
+			e.printStackTrace();
 		}
-		in.close();
-		out.flush();
 	}
 
 }
