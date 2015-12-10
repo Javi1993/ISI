@@ -72,7 +72,7 @@
 											<%	List<Document> listProv = (List<Document>)request.getAttribute("list");
 												String provincia = listProv.get(0).getString("_id");
 												for (Document prov:listProv) {%>
-											<li><a class="selector" id='a<%=prov.getString("_id").replaceAll("\\s+","")%>' style="cursor:pointer;"><%=prov.getString("_id")%></a></li>
+											<li><a class="selector" name="<%=prov.getString("_id")%>" id='a<%=prov.getString("_id").replaceAll("\\s+","")%>' style="cursor:pointer;"><%=prov.getString("_id")%></a></li>
 											<%}%>
 										</ul>
 									</div>
@@ -244,10 +244,10 @@
 $( ".selector" ).click(function() {
 	$( ".provincias" ).css("display","none");
 	$('#'+$(this).attr('id').substring(1)).css("display","inline");
-	$('#prov').html($(this).attr('id').substring(1));
+	$('#prov').html($(this).attr('name'));
 	});
 	
-//$( ".provincias" ).css("display","none");
+$( ".provincias" ).css("display","none");
 $( '#<%=provincia%>' ).css("display","inline");
 </script>
 <style>
