@@ -185,7 +185,11 @@ db.cartodb.insert([{
 	"Geo":"<iframe width='100%' height='300' frameborder='0' src='https://100290698.cartodb.com/viz/4ac13ade-9f45-11e5-b830-0ecd1babdde5/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 	"Mapas":{
 	 	"NO2" : "<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/d2bdf8da-9565-11e5-be60-0ef24382571b/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"NO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/191fcff6-9f57-11e5-909e-0e5db1731f59/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/be0574d2-9b7c-11e5-9651-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM25":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/b2571a94-9f57-11e5-a8ae-0ea31932ec1d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"BEN":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/fa6f3b36-9f57-11e5-81b2-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"SO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/634bbeaa-9f57-11e5-9f35-0e31c9be1b51/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"O3" : "<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/4bf2d994-9d29-11e5-a685-0e787de82d45/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"CO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a755228a-9dbd-11e5-9172-0ecd1babdde5/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
