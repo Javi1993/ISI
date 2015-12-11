@@ -153,6 +153,30 @@ if(mapas!=null){
 	      var chart = new google.visualization.BarChart(document.getElementById('bar<%=conta[i]%>'));
 	      chart.draw(view, options);
 	    }
+	      
+	      google.setOnLoadCallback(drawChart<%="Combo"+conta[i]%>);
+	      function drawChart<%="Combo"+conta[i]%>() {
+	        // Some raw data (not necessarily accurate)
+	       var data = google.visualization.arrayToDataTable([
+         ["Fecha", '<%=request.getParameter("provincia").charAt(0)+request.getParameter("provincia").substring(1).toLowerCase()%>_<%=conta[i]%>', '<%=request.getParameter("provincia2").charAt(0)+request.getParameter("provincia2").substring(1).toLowerCase()%>_<%=conta[i]%>', 'Media'],
+ 		<%for (Document med : medias) {%>
+        ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+conta[i])%>,<%=med.get("average2_"+conta[i])%>,<%if(med.get("average_"+conta[i])!=null&&med.get("average2_"+conta[i])!=null){%><%=(med.getDouble("average_"+conta[i])+med.getDouble("average2_"+conta[i]))/2%><%}else{%>0<%}%>],
+		<%}
+		%>
+      ]);
+
+	    var options = {
+			width: 1200,
+			height: 500,
+	      vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},
+	      hAxis: {title: 'Fecha'},
+	      seriesType: 'bars',
+	      series: {2: {type: 'line'}}
+	    };
+
+	    var chart = new google.visualization.ComboChart(document.getElementById('combo<%=conta[i]%>'));
+	    chart.draw(data, options);
+	  }
       <%}%>
     </script>
     <%}%>
@@ -190,10 +214,10 @@ if(mapas!=null){
 								</span></p>
 								</header>
 								<span class="carto" id="emap<%=conta[0]%>"><%if(mapas[0].get(conta[0])!=null){%><%=mapas[0].get(conta[0])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[0]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
-								<span class="carto" id="emap<%=conta[0]%>2"><%if(mapas[1].get(conta[0])!=null){%><%=mapas[1].get(conta[0])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[0]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[0]%>b"><%if(mapas[1].get(conta[0])!=null){%><%=mapas[1].get(conta[0])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[0]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
 								<%for(int i = 1; i<conta.length; i++){ %>
 								<span class="carto" id="emap<%=conta[i]%>"><%if(mapas[0].get(conta[i])!=null){%><%=mapas[0].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia")%></p><%}%></span>
-								<span class="carto" id="emap<%=conta[i]%>2"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
+								<span class="carto" id="emap<%=conta[i]%>b"><%if(mapas[1].get(conta[i])!=null){%><%=mapas[1].get(conta[i])%><%}else{%><p style="color:red;">No hay mapa de <%=conta[i]%> para <%=request.getAttribute("provincia2")%></p><%}%></span>
 								<%}
 								%>
 								
@@ -202,6 +226,7 @@ if(mapas!=null){
 									 <img class="graph" id="img-colum" title="Gráfico de barras vertical" src="images/column.jpg" style="cursor: pointer;"> 
 									 <img class="graph" src="images/bar.jpg" id="img-bar" title="Gráfico de barras horizontal" style="cursor: pointer;">									
 									 <img class="graph" src="images/line.jpg" id="img-lineal" title="Gráfico lineal" style="cursor: pointer;">
+									 <img class="graph" src="images/combo.jpg" id="img-combo" title="Gráfico combo" style="cursor: pointer;">
 									 <img class="graph" id="img-area" title="Gráfico de área" src="images/area.jpg" style="cursor: pointer;">
 									 <img class="graph" id="img-escalon" src="images/stepped.jpg" title="Gráfico escalonado" style="cursor: pointer;">
 								</div>
@@ -209,6 +234,7 @@ if(mapas!=null){
 										<div class="igraph" id="colum<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="area<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="escalon<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
+											<div class="igraph" id="combo<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="lineal<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<div class="igraph" id="bar<%=conta[i]%>" style="width: 100%; height: 520px;"></div>
 											<%} %>
@@ -234,7 +260,7 @@ if(mapas!=null){
 $( ".map" ).click(function() {
 	$( ".carto" ).css("display","none");
 	$('#e'+$(this).attr('id')).css("display","inline");
-	$('#e'+$(this).attr('id')+'2').css("display","inline");
+	$('#e'+$(this).attr('id')+'b').css("display","inline");
 	$('.map').css("color","#7b818c");
 	$('#'+$(this).attr('id')).css("color","white");
 	$('#elemento').html($(this).attr('id').substring(3));
@@ -253,7 +279,7 @@ $( ".graph" ).click(function() {
 	
 $( ".carto" ).css("display","none");
 $( '#emap<%=elem%>' ).css('display','inline');
-$( '#emap<%=elem%>'+'2' ).css('display','inline');
+$( '#emap<%=elem%>'+'b' ).css('display','inline');
 $( ".igraph" ).css("display","none");
 $('#img-colum').css("border","2px solid yellow");
 $( '#colum<%=elem%>' ).css("display","inline");
