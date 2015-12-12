@@ -274,6 +274,7 @@ public class TopicsClient {
 		String txt = "Los vehículos AUDI con tres ocupantes podrán circular por Real Madrid, Alcobendas y Miranda de Ebro los días de contaminación porque Carmena les deja ";
 //		String txt = "Madrid está con altos niveles de contaminación, como el NO2";
 //		String txt = "La ciudad Madrid está con altos niveles de contaminación, como el NO2";
+//		String txt = "Avilés";
 		String lang = "es"; // es/en/fr/it/pt/ca
 
 		Post post = new Post (api);
@@ -316,7 +317,11 @@ public class TopicsClient {
 							System.out.println("Entidad_: "+((JSONObject)array.get(i)).get("form"));
 							System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
 							System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
+							try{
 							System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
+							}catch(JSONException e){
+								System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm1")).get("form")+"\n");
+							}
 						}else{
 							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
