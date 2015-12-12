@@ -1,6 +1,7 @@
 package com.isi.master.DATOS;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class Personas {
 			}
 		}
 	}
-	
+
 	/**
 	 * Elimina los tweets que no sean de España o no estén en español
 	 */
@@ -118,8 +119,23 @@ public class Personas {
 	{
 		collectionTwitter.deleteMany(Filters.and(Filters.ne("place", null), Filters.exists("place", true), Filters.ne("place.pais", "España")));
 		collectionTwitter.deleteMany(Filters.and(Filters.ne("lang", "es"), Filters.exists("lang", true)));
+
+		String sCurrentLine;//string que almacena los paises y zonas de habla hispana de los que puede haber tweets
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader("./documentos/Personas_/paises.txt"));//cogemos los paises y zonas de habla hispana
+			while ((sCurrentLine = br.readLine()) != null) {//borramos tweets de fuera de Espana
+				collectionTwitter.deleteMany(Filters.regex("localizacion", sCurrentLine, "i"));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
