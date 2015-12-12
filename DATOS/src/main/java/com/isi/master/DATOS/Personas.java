@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 import com.mongodb.MongoClient;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import twitter4j.HashtagEntity;
@@ -95,6 +96,7 @@ public class Personas {
 			{//metemos la lista de tweets a la DB
 				collectionTwitter.insertMany(tweets);
 			}
+			limpiarTweets();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (TwitterException e) {
@@ -108,7 +110,16 @@ public class Personas {
 			}
 		}
 	}
-
+	
+	/**
+	 * Elimina los tweets que no sean de España o no estén en español
+	 */
+	private void limpiarTweets()
+	{
+		collectionTwitter.deleteMany(Filters.and(Filters.ne("place", null), Filters.exists("place", true), Filters.ne("place.pais", "España")));
+		collectionTwitter.deleteMany(Filters.and(Filters.ne("lang", "es"), Filters.exists("lang", true)));
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
