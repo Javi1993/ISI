@@ -214,7 +214,7 @@ db.cartodb.insert([{
 	"Geo":"<iframe width='100%' height='300' frameborder='0' src='https://100290698.cartodb.com/viz/9687583c-9f58-11e5-ab29-0e31c9be1b51/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 	"Mapas":{
 		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/72944c46-9567-11e5-b523-0e8c56e2ffdb/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
-		"NO":"",
+		"NO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a35d3332-9f59-11e5-8b0e-0e5db1731f59/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/6ac3a0fc-9d28-11e5-bfa9-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"PM25":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/712fd5c6-9f5a-11e5-ab13-0e31c9be1b51/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 		"O3":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/0c431cee-9f5b-11e5-ac84-0ecd1babdde5/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
