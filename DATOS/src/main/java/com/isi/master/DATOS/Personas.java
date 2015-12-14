@@ -156,7 +156,7 @@ public class Personas {
 			while(cursor.hasNext()){
 				Document tweet = cursor.next();
 				if(tweet.get("contenido")!=null){
-					pasarContenidoTweet(tweet.getString("contenido"), tweet);
+					pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", ""), tweet);
 				}
 				else if(tweet.get("place")!=null)
 				{
@@ -175,8 +175,9 @@ public class Personas {
 	 * 
 	 * @param txt
 	 * @param tweet
+	 * @return
 	 */
-	private void  pasarContenidoTweet(String txt, Document tweet)
+	private boolean  pasarContenidoTweet(String txt, Document tweet)
 	{
 		List<String> provincias = TopicsClient.recibirTweet(txt);
 		if(provincias.size()>0)
@@ -185,7 +186,9 @@ public class Personas {
 			{
 				collectionTweets.updateOne(new Document("_id", prov), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	public static void main(String[] args) {
