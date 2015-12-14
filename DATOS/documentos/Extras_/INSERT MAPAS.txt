@@ -44,7 +44,17 @@ db.cartodb.insert([{
 	"_id":"SANTA CRUZ DE TENERIFE",
 	"Geo":"<iframe width='100%' height='300' frameborder='0' src='https://100290698.cartodb.com/viz/61bff9e2-9f53-11e5-87e1-0ea31932ec1d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 	"Mapas":{
-		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a651bfb0-9773-11e5-9fbc-0e8c56e2ffdb/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a651bfb0-9773-11e5-9fbc-0e8c56e2ffdb/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"BEN":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/b01aec50-a250-11e5-9cbd-0ecfd53eb7d3/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"CO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/4a35569a-a251-11e5-82fb-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"NO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/7912ca92-a251-11e5-a642-0ecfd53eb7d3/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"O3":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/b1bfd9d4-a251-11e5-a3d6-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/1bee6a64-a252-11e5-b273-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM25":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/7eb9d188-a252-11e5-806a-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"SH2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a64d9e8c-a252-11e5-b858-0ecd1babdde5/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"SO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/db1dcb50-a252-11e5-8892-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"TOL":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/2e62c3a6-a253-11e5-a860-0ea31932ec1d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"XIL":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/cb5e3fe6-a253-11e5-8892-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
 	},{
 	"_id":"SEGOVIA",
