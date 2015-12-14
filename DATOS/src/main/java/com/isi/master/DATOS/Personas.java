@@ -156,14 +156,17 @@ public class Personas {
 			while(cursor.hasNext()){
 				Document tweet = cursor.next();
 				if(tweet.get("contenido")!=null){
-					pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", ""), tweet);
-				}
-				else if(tweet.get("place")!=null)
-				{
-					pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet);
-
-				}else if(tweet.get("localizacion")!=null){
-					pasarContenidoTweet(tweet.getString("localizacion"), tweet);
+					if(!pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", ""), tweet, true))
+					{//con el contenido del tweet no se obtuvo una localización de provincia
+						if(tweet.get("place")!=null){
+							if(!pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet, false))
+							{//con el contenido de place no se obtuvo una localización de provincia
+								if(tweet.get("localizacion")!=null){
+									pasarContenidoTweet(tweet.getString("localizacion"), tweet, false);
+								}
+							}
+						}
+					}
 				}
 			}
 		}finally{
@@ -172,14 +175,16 @@ public class Personas {
 	}
 
 	/**
-	 * 
+	 * Recibe una parte del tweet e intenta clasificarlo por provincia
 	 * @param txt
 	 * @param tweet
 	 * @return
 	 */
-	private boolean  pasarContenidoTweet(String txt, Document tweet)
+	private boolean  pasarContenidoTweet(String txt, Document tweet, boolean body)
 	{
-		List<String> provincias = TopicsClient.recibirTweet(txt);
+		List<String> provincias;
+		if(body){provincias = TopicsClient.recibirTweet(txt, true);}else{provincias = TopicsClient.recibirTweet(txt, false);}
+		if(provincias==null){return true;}//el contenido del tweet no tiene ningun concepto relaciona con contamiancion
 		if(provincias.size()>0)
 		{
 			for(String prov:provincias)
@@ -190,7 +195,7 @@ public class Personas {
 		}
 		return false;
 	}
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();

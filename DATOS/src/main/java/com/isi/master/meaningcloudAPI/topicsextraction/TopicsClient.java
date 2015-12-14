@@ -272,19 +272,24 @@ public class TopicsClient {
 		return output;
 	} //printInfoRelation
 
-	public static List<String> recibirTweet(String contenido){
+	/**
+	 * 
+	 * @param contenido
+	 * @param body
+	 * @return
+	 */
+	public static List<String> recibirTweet(String contenido, boolean body){
 		String api = "http://api.meaningcloud.com/topics-2.0";
 		String key = "67d2d31e37c2ba1d032188b1233f19bf";
 		String txt = contenido;
 		String lang = "es"; // es/en/fr/it/pt/ca
 		List<String> provincia=new ArrayList<String>();
-
 		try{
 			Post post = new Post (api);
 			post.addParameter("key", key);
 			post.addParameter("txt", txt);
 			post.addParameter("lang", lang);
-			post.addParameter("tt", "e");
+			if(body){post.addParameter("tt", "ec");}else{post.addParameter("tt", "e");}
 			post.addParameter("uw", "y");
 			post.addParameter("cont", "City");
 			post.addParameter("of", "json");
@@ -292,43 +297,20 @@ public class TopicsClient {
 			JSONObject jsonObj =null;
 			try {
 				jsonObj = new JSONObject(post.getResponse());
-				JSONArray array = jsonObj.getJSONArray("entity_list");
-				for(int i = 0; i<array.length(); i++)
+				boolean seguir = false;
+				if(body)
 				{
-					try{
-						JSONObject doc = (JSONObject) array.getJSONObject(i);
-						JSONObject doc1 = (JSONObject) doc.get("sementity");
-						if(doc1.getString("id").equals("ODENTITY_CITY")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>City"))
-						{
-							JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
-							JSONObject doc21 = (JSONObject) doc2.get(0);
-							if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
-							{
-//								System.out.println("Entidad_: "+((JSONObject)array.get(i)).get("form"));
-//								System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
-//								System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
-								try{
-//									System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
-									provincia.add(((JSONObject)doc21.get("adm2")).getString("form"));
-								}catch(JSONException e){
-//									System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm1")).get("form")+"\n");
-									provincia.add(((JSONObject)doc21.get("adm1")).getString("form"));
-								}
-							}else{
-								System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
-							}
-						}else{
-							System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
-						}
-					}catch(JSONException e)
-					{
-						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
-					}
+					seguir = conceptTopics(jsonObj);
 				}
-
+				if(seguir||!body)
+				{//la parte del tweet analizada es el cuerpo y tiene contenido relacionado con contaminacion o no es el cuerpo y se quiere buscar localizacion
+					provincia = entidadTopics(jsonObj);
+				}else{//la parte del tweet analizada es el cuerpo y no tiene ningun contenido relacionado con contaminacion
+					return null;
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-//				e.printStackTrace();
+				System.err.println("No es posible analizar '"+contenido+"' en base a entidades\n");
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -343,11 +325,86 @@ public class TopicsClient {
 		return provincia;
 	}
 
+	/**
+	 * 
+	 * @param jsonObj
+	 * @return
+	 */
+	private static boolean conceptTopics(JSONObject jsonObj)
+	{
+		try {
+			JSONArray array = jsonObj.getJSONArray("concept_list");
+			for(int i = 0; i<array.length(); i++)
+			{
+				JSONObject doc = (JSONObject) array.getJSONObject(i);
+				JSONObject doc1 = (JSONObject) doc.get("sementity");
+				if(doc1.getString("type").contains("Top>NaturalSciences>"))
+				{
+					return true;
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private static List<String> entidadTopics(JSONObject jsonObj)
+	{
+		List<String> provincia=new ArrayList<String>();
+		try {
+			JSONArray array = jsonObj.getJSONArray("entity_list");
+			for(int i = 0; i<array.length(); i++)
+			{
+				try{
+					JSONObject doc = (JSONObject) array.getJSONObject(i);
+					JSONObject doc1 = (JSONObject) doc.get("sementity");
+					if(doc1.getString("id").equals("ODENTITY_CITY")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>City"))
+					{
+						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
+						JSONObject doc21 = (JSONObject) doc2.get(0);
+						if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
+						{
+							try{
+								provincia.add(((JSONObject)doc21.get("adm2")).getString("form"));
+							}catch(JSONException e){
+								provincia.add(((JSONObject)doc21.get("adm1")).getString("form"));
+							}
+						}else{
+							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+						}
+					}
+					else if(doc1.getString("id").equals("ODENTITY_ADM1")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm1")){
+						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
+						JSONObject doc21 = (JSONObject) doc2.get(0);
+						if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
+						{
+							provincia.add(((JSONObject)doc21.get("country")).getString("form"));
+						}else{
+							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+						}
+					}
+					else{
+						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+					}
+				}catch(JSONException e)
+				{
+					System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+				}
+			}
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return provincia;
+	}
+
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 		// We define the variables needed to call the API
 		String api = "http://api.meaningcloud.com/topics-2.0";
 		String key = "67d2d31e37c2ba1d032188b1233f19bf";
-		String txt = "Los vehículos AUDI con tres ocupantes podrán circular por Real Madrid, Alcobendas y Miranda de Ebro los días de contaminación porque Carmena les deja ";
+		String txt = "Los vehículos AUDI con tres ocupantes podrán circular por Real Madrid, Alcobendas y Miranda de Ebro los días de contaminación porque Carmena no les deja debido al aire sucio";
 		//		String txt = "Madrid está con altos niveles de contaminación, como el NO2";
 		//		String txt = "La ciudad Madrid está con altos niveles de contaminación, como el NO2";
 		//		String txt = "Avilés";
@@ -357,7 +414,7 @@ public class TopicsClient {
 		post.addParameter("key", key);
 		post.addParameter("txt", txt);
 		post.addParameter("lang", lang);
-		post.addParameter("tt", "e");
+		post.addParameter("tt", "ec");
 		post.addParameter("uw", "y");
 		post.addParameter("cont", "City");
 		post.addParameter("of", "json");
@@ -366,6 +423,8 @@ public class TopicsClient {
 		JSONObject jsonObj =null;
 		try {
 			jsonObj = new JSONObject(post.getResponse());
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
+			System.out.println(jsonObj.toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -375,28 +434,26 @@ public class TopicsClient {
 		System.out.println("============");
 		try {
 			JSONArray array = jsonObj.getJSONArray("entity_list");
-			//			System.out.println(array);
+			System.out.println(array);
 			for(int i = 0; i<array.length(); i++)
 			{
-				/*
-				 * EN CASO DE POCA PRESICION EN LOS TWEETS MOSTRADOS USAR
-				 * MIRAR LO DE CONCEPTOS!!!  concept_list y tipo ODTHEME_ECOLOGY para ver q el tweet tiene q ver con la contmaianción!
-				 */
 				try{
 					//				System.out.println("_--------------------_");
 					JSONObject doc = (JSONObject) array.getJSONObject(i);
-					//				System.out.println(doc);
-					//				System.out.println("_---------------------_");
+					System.out.println(doc);
+					//									System.out.println("_---------------------_");
 					JSONObject doc1 = (JSONObject) doc.get("sementity");
+					System.out.println(doc1);
+					//					System.out.println("_A---------------------_");
 					if(doc1.getString("id").equals("ODENTITY_CITY")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>City"))
 					{
 						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
 						JSONObject doc21 = (JSONObject) doc2.get(0);
 						if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
 						{
-							System.out.println("Entidad_: "+((JSONObject)array.get(i)).get("form"));
-							System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
-							System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
+							//							System.out.println("Entidad_: "+((JSONObject)array.get(i)).get("form"));
+							//							System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
+							//							System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
 							try{
 								System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
 							}catch(JSONException e){
@@ -404,6 +461,14 @@ public class TopicsClient {
 							}
 						}else{
 							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+						}
+					}else if(doc1.getString("id").equals("ODENTITY_ADM1")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm1")){
+						System.out.println(doc.get("form"));
+						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
+						JSONObject doc21 = (JSONObject) doc2.get(0);
+						if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
+						{
+							System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
 						}
 					}else{
 						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
