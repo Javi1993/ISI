@@ -15,17 +15,22 @@ package com.isi.master.meaningcloudAPI.topicsextraction;
  */
 
 import java.io.IOException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+
+//import javax.xml.parsers.DocumentBuilder;
+//import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
+//import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import twitter4j.JSONArray;
 import twitter4j.JSONException;
 import twitter4j.JSONObject;
 
-import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayInputStream;
 import org.w3c.dom.*;
 
 
@@ -267,14 +272,85 @@ public class TopicsClient {
 		return output;
 	} //printInfoRelation
 
+	public static List<String> recibirTweet(String contenido){
+		String api = "http://api.meaningcloud.com/topics-2.0";
+		String key = "67d2d31e37c2ba1d032188b1233f19bf";
+		String txt = contenido;
+		String lang = "es"; // es/en/fr/it/pt/ca
+		List<String> provincia=new ArrayList<String>();
+
+		try{
+			Post post = new Post (api);
+			post.addParameter("key", key);
+			post.addParameter("txt", txt);
+			post.addParameter("lang", lang);
+			post.addParameter("tt", "e");
+			post.addParameter("uw", "y");
+			post.addParameter("cont", "City");
+			post.addParameter("of", "json");
+
+			JSONObject jsonObj =null;
+			try {
+				jsonObj = new JSONObject(post.getResponse());
+				JSONArray array = jsonObj.getJSONArray("entity_list");
+				for(int i = 0; i<array.length(); i++)
+				{
+					try{
+						JSONObject doc = (JSONObject) array.getJSONObject(i);
+						JSONObject doc1 = (JSONObject) doc.get("sementity");
+						if(doc1.getString("id").equals("ODENTITY_CITY")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>City"))
+						{
+							JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
+							JSONObject doc21 = (JSONObject) doc2.get(0);
+							if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
+							{
+//								System.out.println("Entidad_: "+((JSONObject)array.get(i)).get("form"));
+//								System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
+//								System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
+								try{
+//									System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
+									provincia.add(((JSONObject)doc21.get("adm2")).getString("form"));
+								}catch(JSONException e){
+//									System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm1")).get("form")+"\n");
+									provincia.add(((JSONObject)doc21.get("adm1")).getString("form"));
+								}
+							}else{
+								System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+							}
+						}else{
+							System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+						}
+					}catch(JSONException e)
+					{
+						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+					}
+				}
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return provincia;
+	}
+
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 		// We define the variables needed to call the API
 		String api = "http://api.meaningcloud.com/topics-2.0";
 		String key = "67d2d31e37c2ba1d032188b1233f19bf";
 		String txt = "Los vehículos AUDI con tres ocupantes podrán circular por Real Madrid, Alcobendas y Miranda de Ebro los días de contaminación porque Carmena les deja ";
-//		String txt = "Madrid está con altos niveles de contaminación, como el NO2";
-//		String txt = "La ciudad Madrid está con altos niveles de contaminación, como el NO2";
-//		String txt = "Avilés";
+		//		String txt = "Madrid está con altos niveles de contaminación, como el NO2";
+		//		String txt = "La ciudad Madrid está con altos niveles de contaminación, como el NO2";
+		//		String txt = "Avilés";
 		String lang = "es"; // es/en/fr/it/pt/ca
 
 		Post post = new Post (api);
@@ -299,7 +375,7 @@ public class TopicsClient {
 		System.out.println("============");
 		try {
 			JSONArray array = jsonObj.getJSONArray("entity_list");
-//			System.out.println(array);
+			//			System.out.println(array);
 			for(int i = 0; i<array.length(); i++)
 			{
 				/*
@@ -322,13 +398,15 @@ public class TopicsClient {
 							System.out.println("IDENTIFICADORES DE ENTIDAD CIUDAD_: "+doc1.getString("id")+" - "+doc1.getString("type"));
 							System.out.println("PAIS_: "+((JSONObject)doc21.get("country")).get("form"));
 							try{
-							System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
+								System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm2")).get("form")+"\n");
 							}catch(JSONException e){
 								System.out.println("PROVINCIA_: "+((JSONObject)doc21.get("adm1")).get("form")+"\n");
 							}
 						}else{
 							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
+					}else{
+						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
 					}
 				}catch(JSONException e)
 				{

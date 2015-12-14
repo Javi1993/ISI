@@ -21,18 +21,21 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
+import com.isi.master.meaningcloudAPI.topicsextraction.*;
 
 public class Personas {
 
 	private MongoClient client;
 	private MongoDatabase database;
 	private MongoCollection<Document> collectionTwitter;
+	private MongoCollection<Document> collectionTweets;
 	private Twitter twitter;
 
 	public Personas(){
 		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collectionTwitter = database.getCollection("twitter");//tomamos la coleccion de tweets
+		collectionTweets = database.getCollection("tweetProv");//tomamos la coleccion de tweets
 		//conexion a API de twitter
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("z4mU2gFl8tACEun7mzkwKaMI8", "s2srh0iCA1HoifFldrQNYutAKFKBy7xRfmpnb5gUwPEyCy6ACB");
@@ -56,7 +59,7 @@ public class Personas {
 			}finally{
 				cursor.close();
 			}
-						
+
 			br = new BufferedReader(new FileReader("./documentos/Personas_/twitter.txt"));//cogemos los hashtags y usuarios
 			List<Document> tweets = new ArrayList<Document>();//lista con el Document del tweet
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -143,7 +146,7 @@ public class Personas {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Clasifica los tweets segun la provincia, en caso no saber la localizacion se descarta
 	 */
@@ -152,37 +155,46 @@ public class Personas {
 		try{
 			while(cursor.hasNext()){
 				Document tweet = cursor.next();
-				System.out.println(tweet.toJson());
+				if(tweet.get("contenido")!=null){
+					pasarContenidoTweet(tweet.getString("contenido"), tweet);
+				}
+				else if(tweet.get("place")!=null)
+				{
+					pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet);
+
+				}else if(tweet.get("localizacion")!=null){
+					pasarContenidoTweet(tweet.getString("localizacion"), tweet);
+				}
 			}
 		}finally{
 			cursor.close();
 		}
-		
-		//EJEMPLO DE ADDTOSET PARA COLECCION DE TWEETS-PROVINCIA {id:Provincia, tweets:lista de tweets con solo IDtweet y User
-//		MongoCollection<Document> collection = database.getCollection("borrar");
-//		List<Document> docs = new ArrayList<Document>();
-//		Document doc1 = new Document().append("A", "Ale")
-//				.append("B", "Ble");
-//		Document doc2 = new Document().append("A", "Ale")
-//				.append("B", "Cle");
-//		Document doc3 = new Document().append("A", "As")
-//				.append("B", "As");
-//		docs.add(doc1);docs.add(doc2);docs.add(doc3);
-//		Document doc = new Document().append("_id", "prueba1")
-//				.append("cosas", docs);
-//		collection.insertOne(doc);
-//		Document doce = new Document().append("_id", "prueba1")
-//				.append("cosas", new Document("A","Ale").append("B", "Ble"));
-//		collection.updateOne(new Document("_id", doce.get("_id")), new Document("$addToSet", new Document("cosas", doce.get("cosas"))), new UpdateOptions().upsert(true));
 	}
 
+	/**
+	 * 
+	 * @param txt
+	 * @param tweet
+	 */
+	private void  pasarContenidoTweet(String txt, Document tweet)
+	{
+		List<String> provincias = TopicsClient.recibirTweet(txt);
+		if(provincias.size()>0)
+		{
+			for(String prov:provincias)
+			{
+				collectionTweets.updateOne(new Document("_id", prov), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-		test.quejasTwitter();//guardamos tweets en base a unas consultas
-//		test.clasificarTweets();//clasificamos los tweets guardados por provincia
-		
+		//		test.quejasTwitter();//guardamos tweets en base a unas consultas
+		test.clasificarTweets();//clasificamos los tweets guardados por provincia
+
 		test.client.close();//cerramos la conexion
 	}
 }
