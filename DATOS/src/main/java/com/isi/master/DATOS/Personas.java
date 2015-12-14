@@ -47,9 +47,15 @@ public class Personas {
 		try {
 			String sCurrentLine;//string que almacena los temas, hashtag y cuentas de usuario sobre los que buscar tweets
 			List<String> hashId = new ArrayList<String>();//lista que almacena los IDs de los tweets guardados en la DB
-			for(Document id : collectionTwitter.find().projection(new Document("_id",1)).into(new ArrayList<Document>())){
-				hashId.add(id.getString("_id"));//almacenados ID
+			MongoCursor<Document> cursor = collectionTwitter.find().projection(new Document("_id",1)).iterator();
+			try{
+				while(cursor.hasNext()){
+					hashId.add(cursor.next().getString("_id"));//almacenados ID
+				}
+			}finally{
+				cursor.close();
 			}
+						
 			br = new BufferedReader(new FileReader("./documentos/Personas_/twitter.txt"));//cogemos los hashtags y usuarios
 			List<Document> tweets = new ArrayList<Document>();//lista con el Document del tweet
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -157,8 +163,8 @@ public class Personas {
 		Personas test = new Personas();
 
 		test.quejasTwitter();//guardamos tweets en base a unas consultas
-		test.client.close();//cerramos la conexion
-		
 //		test.clasificarTweets();//clasificamos los tweets guardados por provincia
+		
+		test.client.close();//cerramos la conexion
 	}
 }
