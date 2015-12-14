@@ -217,7 +217,17 @@ db.cartodb.insert([{
 	"_id":"ISLAS BALEARES",
 	"Geo":"<iframe width='100%' height='300' frameborder='0' src='https://100290698.cartodb.com/viz/16a4591c-9f58-11e5-ad74-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
 	"Mapas":{
-		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/8d92fe80-95c5-11e5-b509-0e3a376473ab/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
+		"NO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/8d92fe80-95c5-11e5-b509-0e3a376473ab/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"BEN":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/a8a5d9c2-a254-11e5-acdc-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"CO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/41cd8cbc-a255-11e5-aa61-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"NO":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/76f58408-a255-11e5-9558-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"NOX":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/ad2d2cce-a255-11e5-9cbd-0ecfd53eb7d3/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"O3":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/dfad4fa8-a255-11e5-b733-0e5db1731f59/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM10":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/1efe2b82-a256-11e5-8892-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"PM25":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/7ab0f96e-a256-11e5-838e-0e674067d321/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"SO2":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/4df9b734-a257-11e5-b68a-0e3ff518bd15/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"TOL":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/893dd140-a257-11e5-99d6-0e5db1731f59/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>",
+		"XIL":"<iframe width='100%' height='520' frameborder='0' src='https://100290698.cartodb.com/viz/c2906584-a257-11e5-8440-0e31c9be1b51/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>"
 	}
 	},{
 	"_id":"MADRID",
