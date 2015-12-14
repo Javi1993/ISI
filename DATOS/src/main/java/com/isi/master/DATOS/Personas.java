@@ -9,6 +9,7 @@ import java.util.List;
 import org.bson.Document;
 import com.mongodb.MongoClient;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -156,6 +157,23 @@ public class Personas {
 		}finally{
 			cursor.close();
 		}
+		
+		//EJEMPLO DE ADDTOSET PARA COLECCION DE TWEETS-PROVINCIA {id:Provincia, tweets:lista de tweets con solo IDtweet y User
+//		MongoCollection<Document> collection = database.getCollection("borrar");
+//		List<Document> docs = new ArrayList<Document>();
+//		Document doc1 = new Document().append("A", "Ale")
+//				.append("B", "Ble");
+//		Document doc2 = new Document().append("A", "Ale")
+//				.append("B", "Cle");
+//		Document doc3 = new Document().append("A", "As")
+//				.append("B", "As");
+//		docs.add(doc1);docs.add(doc2);docs.add(doc3);
+//		Document doc = new Document().append("_id", "prueba1")
+//				.append("cosas", docs);
+//		collection.insertOne(doc);
+//		Document doce = new Document().append("_id", "prueba1")
+//				.append("cosas", new Document("A","Ale").append("B", "Ble"));
+//		collection.updateOne(new Document("_id", doce.get("_id")), new Document("$addToSet", new Document("cosas", doce.get("cosas"))), new UpdateOptions().upsert(true));
 	}
 
 	public static void main(String[] args) {
