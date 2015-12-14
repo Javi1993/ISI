@@ -10,6 +10,7 @@ import org.bson.Document;
 import com.mongodb.MongoClient;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import twitter4j.HashtagEntity;
 import twitter4j.Query;
@@ -135,12 +136,29 @@ public class Personas {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Clasifica los tweets segun la provincia, en caso no saber la localizacion se descarta
+	 */
+	private void clasificarTweets(){
+		MongoCursor<Document> cursor = collectionTwitter.find().iterator();
+		try{
+			while(cursor.hasNext()){
+				Document tweet = cursor.next();
+				System.out.println(tweet.toJson());
+			}
+		}finally{
+			cursor.close();
+		}
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-		test.quejasTwitter();
+		test.quejasTwitter();//guardamos tweets en base a unas consultas
 		test.client.close();//cerramos la conexion
+		
+//		test.clasificarTweets();//clasificamos los tweets guardados por provincia
 	}
 }

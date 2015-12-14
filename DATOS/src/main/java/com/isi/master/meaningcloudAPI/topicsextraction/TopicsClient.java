@@ -302,6 +302,10 @@ public class TopicsClient {
 //			System.out.println(array);
 			for(int i = 0; i<array.length(); i++)
 			{
+				/*
+				 * EN CASO DE POCA PRESICION EN LOS TWEETS MOSTRADOS USAR
+				 * MIRAR LO DE CONCEPTOS!!!  concept_list y tipo ODTHEME_ECOLOGY para ver q el tweet tiene q ver con la contmaianción!
+				 */
 				try{
 					//				System.out.println("_--------------------_");
 					JSONObject doc = (JSONObject) array.getJSONObject(i);
