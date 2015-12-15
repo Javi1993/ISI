@@ -26,6 +26,7 @@ public class Opcion_Servlet extends HttpServlet {
 	private MongoClient client;
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
+	private MongoCollection<Document> collectionTweet;
 	private MongoCollection<Document> collectionAire;
 
 	/**
@@ -43,12 +44,25 @@ public class Opcion_Servlet extends HttpServlet {
 		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
+		collectionTweet = database.getCollection("tweetProv");//tomamos la coleccion de tweets-prov
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
 
+		int cnt = 0;//BORRAR
+		
 		String nextPage="";
 		switch (request.getParameter("num")) {
 		case "1":
 			nextPage="/opcion1.jsp";
+			List<Document> ja = collectionTweet.find().into(new ArrayList<Document>());
+		
+			for(Document j:ja)
+			{
+				if(j.get("tweets")!=null||j.get("tweets")!="")
+				{
+					cnt+=((List<Document>)j.get("tweets")).size();
+				}
+				
+			}
 			break;
 		case "2":
 			if(!request.getParameter("provincia").equals(request.getParameter("provincia2"))){
@@ -66,6 +80,8 @@ public class Opcion_Servlet extends HttpServlet {
 			System.out.println("La opción elegida de visualización no es valida");
 			break;
 		}
+		
+		request.setAttribute("cnt",cnt);//BORRAR
 
 		client.close();//cerramos la conexion
 		request.setAttribute("provincia",request.getParameter("provincia"));//guardamos la provincia
