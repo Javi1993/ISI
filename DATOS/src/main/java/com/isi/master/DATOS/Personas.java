@@ -167,7 +167,7 @@ public class Personas {
 				{//primero comprobamos si el tweet esta clasificado
 					if(((Document)tw.get("tweets")).getString("id_tweet").equals(tweet.getString("_id")))
 					{//el tweet ya esta guardado, no lo analizamos
-						System.out.println("Ya esta clasificado el tweet "+tw.getString("tweets.id_tweet"));
+//						System.out.println("Ya esta clasificado el tweet con ID"+((Document)tw.get("tweets")).getString("id_tweet"));
 						guardado = true;
 						break;
 					}
