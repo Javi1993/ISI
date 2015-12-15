@@ -1,0 +1,50 @@
+.*madrid.*-MADRID
+.*islas baleares.*-ISLAS BALEARES
+.*alava.*-ALAVA
+.*la coruna.*-LA CORUNA
+.*lugo.*-LUGO
+.*orense.*-ORENSE
+.*pontevedra.*-PONTEVEDRA
+.*asturias.*-ASTURIAS
+.*cantabria.*-CANTABRIA
+.*vizcaya.*-VIZCAYA
+.*guipuzcoa.*-GUIPUZCOA
+.*navarra.*-NAVARRA
+.*huesca.*-HUESCA
+.*lleida.*-LLEIDA
+.*gerona.*-GERONA
+.*tarragona.*-TARRAGONA
+.*barcelona.*-BARCELONA
+.*zaragoza.*-ZARAGOZA
+.*soria.*-SORIA
+.*la rioja.*-LA RIOJA
+.*burgos.*-BURGOS
+.*palencia.*-PALENCIA
+.*leon.*-LEON
+.*zamora.*-ZAMORA
+.*valladolid.*-VALLADOLID
+.*segovia.*-SEGOVIA
+.*teruel.*-TERUEL
+.*castellon.*-CASTELLON
+.*guadalajara.*-GUADALAJARA
+.*avila.*-AVILA
+.*salamanca.*-SALAMANCA
+.*caceres.*-CACERES
+.*toledo.*-TOLEDO
+.*cuenca.*-CUENCA
+.*valencia.*-VALENCIA
+.*alicante.*-ALICANTE
+.*albacete.*-ALBACETE
+.*ciudad real.*-CIUDAD REAL
+.*badajoz.*-BADAJOZ
+.*huelva.*-HUELVA
+.*sevilla.*-SEVILLA
+.*codoba.*-CORDOBA
+.*jaen.*-JAEN
+.*murcia.*-MURCIA
+.*almeria.*-ALMERIA
+.*granada.*-GRANADA
+.*malaga.*-MALAGA
+.*cadiz.*-CADIZ
+.*las palmas.*-LAS PALMAS
+.*santa cruz de tenerife.*-SANTA CRUZ DE TENERIFE

@@ -14,22 +14,23 @@ package com.isi.master.meaningcloudAPI.topicsextraction;
  * @copyright  Copyright (c) 2015, MeaningCloud LLC All rights reserved.
  */
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 //import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
+import com.isi.master.funciones.Funciones;
 import twitter4j.JSONArray;
 import twitter4j.JSONException;
 import twitter4j.JSONObject;
-
 //import java.io.ByteArrayInputStream;
 import org.w3c.dom.*;
 
@@ -305,6 +306,15 @@ public class TopicsClient {
 				if(seguir||!body)
 				{//la parte del tweet analizada es el cuerpo y tiene contenido relacionado con contaminacion o no es el cuerpo y se quiere buscar localizacion
 					provincia = entidadTopics(jsonObj);
+					if(provincia.size()==0)
+					{
+						if(body)
+						{
+							analisisRegex(provincia, txt, true);
+						}else{
+							analisisRegex(provincia, txt, false);
+						}
+					}
 				}else{//la parte del tweet analizada es el cuerpo y no tiene ningun contenido relacionado con contaminacion
 					return null;
 				}
@@ -325,6 +335,39 @@ public class TopicsClient {
 		return provincia;
 	}
 
+	/**
+	 * 
+	 * @param provincia
+	 * @param txt
+	 * @param body
+	 */
+	private static void analisisRegex(List<String> provincia, String txt, boolean body){
+		String sCurrentLine;//string que almacena los paises y zonas de habla hispana de los que puede haber tweets
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader("./documentos/Personas_/zonas.txt"));//cogemos los paises y zonas de habla hispana
+			while ((sCurrentLine = br.readLine()) != null) {//borramos tweets de fuera de Espana
+				if(body)
+				{
+					if(Funciones.quitarTildes(txt).matches(".*#"+sCurrentLine.toUpperCase().split("-")[0]))
+					{
+						provincia.add(sCurrentLine.split("-")[1]);
+					}
+				}else{
+					if(Funciones.quitarTildes(txt).matches(sCurrentLine.toUpperCase().split("-")[0]))
+					{
+						provincia.add(sCurrentLine.split("-")[1]);
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 
 	 * @param jsonObj

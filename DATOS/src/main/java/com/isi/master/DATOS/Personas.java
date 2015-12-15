@@ -21,6 +21,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
+
+import com.isi.master.funciones.Funciones;
 import com.isi.master.meaningcloudAPI.topicsextraction.*;
 
 public class Personas {
@@ -189,7 +191,7 @@ public class Personas {
 		{
 			for(String prov:provincias)
 			{
-				collectionTweets.updateOne(new Document("_id", prov.toUpperCase()), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
+				collectionTweets.updateOne(new Document("_id", Funciones.quitarTildes(prov)), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
 			}
 			return true;
 		}
