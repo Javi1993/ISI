@@ -189,7 +189,7 @@ public class Personas {
 		{
 			for(String prov:provincias)
 			{
-				collectionTweets.updateOne(new Document("_id", prov), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
+				collectionTweets.updateOne(new Document("_id", prov.toUpperCase()), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
 			}
 			return true;
 		}
