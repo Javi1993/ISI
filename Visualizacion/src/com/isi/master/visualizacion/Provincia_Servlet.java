@@ -46,7 +46,7 @@ public class Provincia_Servlet extends HttpServlet {
 		{
 			collection = database.getCollection("tweetProv");//tomamos la coleccion de estaciones de provicias-social
 			pipeline = asList(new Document("$group", new Document("_id","$_id")), 
-					new Document("$sort", new Document("_id",1)), new Document("$project", new Document("$toUpper","_id")));
+					new Document("$sort", new Document("_id",1)));
 		}else{
 			collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
 			pipeline = asList(new Document("$group", new Document("_id","$Provincia")), 
