@@ -1,5 +1,7 @@
 package com.isi.master.DATOS;
 
+import static java.util.Arrays.asList;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -157,8 +159,22 @@ public class Personas {
 		try{
 			while(cursor.hasNext()){
 				Document tweet = cursor.next();
-				if(tweet.get("contenido")!=null){
-					if(!pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", ""), tweet, true))
+				
+				List<Document> pipeline = asList(new Document("$unwind", "$tweets"));
+				List<Document> tweets_clasificados = collectionTweets.aggregate(pipeline).into(new ArrayList<Document>());
+				boolean guardado = false;
+				for(Document tw:tweets_clasificados)
+				{//primero comprobamos si el tweet esta clasificado
+					if(tw.getString("tweets.id_tweet").equals(tweet.getString("_id")))
+					{//el tweet ya esta guardado, no lo analizamos
+						System.out.println("Ya esta clasificado el tweet "+tw.getString("tweets.id_tweet"));
+						guardado = true;
+						break;
+					}
+				}
+				
+				if(tweet.get("contenido")!=null&&!guardado){
+					if(!pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", "").replaceAll("@", ""), tweet, true))
 					{//con el contenido del tweet no se obtuvo una localización de provincia
 						if(tweet.get("place")!=null){
 							if(!pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet, false))
@@ -202,9 +218,10 @@ public class Personas {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-//				test.quejasTwitter();//guardamos tweets en base a unas consultas
+		test.quejasTwitter();//guardamos tweets en base a unas consultas
 		test.clasificarTweets();//clasificamos los tweets guardados por provincia
 
 		test.client.close();//cerramos la conexion
+		System.out.println("Operación finalizada.");
 	}
 }
