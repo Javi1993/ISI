@@ -48,7 +48,7 @@ public class Opcion_Servlet extends HttpServlet {
 		String nextPage="";
 		switch (request.getParameter("num")) {
 		case "1":
-
+			nextPage="/opcion1.jsp";
 			break;
 		case "2":
 			if(!request.getParameter("provincia").equals(request.getParameter("provincia2"))){
