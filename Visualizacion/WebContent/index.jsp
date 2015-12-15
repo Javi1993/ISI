@@ -49,11 +49,11 @@
 					</div>
 					<div class="row">
 						<div class="4u 12u(mobile)">
-							<section> <a href="#" class="image featured"><img
+							<section> <a href="/Visualizacion/provincia?num=1" class="image featured"><img
 								src="images/pic01_b.jpg" alt="" /></a> <header
 								class="second icon fa-user">
 							<h3>OPINIÓN SOCIAL</h3>
-							<p>TWEETS VS MAPAS DE CONTAMINACIÓN</p>
+							<p>TWEETS VS CAMBIAR!</p>
 							</header> </section>
 						</div>
 						<div class="4u 12u(mobile)">
