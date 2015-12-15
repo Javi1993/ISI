@@ -310,9 +310,9 @@ public class TopicsClient {
 					{
 						if(body)
 						{
-							analisisRegex(provincia, txt, true);
+							provincia = analisisRegex(txt, true);
 						}else{
-							analisisRegex(provincia, txt, false);
+							provincia = analisisRegex(txt, false);
 						}
 					}
 				}else{//la parte del tweet analizada es el cuerpo y no tiene ningun contenido relacionado con contaminacion
@@ -341,9 +341,10 @@ public class TopicsClient {
 	 * @param txt
 	 * @param body
 	 */
-	private static void analisisRegex(List<String> provincia, String txt, boolean body){
+	private static List<String> analisisRegex(String txt, boolean body){
 		String sCurrentLine;//string que almacena los paises y zonas de habla hispana de los que puede haber tweets
 		BufferedReader br = null;
+		List<String> provincia = new ArrayList<String>();
 		try {
 			br = new BufferedReader(new FileReader("./documentos/Personas_/zonas.txt"));//cogemos los paises y zonas de habla hispana
 			while ((sCurrentLine = br.readLine()) != null) {//borramos tweets de fuera de Espana
@@ -351,6 +352,7 @@ public class TopicsClient {
 				{
 					if(Funciones.quitarTildes(txt).matches(".*#"+sCurrentLine.toUpperCase().split("-")[0]))
 					{
+						System.out.println("HOLA B");
 						provincia.add(sCurrentLine.split("-")[1]);
 					}
 				}else{
@@ -367,7 +369,9 @@ public class TopicsClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return provincia;
 	}
+	
 	/**
 	 * 
 	 * @param jsonObj
@@ -419,12 +423,12 @@ public class TopicsClient {
 //							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
 					}
-					else if(doc1.getString("id").equals("ODENTITY_ADM1")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm1")){
+					else if(doc1.getString("id").equals("ODENTITY_ADM2")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm2")){
 						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
 						JSONObject doc21 = (JSONObject) doc2.get(0);
 						if(((JSONObject)doc21.get("country")).getString("form").equals("España"))
-						{
-							provincia.add(((JSONObject)doc21.get("country")).getString("form"));
+						{//insertamos la entidad
+							provincia.add(doc.getString("form"));
 						}else{
 //							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
@@ -479,6 +483,7 @@ public class TopicsClient {
 		System.out.println("Response");
 		System.out.println("============");
 		try {
+			System.out.println(jsonObj);
 			JSONArray array = jsonObj.getJSONArray("entity_list");
 			System.out.println(array);
 			for(int i = 0; i<array.length(); i++)
@@ -508,7 +513,7 @@ public class TopicsClient {
 						}else{
 							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
-					}else if(doc1.getString("id").equals("ODENTITY_ADM1")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm1")){
+					}else if(doc1.getString("id").equals("ODENTITY_ADM2")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm1")){
 						System.out.println(doc.get("form"));
 						JSONArray doc2 = (JSONArray) doc.get("semgeo_list");
 						JSONObject doc21 = (JSONObject) doc2.get(0);

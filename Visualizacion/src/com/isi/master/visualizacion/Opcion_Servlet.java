@@ -46,23 +46,13 @@ public class Opcion_Servlet extends HttpServlet {
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		collectionTweet = database.getCollection("tweetProv");//tomamos la coleccion de tweets-prov
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
-
-		int cnt = 0;//BORRAR
 		
 		String nextPage="";
 		switch (request.getParameter("num")) {
 		case "1":
+			opcion1(request);
 			nextPage="/opcion1.jsp";
-			List<Document> ja = collectionTweet.find().into(new ArrayList<Document>());
-		
-			for(Document j:ja)
-			{
-				if(j.get("tweets")!=null||j.get("tweets")!="")
-				{
-					cnt+=((List<Document>)j.get("tweets")).size();
-				}
-				
-			}
+			//pasar twweets de esa prov
 			break;
 		case "2":
 			if(!request.getParameter("provincia").equals(request.getParameter("provincia2"))){
@@ -81,13 +71,21 @@ public class Opcion_Servlet extends HttpServlet {
 			break;
 		}
 		
-		request.setAttribute("cnt",cnt);//BORRAR
-
 		client.close();//cerramos la conexion
 		request.setAttribute("provincia",request.getParameter("provincia"));//guardamos la provincia
 		request.getRequestDispatcher(nextPage).forward(request, response);
 	}
 
+	/**
+	 * Opcion 1 - Visualizacion social
+	 * @param request - Parametro de la peticion
+	 */
+	@SuppressWarnings("unchecked")
+	private void opcion1(HttpServletRequest request){
+		Document doc = collectionTweet.find(new Document("_id", request.getParameter("provincia"))).first();
+		List<Document> tweets = (List<Document>) doc.get("tweets");
+		request.setAttribute("tweets", tweets);
+	}
 	/**
 	 * Opcion 2- Visualizacion de provincia VS provincia
 	 * @param request - Parametros de la peticion

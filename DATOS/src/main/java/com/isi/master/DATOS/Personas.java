@@ -202,7 +202,7 @@ public class Personas {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
-		//		test.quejasTwitter();//guardamos tweets en base a unas consultas
+//				test.quejasTwitter();//guardamos tweets en base a unas consultas
 		test.clasificarTweets();//clasificamos los tweets guardados por provincia
 
 		test.client.close();//cerramos la conexion

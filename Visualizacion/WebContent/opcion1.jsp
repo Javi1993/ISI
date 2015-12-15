@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.List, org.bson.Document"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -64,42 +64,27 @@
 									</article>
 								</div>
 							</div>
+							<%
+								List<Document> tweets = (List<Document> )request.getAttribute("tweets");
+							%>
 							<div class="4u 12u(mobile)">
 								<div id="sidebar">
 									<!-- Sidebar -->
 									<section> <header class="major">
-									<h2>Subheading <%=request.getAttribute("cnt") %></h2>
+									<h2>Subheading</h2>
 									</header>
-									<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
-										<p lang="es" dir="ltr"></p>
-										<a
-											href="https://twitter.com/Elbiocultural/status/662719155863355392"></a>
-									</blockquote>
-									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
-									<blockquote class="twitter-tweet" lang="es">
-										<p lang="es" dir="ltr"></p>
-										<a
-											href="https://twitter.com/AntonioSuarezPr/status/662732131039219712"></a>
-									</blockquote>
-									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
-									<blockquote class="twitter-tweet" lang="es">
-										<p lang="es" dir="ltr"></p>
-										<a
-											href="https://twitter.com/XoseLieiro/status/665578421192364035"></a>
-									</blockquote>
-									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
-									<blockquote class="twitter-tweet" lang="es">
-										<p lang="es" dir="ltr"></p>
-										<a
-											href="https://twitter.com/edu_unizar/status/672342831034466305"></a>
-									</blockquote>
-									<script async src="./assets/js/widgets.js charset="utf-8"></script>
-									<blockquote class="twitter-tweet" lang="es">
-										<p lang="es" dir="ltr"></p>
-										<a
-											href="https://twitter.com/comunasanpedro/status/675726296756842497"></a>
-									</blockquote>
-									<script async src="./assets/js/widgets.js" charset="utf-8"></script> </section>
+									<%
+									if(tweets!=null){
+									for(Document tweet:tweets){ %>
+										<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
+											<p lang="es" dir="ltr"></p>
+											<a
+												href='https://twitter.com/<%=tweet.getString("user")%>/status/<%=tweet.getString("id_tweet")%>'></a>
+										</blockquote>
+										<script async src="./assets/js/widgets.js" charset="utf-8"></script>
+									<%} 
+									}%>
+									</section>
 								</div>
 							</div>
 						</div>
