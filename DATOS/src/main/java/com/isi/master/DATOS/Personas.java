@@ -159,22 +159,23 @@ public class Personas {
 		try{
 			while(cursor.hasNext()){
 				Document tweet = cursor.next();
-				
+
 				List<Document> pipeline = asList(new Document("$unwind", "$tweets"));
 				List<Document> tweets_clasificados = collectionTweets.aggregate(pipeline).into(new ArrayList<Document>());
 				boolean guardado = false;
-				for(Document tw:tweets_clasificados)
-				{//primero comprobamos si el tweet esta clasificado
-					if(((Document)tw.get("tweets")).getString("id_tweet").equals(tweet.getString("_id")))
-					{//el tweet ya esta guardado, no lo analizamos
-//						System.out.println("Ya esta clasificado el tweet con ID"+((Document)tw.get("tweets")).getString("id_tweet"));
-						guardado = true;
-						break;
+				if(tweets_clasificados!=null){
+					for(Document tw:tweets_clasificados)
+					{//primero comprobamos si el tweet esta clasificado
+						if(((Document)tw.get("tweets")).getString("id_tweet").equals(tweet.getString("_id")))
+						{//el tweet ya esta guardado, no lo analizamos
+							//						System.out.println("Ya esta clasificado el tweet con ID"+((Document)tw.get("tweets")).getString("id_tweet"));
+							guardado = true;
+							break;
+						}
 					}
 				}
-				
 				if(tweet.get("contenido")!=null&&!guardado){
-					if(!pasarContenidoTweet(tweet.getString("contenido").replaceAll("#", "").replaceAll("@", ""), tweet, true))
+					if(!pasarContenidoTweet(tweet.getString("contenido"), tweet, true))
 					{//con el contenido del tweet no se obtuvo una localización de provincia
 						if(tweet.get("place")!=null){
 							if(!pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet, false))

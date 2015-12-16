@@ -302,6 +302,18 @@ public class TopicsClient {
 				if(body)
 				{
 					seguir = conceptTopics(jsonObj);
+					if(!seguir){//quitamos '#' de los hashtag
+						Post post2 = new Post (api);
+						post2.addParameter("key", key);
+						post2.addParameter("txt", txt.replaceAll("#", ""));
+						post2.addParameter("lang", lang);
+						post2.addParameter("tt", "ec");
+						post2.addParameter("uw", "y");
+						post2.addParameter("cont", "City");
+						post2.addParameter("of", "json");
+						JSONObject jsonObj2 = new JSONObject(post.getResponse());
+						seguir = conceptTopics(jsonObj2);
+					}
 				}
 				if(seguir||!body)
 				{//la parte del tweet analizada es el cuerpo y tiene contenido relacionado con contaminacion o no es el cuerpo y se quiere buscar localizacion
