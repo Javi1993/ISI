@@ -281,7 +281,7 @@ public class TopicsClient {
 	 */
 	public static List<String> recibirTweet(String contenido, boolean body){
 		String api = "http://api.meaningcloud.com/topics-2.0";
-		String key = "67d2d31e37c2ba1d032188b1233f19bf";
+		String key = "e3f776dbb9ccef43818b576cf60340df";
 		String txt = contenido;
 		String lang = "es"; // es/en/fr/it/pt/ca
 		List<String> provincia=new ArrayList<String>();
@@ -323,6 +323,19 @@ public class TopicsClient {
 						if(body)
 						{
 							provincia = analisisRegex(txt, true);
+							if(provincia.size()==0)
+							{
+								Post post2 = new Post (api);
+								post2.addParameter("key", key);
+								post2.addParameter("txt", txt.replaceAll("#", ""));
+								post2.addParameter("lang", lang);
+								post2.addParameter("tt", "ec");
+								post2.addParameter("uw", "y");
+								post2.addParameter("cont", "City");
+								post2.addParameter("of", "json");
+								JSONObject jsonObj2 = new JSONObject(post.getResponse());
+								provincia = entidadTopics(jsonObj2);
+							}
 						}else{
 							provincia = analisisRegex(txt, false);
 						}
@@ -332,7 +345,7 @@ public class TopicsClient {
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-//				System.err.println("No es posible analizar '"+contenido+"' en base a entidades\n");
+				//				System.err.println("No es posible analizar '"+contenido+"' en base a entidades\n");
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -382,7 +395,7 @@ public class TopicsClient {
 		}
 		return provincia;
 	}
-	
+
 	/**
 	 * 
 	 * @param jsonObj
@@ -404,7 +417,7 @@ public class TopicsClient {
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//			e.printStackTrace();
 		}
 		return false;
 	}
@@ -431,7 +444,7 @@ public class TopicsClient {
 								provincia.add(((JSONObject)doc21.get("adm1")).getString("form"));
 							}
 						}else{
-//							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+							//							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
 					}
 					else if(doc1.getString("id").equals("ODENTITY_ADM2")&&doc1.getString("type").equals("Top>Location>GeoPoliticalEntity>Adm2")){
@@ -441,20 +454,20 @@ public class TopicsClient {
 						{//insertamos la entidad
 							provincia.add(doc.getString("form"));
 						}else{
-//							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
+							//							System.err.println(((JSONObject)array.get(i)).get("form")+" en el texto se refiere a un lugar de "+((JSONObject)doc21.get("country")).getString("form"));
 						}
 					}
 					else{
-//						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+						//						System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
 					}
 				}catch(JSONException e)
 				{
-//					System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
+					//					System.err.println(((JSONObject)array.get(i)).get("form")+" no es una ciudad\n");
 				}
 			}
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
-//			e1.printStackTrace();
+			//			e1.printStackTrace();
 		}
 		return provincia;
 	}

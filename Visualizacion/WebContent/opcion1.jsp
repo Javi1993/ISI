@@ -10,6 +10,34 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Sentimiento', 'Num. Tweets', {role:'style'}],
+          ['Positivo',  5, 'color: #00b300'],
+          ['Negativo',  12, 'color: #ff0000'],
+          ['Neutro', 2, 'color: #e0e0d1']
+        ]);
+
+      var options = {
+    	title: 'Sentimiento de los tweets',
+        legend: 'none',
+        pieSliceText: 'label',
+        pieStartAngle: 100,
+ 	   slices: {
+ 			0: { color: 'green' },
+ 			1: { color: 'red' },
+ 			2: { color: 'grey' }
+ 		  }
+      };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script>
 </head>
 <body class="right-sidebar">
 	<div id="page-wrapper">
@@ -29,10 +57,11 @@
 								<div id="content">
 									<!-- Content -->
 									<article> <header class="major">
-									<h2>Right Sidebar</h2>
-									<p>Which means the sidebar is on the right</p>
-									</header> <span class="image featured"><img
-										src="images/pic08.jpg" alt="" /></span>
+									<h2><%=request.getAttribute("provincia") %></h2>
+									<p>Gráficos de las opiniones de la gente sobre la
+										contaminación</p>
+									</header> 
+										<div id="piechart" style="width: 800px; height: 400px;"></div>
 									<p>Phasellus quam turpis, feugiat sit amet ornare in,
 										hendrerit in lectus. Praesent semper mod quis eget mi. Etiam
 										eu ante risus. Aliquam erat volutpat. Aliquam luctus et mattis
@@ -71,20 +100,18 @@
 								<div id="sidebar">
 									<!-- Sidebar -->
 									<section> <header class="major">
-									<h2>Subheading</h2>
-									</header>
-									<%
+									<h2>Tweets</h2>
+									</header> <%
 									if(tweets!=null){
 									for(Document tweet:tweets){ %>
-										<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
-											<p lang="es" dir="ltr"></p>
-											<a
-												href='https://twitter.com/<%=tweet.getString("user")%>/status/<%=tweet.getString("id_tweet")%>'></a>
-										</blockquote>
-										<script async src="./assets/js/widgets.js" charset="utf-8"></script>
+									<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
+										<p lang="es" dir="ltr"></p>
+										<a
+											href='https://twitter.com/<%=tweet.getString("user")%>/status/<%=tweet.getString("id_tweet")%>'></a>
+									</blockquote>
+									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
 									<%} 
-									}%>
-									</section>
+									}%> </section>
 								</div>
 							</div>
 						</div>

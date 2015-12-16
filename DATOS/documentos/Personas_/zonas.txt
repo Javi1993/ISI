@@ -1,18 +1,27 @@
 .*madrid.*-MADRID
 .*islas baleares.*-ISLAS BALEARES
+.*illes balears.*-ISLAS BALEARES
 .*alava.*-ALAVA
+.*araba.*-ALAVA
 .*la coruna.*-LA CORUNA
+.*a coruna.*-LA CORUNA
 .*lugo.*-LUGO
 .*orense.*-ORENSE
+.*ourense.*-ORENSE
 .*pontevedra.*-PONTEVEDRA
 .*asturias.*-ASTURIAS
 .*cantabria.*-CANTABRIA
 .*vizcaya.*-VIZCAYA
+.*bizkaia.*-VIZCAYA
 .*guipuzcoa.*-GUIPUZCOA
+.*guipuzkoa.*-GUIPUZCOA
 .*navarra.*-NAVARRA
+.*nafarroa.*-NAVARRA
 .*huesca.*-HUESCA
 .*lleida.*-LLEIDA
+.*lerida.*-LLEIDA
 .*gerona.*-GERONA
+.*girona.*-GERONA
 .*tarragona.*-TARRAGONA
 .*barcelona.*-BARCELONA
 .*zaragoza.*-ZARAGOZA
@@ -26,6 +35,7 @@
 .*segovia.*-SEGOVIA
 .*teruel.*-TERUEL
 .*castellon.*-CASTELLON
+.*castello.*-CASTELLON
 .*guadalajara.*-GUADALAJARA
 .*avila.*-AVILA
 .*salamanca.*-SALAMANCA
@@ -34,6 +44,7 @@
 .*cuenca.*-CUENCA
 .*valencia.*-VALENCIA
 .*alicante.*-ALICANTE
+.*alacant.*-ALICANTE
 .*albacete.*-ALBACETE
 .*ciudad real.*-CIUDAD REAL
 .*badajoz.*-BADAJOZ
