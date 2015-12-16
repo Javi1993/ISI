@@ -364,7 +364,6 @@ public class TopicsClient {
 				{
 					if(Funciones.quitarTildes(txt).matches(".*#"+sCurrentLine.toUpperCase().split("-")[0]))
 					{
-						System.out.println("HOLA B");
 						provincia.add(sCurrentLine.split("-")[1]);
 					}
 				}else{
