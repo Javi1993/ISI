@@ -16,10 +16,10 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Sentimiento', 'Num. Tweets', {role:'style'}],
-          ['Positivo',  5, 'color: #00b300'],
-          ['Negativo',  12, 'color: #ff0000'],
-          ['Neutro', 2, 'color: #e0e0d1']
+          ['Sentimiento', 'Num. Tweets'],
+          ['Positivo',  5],
+          ['Negativo',  12],
+          ['Neutro', 2]
         ]);
 
       var options = {

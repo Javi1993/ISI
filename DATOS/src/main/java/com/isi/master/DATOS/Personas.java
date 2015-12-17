@@ -25,6 +25,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 import com.isi.master.funciones.Funciones;
+import com.isi.master.meaningcloudAPI.sentimentanalysis.SentimentClient;
 import com.isi.master.meaningcloudAPI.topicsextraction.*;
 
 public class Personas {
@@ -215,12 +216,59 @@ public class Personas {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	private void sentimientoTweets()
+	{
+		List<Document> tweetsProv = collectionTweets.find().into(new ArrayList<Document>());
+		for(Document prov: tweetsProv)
+		{
+			List<Document> tweets = (List<Document>)prov.get("tweets");
+			if(tweets!=null)
+			{
+				int index = 0;
+				for(Document cont:tweets)
+				{
+					Document tweet = collectionTwitter.find(new Document("_id",cont.getString("id_tweet"))).first();
+					if(tweet!=null)
+					{
+						String feeling = SentimentClient.verSentimiento(tweet);
+						System.out.println(feeling);
+						if(feeling!=null){
+						switch (feeling) {
+						case "N":
+						case "N+":	
+							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
+							break;
+						case "P":
+						case "P+":
+							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
+							break;
+						default:
+							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+							break;
+						}
+					}
+					}else{
+						collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+					}
+					index++;
+				}
+			}
+		}
+
+
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
 		test.quejasTwitter();//guardamos tweets en base a unas consultas
 		test.clasificarTweets();//clasificamos los tweets guardados por provincia
+		test.sentimientoTweets();
 
 		test.client.close();//cerramos la conexion
 		System.out.println("Operación finalizada.");
