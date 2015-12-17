@@ -33,14 +33,14 @@ public class Personas {
 	private MongoClient client;
 	private MongoDatabase database;
 	private MongoCollection<Document> collectionTwitter;
-	private MongoCollection<Document> collectionTweets;
+	private MongoCollection<Document> collectionTweetsProv;
 	private Twitter twitter;
 
 	public Personas(){
 		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collectionTwitter = database.getCollection("twitter");//tomamos la coleccion de tweets
-		collectionTweets = database.getCollection("tweetProv");//tomamos la coleccion de tweets
+		collectionTweetsProv = database.getCollection("tweetProv");//tomamos la coleccion de tweets
 		//conexion a API de twitter
 		twitter = TwitterFactory.getSingleton();
 		twitter.setOAuthConsumer("z4mU2gFl8tACEun7mzkwKaMI8", "s2srh0iCA1HoifFldrQNYutAKFKBy7xRfmpnb5gUwPEyCy6ACB");
@@ -162,7 +162,7 @@ public class Personas {
 				Document tweet = cursor.next();
 
 				List<Document> pipeline = asList(new Document("$unwind", "$tweets"));
-				List<Document> tweets_clasificados = collectionTweets.aggregate(pipeline).into(new ArrayList<Document>());
+				List<Document> tweets_clasificados = collectionTweetsProv.aggregate(pipeline).into(new ArrayList<Document>());
 				boolean guardado = false;
 				if(tweets_clasificados!=null){
 					for(Document tw:tweets_clasificados)
@@ -209,7 +209,7 @@ public class Personas {
 		{
 			for(String prov:provincias)
 			{
-				collectionTweets.updateOne(new Document("_id", Funciones.quitarTildes(prov)), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
+				collectionTweetsProv.updateOne(new Document("_id", Funciones.quitarTildes(prov)), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
 			}
 			return true;
 		}
@@ -222,7 +222,7 @@ public class Personas {
 	@SuppressWarnings("unchecked")
 	private void sentimientoTweets()
 	{
-		List<Document> tweetsProv = collectionTweets.find().into(new ArrayList<Document>());
+		List<Document> tweetsProv = collectionTweetsProv.find().into(new ArrayList<Document>());
 		for(Document prov: tweetsProv)
 		{
 			List<Document> tweets = (List<Document>)prov.get("tweets");
@@ -232,34 +232,33 @@ public class Personas {
 				for(Document cont:tweets)
 				{
 					Document tweet = collectionTwitter.find(new Document("_id",cont.getString("id_tweet"))).first();
+					System.out.println(tweet);
 					if(tweet!=null)
 					{
 						String feeling = SentimentClient.verSentimiento(tweet);
-						System.out.println(feeling);
-						if(feeling!=null){
 						switch (feeling) {
 						case "N":
 						case "N+":	
-							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
+							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
+							System.out.println("ENTRO N o N+ TWEET");
 							break;
 						case "P":
 						case "P+":
-							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
+							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
+							System.out.println("ENTRO P o P+ TWEET");
 							break;
 						default:
-							collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+							System.out.println("ENTRO NONE TWEET");
 							break;
 						}
-					}
 					}else{
-						collectionTweets.updateOne(prov, new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+						collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
 					}
 					index++;
 				}
 			}
 		}
-
-
 	}
 
 	public static void main(String[] args) {

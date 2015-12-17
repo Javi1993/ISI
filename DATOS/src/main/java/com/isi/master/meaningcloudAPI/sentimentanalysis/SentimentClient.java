@@ -72,6 +72,7 @@ public class SentimentClient {
 		String txt = tweet.getString("contenido");
 		String model = "general_es"; // general_es / general_en / general_fr
 
+		String output = "none";
 		try {
 			Post post = new Post (api);
 			post.addParameter("key", key);
@@ -96,25 +97,23 @@ public class SentimentClient {
 			NamedNodeMap attributes = status.getAttributes();
 			Node code = attributes.item(0);
 			if(!code.getTextContent().equals("0")) {
-				System.out.println("Not found");
+				//System.out.println("Not found");
 			} else {    
 				NodeList score_tags = response_node.getElementsByTagName("score_tag");
 
-				String output = "";
+				
 				Node score_tag = null;
 
 				if(score_tags.getLength()>0)
 					score_tag = score_tags.item(0);
 
 				if(score_tag != null)
-					output += score_tag.getTextContent();
-
-				return output;
+					output = score_tag.getTextContent();
 			}
 		} catch (Exception e) {
-			System.out.println("Not found");
+			//System.out.println("Not found");
 		}
-		return null;
+		return output;
 	}
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
