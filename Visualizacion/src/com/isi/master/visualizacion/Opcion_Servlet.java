@@ -4,15 +4,10 @@ import static java.util.Arrays.asList;
 import java.io.IOException;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -122,48 +117,19 @@ public class Opcion_Servlet extends HttpServlet {
 				}
 			}
 		}
-
-		Map<String, Integer> map = sortByValues(hashTag); 
-//		Set set2 = map.entrySet();
-//		Iterator iterator2 = set2.iterator();
-//		while(iterator2.hasNext()) {
-//			Map.Entry<String, Integer> me2 = (Map.Entry<String, Integer>)iterator2.next();
-//			System.out.print(me2.getKey() + ": ");
-//			System.out.println(me2.getValue());
-//		}
-
-
-		request.setAttribute("hashTag", map);
+		
+		Iterator it = hashTag.entrySet().iterator();
+		 while (it.hasNext()) {
+		 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
+		 System.out.println(e.getKey() + " " + e.getValue());
+		 }
+		 
+		 //ORDENAR DE MAYOR A MEOR Y PONER LIMITE EN EL JSP A LA HORA DE MOSTRAR!!!
+		 
+		request.setAttribute("hashTag", hashTag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
 	}
-
-	/**
-	 * 
-	 * @param map
-	 * @return
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static HashMap<String, Integer> sortByValues(HashMap<String, Integer> map) { 
-		List list = new LinkedList(map.entrySet());
-		// Defined Custom Comparator here
-		Collections.sort(list, new Comparator() {
-			public int compare(Object o1, Object o2) {
-				return ((Comparable) ((Map.Entry) (o1)).getValue())
-						.compareTo(((Map.Entry) (o2)).getValue());
-			}
-		});
-
-		// Here I am copying the sorted list in HashMap
-		// using LinkedHashMap to preserve the insertion order
-		HashMap<String, Integer> sortedHashMap = new LinkedHashMap();
-		for (Iterator it = list.iterator(); it.hasNext();) {
-			Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) it.next();
-			sortedHashMap.put(entry.getKey(), entry.getValue());
-		} 
-		return sortedHashMap;
-	}
-
 
 	/**
 	 * Opcion 2- Visualizacion de provincia VS provincia

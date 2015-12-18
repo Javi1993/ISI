@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.List, org.bson.Document"%>
+	pageEncoding="UTF-8" import="java.util.List, org.bson.Document, java.util.HashMap, java.util.Iterator, java.util.Map"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<script type="text/javascript" src="./assets/js/d3.v3.min.js"></script>
+<script type="text/javascript" src="./assets/js/d3.layout.cloud.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <%int[] feeling = (int[])request.getAttribute("feeling"); 
 if(feeling!=null){%>
@@ -61,9 +63,55 @@ if(feeling!=null){%>
 									<!-- Content -->
 									<article> <header class="major">
 									<h2><%=request.getAttribute("provincia") %></h2>
-									<p>Gráficos de las opiniones de la gente sobre la
-										contaminación</p>
-									</header> 
+									<p>Opinión social</p>
+									</header>
+									<span id="hashtag">
+									<%HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute("hashTag");
+									if(hashTag!=null){ 
+										Iterator it = hashTag.entrySet().iterator();%>
+									<script>
+									    var frequency_list = [
+									        <%
+											 while (it.hasNext()) {
+												 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
+									        %>
+									        {"text":"<%=e.getKey()%>","size":<%=e.getValue()%>},
+									        <%}%>
+									        ];
+										
+									    var color = d3.scale.linear()
+							            .domain([0,1,5,20,100])
+							            .range(["#0d0d26", "#141439", "#2e2e85", "#343498", "#6767cb", "#7a7ad1"]);
+									
+									    d3.layout.cloud().size([800, 300])
+									            .words(frequency_list)
+									            .rotate(0)
+									            .fontSize(function(d) { return d.size; })
+									            .on("end", draw)
+									            .start();
+									
+									    function draw(words) {
+									        d3.select("#hashtag").append("svg")
+									                .attr("width", 850)
+									                .attr("height", 300)
+									                .attr("class", "wordcloud")
+									                .append("g")
+									                // without the transform, words words would get cutoff to the left and top, they would
+									                // appear outside of the SVG area
+									                .attr("transform", "translate(320,200)")
+									                .selectAll("text")
+									                .data(words)
+									                .enter().append("text")
+									                .style("font-size", function(d) { return d.size + "px"; })
+									                .style("fill", function(d, i) { return color(i); })
+									                .attr("transform", function(d) {
+									                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+									                })
+									                .text(function(d) { return d.text; });
+									    }
+									</script>
+									<%} %>
+									</span>
 										<div id="piechart" style="width: 800px; height: 400px;"></div>
 									<p>(PONER GRAFICO) El top-5 de hashtags es.</p>
 									<h3>More intriguing information</h3>
