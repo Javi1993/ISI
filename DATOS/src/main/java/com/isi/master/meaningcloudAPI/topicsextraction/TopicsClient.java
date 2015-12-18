@@ -281,7 +281,7 @@ public class TopicsClient {
 	 */
 	public static List<String> recibirTweet(String contenido, boolean body){
 		String api = "http://api.meaningcloud.com/topics-2.0";
-		String key = "e3f776dbb9ccef43818b576cf60340df";
+		String key = "45e9ccac0f95b13bb0dd3ef9de0e0cf5";
 		String txt = contenido;
 		String lang = "es"; // es/en/fr/it/pt/ca
 		List<String> provincia=new ArrayList<String>();

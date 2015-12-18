@@ -68,7 +68,7 @@ public class SentimentClient {
 	public static String verSentimiento(org.bson.Document tweet)
 	{
 		String api = "http://api.meaningcloud.com/sentiment-2.0";
-		String key = "e3f776dbb9ccef43818b576cf60340df";
+		String key = "45e9ccac0f95b13bb0dd3ef9de0e0cf5";
 		String txt = tweet.getString("contenido");
 		String model = "general_es"; // general_es / general_en / general_fr
 

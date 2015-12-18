@@ -232,7 +232,7 @@ public class Personas {
 				for(Document cont:tweets)
 				{
 					Document tweet = collectionTwitter.find(new Document("_id",cont.getString("id_tweet"))).first();
-					System.out.println(tweet);
+
 					if(tweet!=null)
 					{
 						String feeling = SentimentClient.verSentimiento(tweet);
@@ -240,16 +240,13 @@ public class Personas {
 						case "N":
 						case "N+":	
 							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
-							System.out.println("ENTRO N o N+ TWEET");
 							break;
 						case "P":
 						case "P+":
 							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
-							System.out.println("ENTRO P o P+ TWEET");
 							break;
 						default:
 							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
-							System.out.println("ENTRO NONE TWEET");
 							break;
 						}
 					}else{
