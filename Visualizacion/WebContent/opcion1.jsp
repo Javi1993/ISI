@@ -11,15 +11,17 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<%int[] feeling = (int[])request.getAttribute("feeling"); 
+if(feeling!=null){%>
 <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Sentimiento', 'Num. Tweets'],
-          ['Positivo',  5],
-          ['Negativo',  12],
-          ['Neutro', 2]
+          ['Positivo',  <%=feeling[0]%>],
+          ['Negativo',  <%=feeling[1]%>],
+          ['Neutro', <%=feeling[2]%>]
         ]);
 
       var options = {
@@ -38,6 +40,7 @@
         chart.draw(data, options);
       }
     </script>
+    <%} %>
 </head>
 <body class="right-sidebar">
 	<div id="page-wrapper">
@@ -62,11 +65,7 @@
 										contaminación</p>
 									</header> 
 										<div id="piechart" style="width: 800px; height: 400px;"></div>
-									<p>Phasellus quam turpis, feugiat sit amet ornare in,
-										hendrerit in lectus. Praesent semper mod quis eget mi. Etiam
-										eu ante risus. Aliquam erat volutpat. Aliquam luctus et mattis
-										lectus sit amet pulvinar. Nam turpis nisi consequat etiam
-										lorem ipsum dolor sit amet nullam.</p>
+									<p>(PONER GRAFICO) El top-5 de hashtags es.</p>
 									<h3>More intriguing information</h3>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 										Maecenas ac quam risus, at tempus justo. Sed dictum rutrum
@@ -103,15 +102,21 @@
 									<h2>Tweets</h2>
 									</header> <%
 									if(tweets!=null){
-									for(Document tweet:tweets){ %>
+									int cnt=0;
+									for(Document tweet:tweets){ 
+										if(cnt>=5){break;}else{%>
 									<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
 										<p lang="es" dir="ltr"></p>
 										<a
 											href='https://twitter.com/<%=tweet.getString("user")%>/status/<%=tweet.getString("id_tweet")%>'></a>
 									</blockquote>
 									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
-									<%} 
-									}%> </section>
+									
+									<%cnt++;}
+									}%>
+									<p>Mostrando <%=cnt%> de un total de <%=tweets.size()%> tweets</p>
+								<%	}%> 
+									<p></section>
 								</div>
 							</div>
 						</div>

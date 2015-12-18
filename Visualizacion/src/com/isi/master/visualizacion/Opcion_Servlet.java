@@ -2,11 +2,18 @@ package com.isi.master.visualizacion;
 
 import static java.util.Arrays.asList;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +34,7 @@ public class Opcion_Servlet extends HttpServlet {
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
 	private MongoCollection<Document> collectionTweet;
+	private MongoCollection<Document> collectionTweetProv;
 	private MongoCollection<Document> collectionAire;
 
 	/**
@@ -44,9 +52,10 @@ public class Opcion_Servlet extends HttpServlet {
 		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
-		collectionTweet = database.getCollection("tweetProv");//tomamos la coleccion de tweets-prov
+		collectionTweet = database.getCollection("twitter");//tomamos la coleccion de tweets-prov
+		collectionTweetProv = database.getCollection("tweetProv");//tomamos la coleccion de tweets-prov
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
-		
+
 		String nextPage="";
 		switch (request.getParameter("num")) {
 		case "1":
@@ -70,7 +79,7 @@ public class Opcion_Servlet extends HttpServlet {
 			System.out.println("La opción elegida de visualización no es valida");
 			break;
 		}
-		
+
 		client.close();//cerramos la conexion
 		request.setAttribute("provincia",request.getParameter("provincia"));//guardamos la provincia
 		request.getRequestDispatcher(nextPage).forward(request, response);
@@ -82,10 +91,80 @@ public class Opcion_Servlet extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	private void opcion1(HttpServletRequest request){
-		Document doc = collectionTweet.find(new Document("_id", request.getParameter("provincia"))).first();
+		Document doc = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
 		List<Document> tweets = (List<Document>) doc.get("tweets");
+		int[] feeling = new int[3];//0-P,1-N,2-Neu
+		HashMap<String,Integer> hashTag = new HashMap<String,Integer>();
+		for (Document tw : tweets) 
+		{//cogemos el feeling de los tweets y el numero de hashtags
+			switch (tw.getString("feeling")) {
+			case "P":
+				feeling[0]++;
+				break;
+			case "N":
+				feeling[1]++;
+				break;
+			default:
+				feeling[2]++;
+				break;
+			}
+			String bodyTweet = collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().getString("contenido");
+			StringTokenizer tokens=new StringTokenizer(bodyTweet);
+			while(tokens.hasMoreTokens()){
+				String palabra = quitarTildes(tokens.nextToken().toLowerCase().replaceAll("[^\\p{L}\\p{Nd}]+$",""));
+				if(palabra.startsWith("#"))
+				{
+					if(hashTag.get(palabra)!=null){
+						hashTag.put(palabra, hashTag.get(palabra)+1);
+					}else{
+						hashTag.put(palabra, 1);
+					}
+				}
+			}
+		}
+
+		Map<String, Integer> map = sortByValues(hashTag); 
+//		Set set2 = map.entrySet();
+//		Iterator iterator2 = set2.iterator();
+//		while(iterator2.hasNext()) {
+//			Map.Entry<String, Integer> me2 = (Map.Entry<String, Integer>)iterator2.next();
+//			System.out.print(me2.getKey() + ": ");
+//			System.out.println(me2.getValue());
+//		}
+
+
+		request.setAttribute("hashTag", map);
 		request.setAttribute("tweets", tweets);
+		request.setAttribute("feeling", feeling);
 	}
+
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static HashMap<String, Integer> sortByValues(HashMap<String, Integer> map) { 
+		List list = new LinkedList(map.entrySet());
+		// Defined Custom Comparator here
+		Collections.sort(list, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o1)).getValue())
+						.compareTo(((Map.Entry) (o2)).getValue());
+			}
+		});
+
+		// Here I am copying the sorted list in HashMap
+		// using LinkedHashMap to preserve the insertion order
+		HashMap<String, Integer> sortedHashMap = new LinkedHashMap();
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) it.next();
+			sortedHashMap.put(entry.getKey(), entry.getValue());
+		} 
+		return sortedHashMap;
+	}
+
+
 	/**
 	 * Opcion 2- Visualizacion de provincia VS provincia
 	 * @param request - Parametros de la peticion
@@ -136,7 +215,7 @@ public class Opcion_Servlet extends HttpServlet {
 							.append("average2_CO", new Document("$avg","$Medidas.CO")).append("average2_SH2", new Document("$avg","$Medidas.SH2")).append("average2_TOL", new Document("$avg","$Medidas.TOL"))), 
 					new Document("$sort", new Document("_id.year",1).append("_id.month", 1)));
 			List<Document> medias2B = collectionAire.aggregate(pipeline2B).into(new ArrayList<Document>());
-			
+
 			request.setAttribute("medias",juntarListasOpcion2(juntarListasOpcion2(limpiarMedias(medias,""), limpiarMedias(mediasB,"2")), juntarListasOpcion2(limpiarMedias2(medias2,""), limpiarMedias2(medias2B,"2"))));
 		}catch(NullPointerException e){
 			System.err.println("Error: Se esta accediendo a un elemento nulo");
@@ -216,7 +295,7 @@ public class Opcion_Servlet extends HttpServlet {
 		}
 		return limpia;
 	}
-	
+
 
 	/**
 	 * Dada una lista de documentos de medias mensuales elimina los contaminantes sin media (mg/m3)
@@ -253,7 +332,7 @@ public class Opcion_Servlet extends HttpServlet {
 		}
 		return limpia;
 	}
-	
+
 	/**
 	 * Map de contaminantes y su ID (ug/m3)
 	 * @return Map de los contaminantes y sus medias
@@ -375,5 +454,10 @@ public class Opcion_Servlet extends HttpServlet {
 		lista.put(0, "CO");		lista.put(1, "SH2");
 		lista.put(2, "TOL");
 		return lista;
+	}
+
+	private String quitarTildes(String input) {
+		String text = Normalizer.normalize(input, Normalizer.Form.NFD);
+		return text.replaceAll("[^\\p{ASCII}]", "").toLowerCase();
 	}
 }
