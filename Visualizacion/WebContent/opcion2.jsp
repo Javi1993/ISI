@@ -54,8 +54,8 @@ if(mapas!=null){
   			width: 1200,
 			height: 750,
 	        bar: {groupWidth: "75%"},
-			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
-			hAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
+			hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+			vAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
 	        legend: { position: "right" }
       };
       var chart = new google.visualization.ColumnChart(document.getElementById('colum<%=conta[i]%>'));
@@ -146,9 +146,9 @@ if(mapas!=null){
 			width: 1200,
 			height: 750,
 	        bar: {groupWidth: "75%"},
-			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
 			hAxis: {title: '<%if(conta[i].equals("CO")||conta[i].equals("TOL")||conta[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
-	        legend: { position: "right" }
+			vAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
+			legend: { position: "right" }
 	      };
 	      var chart = new google.visualization.BarChart(document.getElementById('bar<%=conta[i]%>'));
 	      chart.draw(view, options);
@@ -271,18 +271,26 @@ $( ".map" ).click(function() {
 	
 	});
 $( ".graph" ).click(function() {
-	$( ".igraph" ).css("display","none");
-	$( ".graph" ).css("border","none");
-	$('#'+$(this).attr('id')).css("border","2px solid yellow");
-	$( '#'+$(this).attr('id').substring(4)+$('#elemento').text()).css("display","inline");
-	});
+	if($( '#'+$(this).attr('id').substring(4)+$('#elemento').text()).css("display")=="inline"){
+		$('#'+$(this).attr('id')).css("border","none");
+		$( '#'+$(this).attr('id').substring(4)+$('#elemento').text()).css("display","none");
+	}else{
+		$('#'+$(this).attr('id')).css("border","2px solid yellow");
+		$( '#'+$(this).attr('id').substring(4)+$('#elemento').text()).css("display","inline");
+	}
+});
 	
 $( ".carto" ).css("display","none");
 $( '#emap<%=elem%>' ).css('display','inline');
 $( '#emap<%=elem%>'+'b' ).css('display','inline');
 $( ".igraph" ).css("display","none");
-$('#img-colum').css("border","2px solid yellow");
+$('.graph').css("border","2px solid yellow");
 $( '#colum<%=elem%>' ).css("display","inline");
+$( '#area<%=elem%>' ).css("display","inline");
+$( '#escalon<%=elem%>' ).css("display","inline");
+$( '#combo<%=elem%>' ).css("display","inline");
+$( '#lineal<%=elem%>' ).css("display","inline");
+$( '#bar<%=elem%>' ).css("display","inline");
 $( "li#v" ).addClass( "current_page_item" );
 </script>
 <style>

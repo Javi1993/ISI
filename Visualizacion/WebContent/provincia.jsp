@@ -43,7 +43,7 @@
 						 <br>
 						<br> <input type="submit"><br>
 											</form>
-						<a href="javascript:history.back()">Volver</a>
+						<a href="/Visualizacion/">Volver</a>
 					<br>
 				</div>
 			</div>

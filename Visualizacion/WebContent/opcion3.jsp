@@ -79,11 +79,17 @@
         chart.draw(data, options);
       }
       
-      google.load("visualization", "1", {packages:["corechart"]});
+      google.load('visualization', '1.1', {packages: ['line']});
       google.setOnLoadCallback(drawChart3);
       function drawChart3() {
-        var data = google.visualization.arrayToDataTable([
-          ['Fecha',<%for (int i = 0; i < contaminantes.length - 1; i++) {%>'<%=contaminantes[i + 1].replace("average_", "")%>',<%}%>],
+    	  
+    	var data = new google.visualization.DataTable();
+    	data.addColumn('string', 'Fecha');
+    	<%for (int i = 0; i < contaminantes.length - 1; i++) {%>
+    	data.addColumn('number', '<%=contaminantes[i + 1].replace("average_", "")%>');
+    	<%}%>
+    	
+    	data.addRows([
     		<%for (Document med : medias) {%>
             ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes.length - 1; j++) {%>,<%=med.get(contaminantes[j + 1])%><%}%>],
     		<%}
@@ -91,16 +97,16 @@
         ]);
 
 	var options = {
+			chart: {
+		          subtitle: 'ug/m3'
+		        },
 			width: 1200,
 			height: 520,
-		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
-		vAxis: {title: 'ug/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
-		legend: { position: 'right' }
         };
 
-   var chart = new google.visualization.LineChart(document.getElementById('lineal_1'));
+	var chart = new google.charts.Line(document.getElementById('lineal_1'));
 
-        chart.draw(data, options);
+    chart.draw(data, options);
 
       }
       
@@ -203,28 +209,34 @@
       chart.draw(data, options);
     }
     
-    google.load("visualization", "1", {packages:["corechart"]});
+    google.load('visualization', '1.1', {packages: ['line']});
     google.setOnLoadCallback(drawChart3);
     function drawChart3() {
-      var data = google.visualization.arrayToDataTable([
-        ['Fecha',<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>'<%=contaminantes2[i + 1].replace("average_", "")%>',<%}%>],
-  		<%for (Document med : medias2) {%>
-          ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
-  		<%}
-  		%>
-      ]);
+    	
+    	var data = new google.visualization.DataTable();
+    	data.addColumn('string', 'Fecha');
+    	<%for (int i = 0; i < contaminantes2.length - 1; i++) {%>
+    	data.addColumn('number', '<%=contaminantes2[i + 1].replace("average_", "")%>');
+    	<%}%>
+    	
+    	data.addRows([
+    		<%for (Document med : medias2) {%>
+            ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>'<%for (int j = 0; j < contaminantes2.length - 1; j++) {%>,<%=med.get(contaminantes2[j + 1])%><%}%>],
+    		<%}
+    		%>
+        ]);
 
-	var options = {
-			width: 1200,
-			height: 520,
-		hAxis: {title: 'Fecha', titleTextStyle: {color: '#333'}},
-		vAxis: {title: 'mg/m3', titleTextStyle: {color: '#333'}, minValue: 0},			
-		legend: { position: 'right' }
-      };
+    	var options = {
+    			chart: {
+    		          subtitle: 'mg/m3'
+    		        },
+    			width: 1200,
+    			height: 520,
+            };
 
- 	var chart = new google.visualization.LineChart(document.getElementById('lineal_2'));
+    	var chart = new google.charts.Line(document.getElementById('lineal_2'));
 
-      chart.draw(data, options);
+        chart.draw(data, options);
 
     }
 
@@ -346,19 +358,20 @@ $( ".map" ).click(function() {
 	
 	});
 $( ".graph" ).click(function() {
-	$( ".igraph" ).css("display","none");
-	$( ".graph" ).css("border","none");
-	$('#'+$(this).attr('id')).css("border","2px solid yellow");
-	$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","block");
-	$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","block");
+	if($('#'+$(this).attr('id').substring(4)+"_1").css("display")=="block"){
+		$('#'+$(this).attr('id')).css("border","none");
+		$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","none");
+		$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","none");
+	}else{
+		$('#'+$(this).attr('id')).css("border","2px solid yellow");
+		$( '#'+$(this).attr('id').substring(4)+"_1" ).css("display","block");
+		$( '#'+$(this).attr('id').substring(4)+"_2" ).css("display","block");
+		}
 	});
 	
 $( ".carto" ).css("display","none");
 $( '#emap<%=elem%>' ).css('display','inline');
-$( ".igraph" ).css("display","none");
-$('#img-column').css("border","2px solid yellow");
-$( '#column_1' ).css("display","block");
-$( '#column_2' ).css("display","block");
+$('.graph').css("border","2px solid yellow");
 $( "li#v" ).addClass( "current_page_item" );
 </script>
 <style>
