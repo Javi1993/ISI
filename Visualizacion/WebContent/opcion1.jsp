@@ -107,13 +107,23 @@ if(feeling!=null){%>
 									      .data(words)
 									    .enter().append("text")
 									      .style("font-size", function(d) {
-									    	  if(d.size<10){
-									    		  return d.size + 5 + "px"; 
-									    	  }else if(d.size>150){
-									    		  return 125 + "px"; 
-									    	  }else{
-									    		  return d.size + 2 + "px"; 
-									    	  }
+									    	  if(frequency_list.length>50){
+										    	  if(d.size<10){
+										    		  return d.size + 5 + "px"; 
+										    	  }else if(d.size>150){
+										    		  return 125 + "px"; 
+										    	  }else{
+										    		  return d.size + 2 + "px"; 
+										    	  }
+								    		  }else{
+										    	  if(d.size<10){
+										    		  return d.size + 15 + "px"; 
+										    	  }else if(d.size>150){
+										    		  return 125 + "px"; 
+										    	  }else{
+										    		  return d.size + 25 + "px"; 
+										    	  }								    			  
+								    		  }
 									    	   }
 									      )
 									      .style("font-family", "Impact")
