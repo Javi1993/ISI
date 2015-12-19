@@ -70,6 +70,8 @@ if(feeling!=null){%>
 									if(hashTag!=null){ 
 										Iterator it = hashTag.entrySet().iterator();%>
 									<script>
+									var fill = d3.scale.category20();
+									
 									    var frequency_list = [
 									        <%
 											 while (it.hasNext()) {

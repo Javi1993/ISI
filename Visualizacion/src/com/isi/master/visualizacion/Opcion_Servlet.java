@@ -117,15 +117,13 @@ public class Opcion_Servlet extends HttpServlet {
 				}
 			}
 		}
+
+		/*
+		 * 
+		 * PARA EL TAMAÑO EN EL JSP DONDE DICE d.size() px, usar estilo MODULO PARA TAMAÑO ESTANDAR INDEPENDIENTEMNTE DE Nº tweets, usar total tweets como ref
+		 * 
+		 */
 		
-		Iterator it = hashTag.entrySet().iterator();
-		 while (it.hasNext()) {
-		 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
-		 System.out.println(e.getKey() + " " + e.getValue());
-		 }
-		 
-		 //ORDENAR DE MAYOR A MEOR Y PONER LIMITE EN EL JSP A LA HORA DE MOSTRAR!!!
-		 
 		request.setAttribute("hashTag", hashTag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
