@@ -109,17 +109,17 @@ if(feeling!=null){%>
 									      .style("font-size", function(d) {
 									    	  if(frequency_list.length>50){
 										    	  if(d.size<10){
-										    		  return d.size + 5 + "px"; 
+										    		  return d.size + 7 + "px"; 
 										    	  }else if(d.size>150){
-										    		  return 125 + "px"; 
+										    		  return 80 + "px"; 
 										    	  }else{
-										    		  return d.size + 2 + "px"; 
+										    		  return 25 + "px"; 
 										    	  }
 								    		  }else{
 										    	  if(d.size<10){
 										    		  return d.size + 15 + "px"; 
 										    	  }else if(d.size>150){
-										    		  return 125 + "px"; 
+										    		  return 80 + "px"; 
 										    	  }else{
 										    		  return d.size + 25 + "px"; 
 										    	  }								    			  
