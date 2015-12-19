@@ -182,8 +182,24 @@ public class Personas {
 							if(!pasarContenidoTweet(((Document)tweet.get("place")).getString("ciudad"), tweet, false))
 							{//con el contenido de place no se obtuvo una localización de provincia
 								if(tweet.get("localizacion")!=null){
-									pasarContenidoTweet(tweet.getString("localizacion"), tweet, false);
+									if(!pasarContenidoTweet(tweet.getString("localizacion"), tweet, false)){
+										//no se pudo clasificar el tweet de ninguna forma
+										collectionTwitter.deleteOne(tweet);
+									}
+								}else{
+									//no se pudo clasificar el tweet de ninguna forma
+									collectionTwitter.deleteOne(tweet);
 								}
+							}
+						}else{
+							if(tweet.get("localizacion")!=null){
+								if(!pasarContenidoTweet(tweet.getString("localizacion"), tweet, false)){
+									//no se pudo clasificar el tweet de ninguna forma
+									collectionTwitter.deleteOne(tweet);
+								}
+							}else{
+								//no se pudo clasificar el tweet de ninguna forma
+								collectionTwitter.deleteOne(tweet);
 							}
 						}
 					}
@@ -235,19 +251,22 @@ public class Personas {
 
 					if(tweet!=null)
 					{
-						String feeling = SentimentClient.verSentimiento(tweet);
-						switch (feeling) {
-						case "N":
-						case "N+":	
-							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
-							break;
-						case "P":
-						case "P+":
-							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
-							break;
-						default:
-							collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
-							break;
+						if(cont.getString("feeling")==null||cont.getString("feeling").equals("")
+								||cont.getString("feeling").equals("NEU")){
+							String feeling = SentimentClient.verSentimiento(tweet);
+							switch (feeling) {
+							case "N":
+							case "N+":	
+								collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","N")));
+								break;
+							case "P":
+							case "P+":
+								collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","P")));
+								break;
+							default:
+								collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
+								break;
+							}
 						}
 					}else{
 						collectionTweetsProv.updateOne(new Document("_id", prov.get("_id")), new Document("$set", new Document("tweets."+String.valueOf(index)+".feeling","NEU")));
@@ -262,9 +281,12 @@ public class Personas {
 		// TODO Auto-generated method stub
 		Personas test = new Personas();
 
+		System.out.println("Obteniendo tweets relacionados con la contaminación...");
 		test.quejasTwitter();//guardamos tweets en base a unas consultas
+		System.out.println("Clasificando tweets por provincia...");
 		test.clasificarTweets();//clasificamos los tweets guardados por provincia
-		test.sentimientoTweets();
+		System.out.println("Otrogando sentimiento a los tweets clasificados...");
+		test.sentimientoTweets();//otorgamos un sentimiento positivo, negativo o neutro al tweet
 
 		test.client.close();//cerramos la conexion
 		System.out.println("Operación finalizada.");
