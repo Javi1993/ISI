@@ -82,7 +82,7 @@ if(feeling!=null){%>
 									        ];
 										
 									    var layout = d3.layout.cloud()
-									    .size([800, 300])
+									    .size([800, 500])
 										.words(frequency_list)
 									    /*.words([
 									      "Hello", "world", "normally", "you", "want", "more", "words",
@@ -106,7 +106,16 @@ if(feeling!=null){%>
 									    .selectAll("text")
 									      .data(words)
 									    .enter().append("text")
-									      .style("font-size", function(d) { return d.size + "px"; })
+									      .style("font-size", function(d) {
+									    	  if(d.size<10){
+									    		  return d.size + 5 + "px"; 
+									    	  }else if(d.size>150){
+									    		  return 125 + "px"; 
+									    	  }else{
+									    		  return d.size + 2 + "px"; 
+									    	  }
+									    	   }
+									      )
 									      .style("font-family", "Impact")
 									      .style("fill", function(d, i) { return fill(i); })
 									      .attr("text-anchor", "middle")
