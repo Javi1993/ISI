@@ -4,10 +4,15 @@ import static java.util.Arrays.asList;
 import java.io.IOException;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -103,30 +108,92 @@ public class Opcion_Servlet extends HttpServlet {
 				feeling[2]++;
 				break;
 			}
+
 			String bodyTweet = collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().getString("contenido");
 			StringTokenizer tokens=new StringTokenizer(bodyTweet);
 			while(tokens.hasMoreTokens()){
-				String palabra = quitarTildes(tokens.nextToken().toLowerCase().replaceAll("[^\\p{L}\\p{Nd}]+$",""));
+				String palabra = tokens.nextToken();
 				if(palabra.startsWith("#"))
 				{
-					if(hashTag.get(palabra)!=null){
-						hashTag.put(palabra, hashTag.get(palabra)+1);
-					}else{
-						hashTag.put(palabra, 1);
-					}
+					palabra = quitarTildes(palabra.replace("#", "").toLowerCase().replaceAll("[^\\p{L}\\p{Nd}]+$",""));
+					insertarPalabra(palabra, hashTag);
 				}
 			}
 		}
 
-		/*
-		 * 
-		 * PARA EL TAMAÑO EN EL JSP DONDE DICE d.size() px, usar estilo MODULO PARA TAMAÑO ESTANDAR INDEPENDIENTEMNTE DE Nº tweets, usar total tweets como ref
-		 * 
-		 */
-		
-		request.setAttribute("hashTag", hashTag);
+		Map<String, Integer> sortHashtag = sortByComparator(hashTag, false);
+		//		Iterator it = sortHashtag.entrySet().iterator();
+		//		while (it.hasNext()) {
+		//
+		//			Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
+		//			System.out.println(e.getKey()+"_"+e.getValue());
+		//		}
+		//		System.out.println(sortHashtag.size());
+
+
+		request.setAttribute("hashTag", sortHashtag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
+	}
+
+	/**
+	 * 
+	 * @param palabra
+	 * @param hashTag
+	 */
+	private void insertarPalabra(String palabra, HashMap<String, Integer> hashTag) {
+		if(palabra.contains(".")||palabra.contains(",")||palabra.contains(":")||palabra.contains(";"))
+		{
+			String[] test = palabra.split("\\.")[0].split(",")[0].split(":")[0].split(";");
+			palabra = test[0];
+		}
+		if(hashTag.get(palabra)!=null){
+			if(hashTag.get(palabra)+1>90)
+			{
+				hashTag.put(palabra, 90);
+			}else{
+				hashTag.put(palabra, hashTag.get(palabra)+1);
+			}	
+		}else{
+			hashTag.put(palabra, 1);
+		}
+	}
+
+	/**
+	 * 
+	 * @param unsortMap
+	 * @param order
+	 * @return
+	 */
+	private static Map<String, Integer> sortByComparator(Map<String, Integer> unsortMap, final boolean order)
+	{
+		List<Entry<String, Integer>> list = new LinkedList<Entry<String, Integer>>(unsortMap.entrySet());
+
+		// Sorting the list based on values
+		Collections.sort(list, new Comparator<Entry<String, Integer>>()
+		{
+			public int compare(Entry<String, Integer> o1,
+					Entry<String, Integer> o2)
+			{
+				if (order)
+				{
+					return o1.getValue().compareTo(o2.getValue());
+				}
+				else
+				{
+					return o2.getValue().compareTo(o1.getValue());
+				}
+			}
+		});
+
+		// Maintaining insertion order with the help of LinkedList
+		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+		for (Entry<String, Integer> entry : list)
+		{
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedMap;
 	}
 
 	/**

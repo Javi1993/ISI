@@ -49,15 +49,15 @@
 					</div>
 					<div class="row">
 						<div class="4u 12u(mobile)">
-							<section> <a href="/Visualizacion/provincia?num=1" class="image featured"><img
+							<section title="Opinión social"> <a href="/Visualizacion/provincia?num=1" class="image featured"><img
 								src="images/pic01_b.jpg" alt="" /></a> <header
 								class="second icon fa-user">
 							<h3>OPINIÓN SOCIAL</h3>
-							<p>TWEETS VS CAMBIAR!</p>
+							<p>TWEETS Y GRÁFICOS</p>
 							</header> </section>
 						</div>
 						<div class="4u 12u(mobile)">
-							<section> <a href="/Visualizacion/provincia?num=2"
+							<section title="Comparar provincias"> <a href="/Visualizacion/provincia?num=2"
 								class="image featured"><img src="images/pic02_b.jpg" alt="" /></a>
 							<header class="second icon fa-cog">
 							<h3>COMPARAR PROVINCIAS</h3>
@@ -65,7 +65,7 @@
 							</header> </section>
 						</div>
 						<div class="4u 12u(mobile)">
-							<section> <a href="/Visualizacion/provincia?num=3"
+							<section title="Gráficos de una provincial"> <a href="/Visualizacion/provincia?num=3"
 								class="image featured"><img src="images/pic03_b.jpg" alt="" /></a>
 							<header class="second icon fa-bar-chart-o">
 							<h3>GRÁFICOS DE UNA PROVINCIA</h3>

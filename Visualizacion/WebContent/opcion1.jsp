@@ -21,20 +21,17 @@ if(feeling!=null){%>
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Sentimiento', 'Num. Tweets'],
-          ['Positivo',  <%=feeling[0]%>],
-          ['Negativo',  <%=feeling[1]%>],
-          ['Neutro', <%=feeling[2]%>]
+          ['Tweets positivos',  <%=feeling[0]%>],
+          ['Tweets negativos',  <%=feeling[1]%>],
+          ['Tweets neutros', <%=feeling[2]%>]
         ]);
 
       var options = {
-    	title: 'Sentimiento de los tweets',
-        legend: 'none',
-        pieSliceText: 'label',
-        pieStartAngle: 100,
+    	is3D: true,
  	   slices: {
- 			0: { color: 'green' },
- 			1: { color: 'red' },
- 			2: { color: 'grey' }
+ 			0: { color: '#00cc00' },
+ 			1: { color: '#ff0000' },
+ 			2: { color: '#adad85' }
  		  }
       };
 
@@ -65,24 +62,32 @@ if(feeling!=null){%>
 									<h2><%=request.getAttribute("provincia") %></h2>
 									<p>Opinión social</p>
 									</header>
-									<span id="hashtag">
 									<%HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute("hashTag");
-									if(hashTag!=null){ 
+									if(hashTag!=null&&hashTag.size()>0){ 
+										%><p>Frecuencia de hashtags:</p><%
+										int i = 0;
 										Iterator it = hashTag.entrySet().iterator();%>
+									<div id="hashtag"></div>
 									<script>
 									var fill = d3.scale.category20();
 									
 									    var frequency_list = [
 									        <%
-											 while (it.hasNext()) {
+										while (it.hasNext()) {
+											if(i>25){break;}else{
 												 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
 									        %>
 									        {"text":"<%=e.getKey()%>","size":<%=e.getValue()%>},
-									        <%}%>
+									        <%}i++;
+									        	}%>
 									        ];
 										
 									    var layout = d3.layout.cloud()
+									    <%if(hashTag.size()>=25){%>
 									    .size([800, 500])
+									    <%}else{%>
+									    .size([800, 300])
+									    <%}%>
 										.words(frequency_list)
 									    /*.words([
 									      "Hello", "world", "normally", "you", "want", "more", "words",
@@ -90,7 +95,7 @@ if(feeling!=null){%>
 									      return {text: d, size: 10 + Math.random() * 90, test: "haha"};
 									    }))*/
 									    .padding(5)
-									    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+									    .rotate(function() { return ~~((Math.random() * 6) - 3) * 30; })
 									    .font("Impact")
 									    .fontSize(function(d) { return d.size; })
 									    .on("end", draw);
@@ -98,7 +103,7 @@ if(feeling!=null){%>
 									layout.start();
 
 									function draw(words) {
-									  d3.select("#hashtag").append("svg")
+									  d3.select("div#hashtag").append("svg")
 									      .attr("width", layout.size()[0])
 									      .attr("height", layout.size()[1])
 									    .append("g")
@@ -107,23 +112,23 @@ if(feeling!=null){%>
 									      .data(words)
 									    .enter().append("text")
 									      .style("font-size", function(d) {
-									    	  if(frequency_list.length>50){
-										    	  if(d.size<10){
-										    		  return d.size + 7 + "px"; 
-										    	  }else if(d.size>150){
-										    		  return 80 + "px"; 
+									    	  <%if(hashTag.size()>=25){%>
+										    	  if(d.size<5){
+										    		  return (d.size+15)+"px"; 
+										    	  }else if(d.size>=100){
+										    		  return (80+d.size*0.1)+"px"; 
 										    	  }else{
-										    		  return 25 + "px"; 
+										    		  return (d.size+10) + "px"; 
 										    	  }
-								    		  }else{
-										    	  if(d.size<10){
-										    		  return d.size + 15 + "px"; 
-										    	  }else if(d.size>150){
-										    		  return 80 + "px"; 
+										    	  <%}else{%>
+										    	  if(d.size<=1){
+										    		  return "9px"; 
+										    	  }else if(d.size>=100){
+										    		  return (80+d.size*0.1)+"px"; 
 										    	  }else{
-										    		  return d.size + 25 + "px"; 
-										    	  }								    			  
-								    		  }
+										    		  return (d.size+20) + "px"; 
+										    	  }
+												    <%}%>
 									    	   }
 									      )
 									      .style("font-family", "Impact")
@@ -136,9 +141,8 @@ if(feeling!=null){%>
 									}
 									</script>
 									<%} %>
-									</span>
+									<p>Sentimiento de tweets:</p>
 										<div id="piechart" style="width: 800px; height: 400px;"></div>
-									<p>(PONER GRAFICO) El top-5 de hashtags es.</p>
 									<h3>More intriguing information</h3>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 										Maecenas ac quam risus, at tempus justo. Sed dictum rutrum
