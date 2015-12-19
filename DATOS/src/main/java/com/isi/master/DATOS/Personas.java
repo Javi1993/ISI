@@ -225,7 +225,11 @@ public class Personas {
 		{
 			for(String prov:provincias)
 			{
-				collectionTweetsProv.updateOne(new Document("_id", Funciones.quitarTildes(prov)), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
+				prov = Funciones.quitarTildes(prov);
+				if(prov.equals("ISLAS BALEARES")){prov = "BALEARES";}
+				else if(prov.equals("SANTA CRUZ DE TENERIFE")){prov = "TENERIFE";}
+
+				collectionTweetsProv.updateOne(new Document("_id", prov), new Document("$addToSet", new Document("tweets", new Document("id_tweet", tweet.getString("_id")).append("user", tweet.getString("usuario")))), new UpdateOptions().upsert(true));	
 			}
 			return true;
 		}
