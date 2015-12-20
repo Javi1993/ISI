@@ -3,9 +3,11 @@ package com.isi.master.visualizacion;
 import static java.util.Arrays.asList;
 import java.io.IOException;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -95,6 +99,9 @@ public class Opcion_Servlet extends HttpServlet {
 		List<Document> tweets = (List<Document>) doc.get("tweets");
 		int[] feeling = new int[3];//0-P,1-N,2-Neu
 		HashMap<String,Integer> hashTag = new HashMap<String,Integer>();
+		SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+		HashMap<Date,List<HashtagFreq>> hashTagDate = new HashMap<Date,List<HashtagFreq>>();
+
 		for (Document tw : tweets) 
 		{//cogemos el feeling de los tweets y el numero de hashtags
 			switch (tw.getString("feeling")) {
@@ -117,23 +124,62 @@ public class Opcion_Servlet extends HttpServlet {
 				{
 					palabra = quitarTildes(palabra.replace("#", "").toLowerCase().replaceAll("[^\\p{L}\\p{Nd}]+$",""));
 					insertarPalabra(palabra, hashTag);
+					String fecha = dt1.format(collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().getDate("fecha"));
+					insertarPalabraDate(palabra,hashTagDate, fecha);
 				}
 			}
 		}
 
 		Map<String, Integer> sortHashtag = sortByComparator(hashTag, false);
-		//		Iterator it = sortHashtag.entrySet().iterator();
+
+		Map<Date, List<HashtagFreq>> newMap = new TreeMap<Date, List<HashtagFreq>>();
+		newMap.putAll(hashTagDate);
+
+		//		Iterator it = newMap.entrySet().iterator();
 		//		while (it.hasNext()) {
 		//
-		//			Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
-		//			System.out.println(e.getKey()+"_"+e.getValue());
+		//			Map.Entry<Date,List<HashtagFreq>> e = (Map.Entry<Date,List<HashtagFreq>>)it.next();
+		//			System.out.println("--"+dt1.format(e.getKey())+" :");
+		//			for(HashtagFreq hashtagFreq : e.getValue())
+		//			{
+		//				System.out.println("---- "+hashtagFreq.getHashtag()+"_"+hashtagFreq.getSize());
+		//			}
 		//		}
-		//		System.out.println(sortHashtag.size());
+		//		System.out.println(hashTagDate.size());
 
-
+		request.setAttribute("hashTagDate", newMap);
 		request.setAttribute("hashTag", sortHashtag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void insertarPalabraDate(String palabra, HashMap<Date,List<HashtagFreq>> hashDate, String fecha) {
+		List<HashtagFreq> hashList = new ArrayList<HashtagFreq>();
+		if(palabra.contains(".")||palabra.contains(",")||palabra.contains(":")||palabra.contains(";"))
+		{
+			String[] test = palabra.split("\\.")[0].split(",")[0].split(":")[0].split(";");
+			palabra = test[0];
+		}
+
+		if(hashDate.get(new Date(fecha))!=null){
+			List<HashtagFreq> aux = hashDate.get(new Date(fecha));
+			boolean existe = false;
+			for (HashtagFreq hashtagFreq : aux) {
+				if(hashtagFreq.getHashtag().equals("#"+palabra))
+				{
+					hashtagFreq.setSize(hashtagFreq.getSize()+1);
+					existe = true;
+					break;
+				}
+			}
+			//Ese hashtag no esta para esa fecha
+			if(!existe){aux.add(new HashtagFreq("#"+palabra, 1));}
+			hashDate.put(new Date(fecha), aux);//actualizamos
+		}else{//insertamos la nueva fecha con su hashtag
+			hashList.add(new HashtagFreq("#"+palabra, 1));
+			hashDate.put(new Date(fecha), hashList);
+		}
 	}
 
 	/**

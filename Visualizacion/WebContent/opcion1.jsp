@@ -1,5 +1,6 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.List, org.bson.Document, java.util.HashMap, java.util.Iterator, java.util.Map"%>
+	pageEncoding="UTF-8" import="java.util.List, org.bson.Document, java.util.Map.Entry, java.util.HashMap, java.util.Iterator, java.util.Map, java.util.Date, com.isi.master.visualizacion.HashtagFreq, java.text.SimpleDateFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,10 +14,14 @@
 <script type="text/javascript" src="./assets/js/d3.v3.min.js"></script>
 <script type="text/javascript" src="./assets/js/d3.layout.cloud.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<%int[] feeling = (int[])request.getAttribute("feeling"); 
-if(feeling!=null){%>
+<%
+int[] feeling = (int[])request.getAttribute("feeling"); 
+Map<Date, List<HashtagFreq>> hashTagDate = (Map <Date, List<HashtagFreq>>)request.getAttribute("hashTagDate");
+HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute("hashTag");
+%>
 <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
+<%if(feeling!=null){%>
+	  google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
@@ -38,8 +43,51 @@ if(feeling!=null){%>
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
       }
+     <%}if(hashTagDate!=null&&hashTag!=null&&hashTag.size()>0){
+     	int i = 0;
+     	SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yy");
+		Iterator<Entry<String, Integer>> it = hashTag.entrySet().iterator();
+		List<String> auxHashtags = new ArrayList<String>();
+		%>
+	  google.load('visualization', '1.1', {packages: ['line']});
+      google.setOnLoadCallback(drawChart2);
+      function drawChart2() {
+    	  
+      	var data = new google.visualization.DataTable();
+    	data.addColumn('string', 'Fecha (MM/dd/yy)');
+    	<%while (it.hasNext()) {
+			if(i>=5){break;}else{
+				 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();%>
+    	data.addColumn('number', '#<%=e.getKey()%>');
+    	<%auxHashtags.add("#"+e.getKey());}i++;
+    	}%>
+    	
+    	data.addRows([
+    	 <%
+    	 int j = 0;
+ 		Iterator<Entry<Date, List<HashtagFreq>>> ite = hashTagDate.entrySet().iterator();
+ 		while (ite.hasNext()) {   
+ 			Map.Entry<Date,List<HashtagFreq>> e = (Map.Entry<Date,List<HashtagFreq>>)ite.next();%> 
+ 			['<%=dt1.format(e.getKey())%>',
+ 			 <%for(int k = 0; k<auxHashtags.size(); k++){
+ 				boolean esta = false;
+ 			 	for(HashtagFreq hashtagFreq : e.getValue()){
+ 			 	if(auxHashtags.get(k).equals(hashtagFreq.getHashtag())){%>
+ 			 		<%=hashtagFreq.getSize()%>,
+ 			 	<%esta=true;break;}}%>
+ 		<%if(!esta){%>0,<%}}%>],<%}%>]);
+
+  	var options = {	
+  			legend: { position: 'bottom'},
+          };
+
+	var chart = new google.charts.Line(document.getElementById('lineal'));
+
+    chart.draw(data, options);
+
+        }
+      <%} %>
     </script>
-    <%} %>
 </head>
 <body class="right-sidebar">
 	<div id="page-wrapper">
@@ -59,14 +107,14 @@ if(feeling!=null){%>
 								<div id="content">
 									<!-- Content -->
 									<article> <header class="major">
-									<h2><%=request.getAttribute("provincia") %></h2>
+									<h2><%=request.getAttribute("provincia")%></h2>
 									<p>Opinión social</p>
 									</header>
-									<%HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute("hashTag");
+									<%
 									if(hashTag!=null&&hashTag.size()>0){ 
-										%><p>Frecuencia de hashtags:</p><%
+										%><h3>Frecuencia de hashtags</h3><%
 										int i = 0;
-										Iterator it = hashTag.entrySet().iterator();%>
+										Iterator<Entry<String, Integer>> it = hashTag.entrySet().iterator();%>
 									<div id="hashtag"></div>
 									<script>
 									var fill = d3.scale.category20();
@@ -141,31 +189,10 @@ if(feeling!=null){%>
 									}
 									</script>
 									<%} %>
-									<p>Sentimiento de tweets:</p>
-										<div id="piechart" style="width: 800px; height: 400px;"></div>
-									<h3>More intriguing information</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										Maecenas ac quam risus, at tempus justo. Sed dictum rutrum
-										massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque
-										lorem felis, ultricies a bibendum id, bibendum sit amet nisl.
-										Mauris et lorem quam. Maecenas rutrum imperdiet vulputate.
-										Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis
-										orci convallis tempor. Etiam a lacus a lacus pharetra
-										porttitor quis accumsan odio. Sed vel euismod nisi. Etiam
-										convallis rhoncus dui quis euismod. Maecenas lorem tellus,
-										congue et condimentum ac, ullamcorper non sapien. Donec
-										sagittis massa et leo semper a scelerisque metus faucibus.
-										Morbi congue mattis mi. Phasellus sed nisl vitae risus
-										tristique volutpat. Cras rutrum commodo luctus.</p>
-									<p>Phasellus odio risus, faucibus et viverra vitae,
-										eleifend ac purus. Praesent mattis, enim quis hendrerit
-										porttitor, sapien tortor viverra magna, sit amet rhoncus nisl
-										lacus nec arcu. Suspendisse laoreet metus ut metus imperdiet
-										interdum aliquam justo tincidunt. Mauris dolor urna, fringilla
-										vel malesuada ac, dignissim eu mi. Praesent mollis massa ac
-										nulla pretium pretium. Maecenas tortor mauris, consectetur
-										pellentesque dapibus eget, tincidunt vitae arcu. Vestibulum
-										purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+									<h3>Sentimiento de tweets</h3>
+										<div id="piechart" style="width: 100%; height: 400px;"></div>
+									<h3>Evolcuión diaria de Hashtags principales</h3>
+										<div class="igraph" id="lineal" style="width: 100%; height: 400px;"></div>
 									</article>
 								</div>
 							</div>
