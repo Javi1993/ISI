@@ -206,20 +206,29 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 									<h2>Tweets</h2>
 									</header> <%
 									if(tweets!=null){
-									int cnt=0;
-									for(Document tweet:tweets){ 
-										if(cnt>=5){break;}else{%>
+										int cnt = 0;
+										if(request.getAttribute("cnt")!=null){cnt=(int)request.getAttribute("cnt");}
+										int limite = cnt+5;
+										if(limite>tweets.size()){limite=tweets.size();}
+										for(int k = cnt; k<limite; k++){%>
 									<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
 										<p lang="es" dir="ltr"></p>
 										<a
-											href='https://twitter.com/<%=tweet.getString("user")%>/status/<%=tweet.getString("id_tweet")%>'></a>
+											href='https://twitter.com/<%=tweets.get(k).getString("user")%>/status/<%=tweets.get(k).getString("id_tweet")%>'></a>
 									</blockquote>
 									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
 									
-									<%cnt++;}
-									}%>
-									<p>Mostrando <%=cnt%> de un total de <%=tweets.size()%> tweets</p>
-								<%	}%> 
+									<%}%>
+									<p>Página <%=cnt/5+1%> de <%if(tweets.size()/5==0){%>1<%}else{%><%=tweets.size()/5%><%}if(tweets.size()>5){%>
+									<br><%if(cnt>=5){%><a href="/Visualizacion/page?n=0&p=<%=cnt%>">Anterior</a> | <%}if(limite<tweets.size()){%><a href="/Visualizacion/page?n=1&p=<%=cnt%>">Siguiente</a><%}}%></p>
+									<p>Mostrando <%if(tweets.size()<=5){%><%=tweets.size()%><%}else if(tweets.size()-cnt<5){%><%=tweets.size()-cnt%><%}else{%>5<%}%> de un total de <%=tweets.size()%> tweets</p>
+									<%
+										request.getSession().setAttribute("hashTagDate", hashTagDate);								
+										request.getSession().setAttribute("hashTag", hashTag);
+										request.getSession().setAttribute("tweets", tweets);
+										request.getSession().setAttribute("feeling", feeling);	
+										request.getSession().setAttribute("provincia", request.getAttribute("provincia"));	
+									}%> 
 									<p></section>
 								</div>
 							</div>
