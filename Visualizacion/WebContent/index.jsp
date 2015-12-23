@@ -115,7 +115,7 @@
 								visualización en la que podrá analizar la contaminación de una
 								provincia en base a ciertos contaminantes. Infórmese sobre los
 								riesgos para la salud de estos contaminantes atmosfericos.</p>
-							<footer> <a href="#"
+							<footer> <a href="/Visualizacion/contaminante"
 								class="button medium alt icon fa-info-circle">INFORMACIÓN DE
 								CONTAMINANTES</a></footer> </section>
 						</div>
