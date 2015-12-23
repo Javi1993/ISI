@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.List, org.bson.Document"%>
+	pageEncoding="UTF-8" import="java.util.List, org.bson.Document, java.util.HashMap"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +10,33 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	<%
+	List<Document> listCont = (List<Document>)request.getAttribute("cont");
+	HashMap<String,List<Document>> topCity = (HashMap<String,List<Document>>)request.getAttribute("topCity");
+	for(Document cont:listCont){%>
+      google.setOnLoadCallback(drawChart<%=cont.get("_id")%>);
+      function drawChart<%=cont.get("_id")%>() {
+        var data = google.visualization.arrayToDataTable([
+          ['Provincia', '<%=cont.getString("Unidades")%>'],
+  		<%for (Document prov : topCity.get(cont.getString("_id"))) {%>
+        ['<%=prov.getString("_id")%>',<%=prov.getDouble("average")%>],
+		<%}
+		%>
+        ]);
+
+        var options = {
+        	title: 'Top 5 ciudades con mayor <%=cont.get("_id")%>',
+        	legend: { position: "none" }
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('ch<%=cont.get("_id")%>'));
+        chart.draw(data, options);
+      }
+      <%}%>
+      </script>
 </head>
 <body class="left-sidebar">
 	<div id="page-wrapper">
@@ -32,7 +59,7 @@
 									<section>
 									<div id="menu">
 										<ul>
-											<%	List<Document> listCont = (List<Document>)request.getAttribute("cont");
+											<%	
 												String contaminante = listCont.get(0).getString("_id");
 												String contaminanteName = listCont.get(0).getString("Nombre");
 												for (Document cont:listCont) {%>
@@ -51,6 +78,9 @@
 														<h2 id="cont_1"><%=contaminante %></h2>
 														<p>Informese sobre los efectos a la salud del <span id="cont_2"><%=contaminanteName%></span></p>
 													</header>
+													<%for(Document elem:listCont){ %>
+													<div class="chart" id="ch<%=elem.getString("_id").replaceAll("\\s+","")%>" style="width:100%; height:300px"></div>
+													<%} %>
 													<div class="column">
 													<%for (Document cont:listCont) {%>
 													<ul class="provincias" id='<%=cont.getString("_id").replaceAll("\\s+","")%>'>
@@ -81,12 +111,16 @@
 	<script>
 $( ".selector" ).click(function() {
 	$( ".provincias" ).css("display","none");
+	$( ".chart" ).css("display","none");
 	$('#'+$(this).attr('id').substring(1)).css("display","inline");
+	$('#ch'+$(this).attr('id').substring(1)).css("display","inline");
 	$('#cont_1').html($(this).attr('id').substring(1));
 	$('#cont_2').html($(this).attr('name'));
 	});
 
 $( ".provincias" ).css("display","none");
+$( ".chart" ).css("display","none");
+$( '#ch<%=contaminante%>' ).css("display","inline");
 $( '#<%=contaminante%>' ).css("display","inline");
 $( "li#c" ).addClass( "current_page_item" );
 </script>

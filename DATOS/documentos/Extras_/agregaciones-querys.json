@@ -37,6 +37,17 @@ db.aire.aggregate([
 	}
 ]);
 
+/*Ver ciudades TOP en un elemento*/
+db.aire.aggregate([
+	{"$unwind":"$Medidas"},
+	{"$group":
+		{"_id":"$Provincia",
+		"average_NO2":{"$avg":"$Medidas.NO2"},
+		}	
+	},
+	{"$sort":{"average_NO2":-1}}
+]);
+
 /*Ejemplo de calculo de medias para una provincia por mes*/
 db.aire.aggregate([
 	{"$match":{"Provincia":"MADRID"}},
