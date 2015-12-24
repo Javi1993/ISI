@@ -248,4 +248,7 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
 </body>
+<script>
+$( "li#v" ).addClass( "current_page_item" );
+</script>
 </html>
