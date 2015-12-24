@@ -22,7 +22,7 @@
 				<div id="banner">
 					<h2>
 						<strong>atmosphspain:</strong> consulta datos SOBRE LOS DIFERENTES
-						CONTAMINANTES del aire español usando herramientas de
+						CONTAMINANTES del aire en España usando herramientas de
 						visualización <br>
 					</h2>
 					<p>ver los niveles por provincias, mostar las opiniones de sus
@@ -73,17 +73,6 @@
 							</header> </section>
 						</div>
 					</div>
-					<div class="row">
-						<div class="12u">
-							<p>Estas formas de visualización proporcionan al usuario la
-								opción de consultar los datos sobre la contaminación atmosférica
-								en la provincia de España seleccionada. Esta información podrá
-								ser visualizada desde dos puntos de vista diferentes, la opinión
-								de los habitantes y los datos reales recopilados por las
-								estaciones de calidad del aire de las provincias de estas
-								personas.</p>
-						</div>
-					</div>
 					</section>
 				</div>
 			</div>
@@ -95,29 +84,25 @@
 						<div class="6u 12u(mobile)">
 							<section> <header class="major">
 							<h2>DESCARGAR LOS DATASHEET</h2>
-							<p>LAS MEDICIONES EXACTAS DE LAS ESTACIONES DE CALIDAD DE
+							<p>LAS MEDICIONES DE LAS ESTACIONES DE CALIDAD DE
 								AIRE UTILIZADAS</p>
 							</header>
 							<p>ATMOSPHSPAIN le da la oportunidad de descargar los
-								datasheets con los datos reales de los contaminantes medidos por
-								las estaciones de calidad del aire ubicadas en cada una de las
-								provincias de España</p>
+								datasheets limpios y preprocesados con los datos reales de los contaminantes medidos por
+								las estaciones de calidad del aire</p>
 							<footer> <a href="/Visualizacion/datasheet?op=1"
-								class="button medium icon fa-arrow-circle-right">ver
-								datasheets</a></footer> </section>
+								class="button medium icon fa-arrow-circle-right" title="Ver datasheets">datasheets</a></footer> </section>
 						</div>
 						<div class="6u 12u(mobile)">
 							<section> <header class="major">
 							<h2>numerosos contaminantes</h2>
-							<p>informese sobre los contaminantes mostrados</p>
+							<p>infórmese sobre los contaminantes mostrados</p>
 							</header>
-							<p>ATMOSPHSPAIN le proporciona varias herramientas de
-								visualización en la que podrá analizar la contaminación de una
-								provincia en base a ciertos contaminantes. Infórmese sobre los
-								riesgos para la salud de estos contaminantes atmosfericos.</p>
+							<p>ATMOSPHSPAIN le ayuda a informarse sobre los
+								riesgos para la salud de los contaminantes atmosfericos mostrados en las visualizaciones.
+								 Además, podra ver el top 5 de provincias a la cabeza en cada contaminante.</p>
 							<footer> <a href="/Visualizacion/contaminante"
-								class="button medium alt icon fa-info-circle">INFORMACIÓN DE
-								CONTAMINANTES</a></footer> </section>
+								class="button medium alt icon fa-info-circle" title="Informarse sobre contaminantes">CONTAMINANTES</a></footer> </section>
 						</div>
 					</div>
 					</section>
