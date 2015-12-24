@@ -29,7 +29,9 @@
 
         var options = {
         	title: 'Top 5 ciudades con mayor <%=cont.get("_id")%>',
-        	legend: { position: "none" }
+        	legend: { position: "none" },
+        	height: "300px",
+        	widht: "800px"
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('ch<%=cont.get("_id")%>'));
@@ -76,17 +78,18 @@
 												<article>
 													<header class="major">
 														<h2 id="cont_1"><%=contaminante %></h2>
-														<p>Informese sobre los efectos a la salud del <span id="cont_2"><%=contaminanteName%></span></p>
-													</header>
+														<p>Infórmese sobre los efectos a la salud del <span id="cont_2"><%=contaminanteName%></span></p>
 													<%for(Document elem:listCont){ %>
-													<div class="chart" id="ch<%=elem.getString("_id").replaceAll("\\s+","")%>" style="width:100%; height:300px"></div>
-													<%} %>
+													<div class="chart" id="ch<%=elem.getString("_id").replaceAll("\\s+","")%>"></div>
+													<%} %>													
+													</header>
 													<div class="column">
 													<%for (Document cont:listCont) {%>
 													<ul class="provincias" id='<%=cont.getString("_id").replaceAll("\\s+","")%>'>
-														<li>Hola <%=cont.getString("_id") %></li>
+														<%=cont.getString("info") %>
 													</ul>
-													<%} %>
+													<%} %><br>
+													<p><b>Fuente: </b><a href="http://www.murciasalud.es/">http://www.murciasalud.es/</a></p>
 													</div>
 												</article>
 
