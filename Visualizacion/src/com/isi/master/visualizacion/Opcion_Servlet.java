@@ -36,7 +36,6 @@ public class Opcion_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MongoClient client;
 	private MongoDatabase database;
-	private MongoCollection<Document> collection;
 	private MongoCollection<Document> collectionTweet;
 	private MongoCollection<Document> collectionTweetProv;
 	private MongoCollection<Document> collectionAire;
@@ -55,7 +54,6 @@ public class Opcion_Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		client = new MongoClient("localhost", 27017);//conectamos
 		database = client.getDatabase("test");//elegimos bbdd
-		collection = database.getCollection("cartodb");//tomamos la coleccion de mapas de cartdb
 		collectionTweet = database.getCollection("twitter");//tomamos la coleccion de tweets-prov
 		collectionTweetProv = database.getCollection("tweetProv");//tomamos la coleccion de tweets-prov
 		collectionAire = database.getCollection("aire");//tomamos la coleccion de mapas de aire
@@ -249,8 +247,8 @@ public class Opcion_Servlet extends HttpServlet {
 	private void opcion2(HttpServletRequest request){
 		try{
 			//obtenemos los mapas de las provincias
-			Document map1 = collection.find(new Document("_id", request.getParameter("provincia"))).first();
-			Document map2 = collection.find(new Document("_id", request.getParameter("provincia2"))).first();
+			Document map1 = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
+			Document map2 = collectionTweetProv.find(new Document("_id", request.getParameter("provincia2"))).first();
 			Document[] maps = new Document[2];
 			maps[0] = (Document) map1.get("Mapas");
 			maps[1] = (Document) map2.get("Mapas");
@@ -307,7 +305,7 @@ public class Opcion_Servlet extends HttpServlet {
 	private void opcion3(HttpServletRequest request){
 		try{
 			//obtenemos los mapas para esa provincia
-			Document map = collection.find(new Document("_id", request.getParameter("provincia"))).first();
+			Document map = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
 			request.setAttribute("maps", map.get("Mapas"));
 			//obtenemos las medias mensuales de los contaminantes que se miden por ug/m3
 			List<Document> pipeline = asList(new Document("$match", new Document("Provincia",request.getParameter("provincia"))),

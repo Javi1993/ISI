@@ -50,7 +50,7 @@ public class Datasheet_Servlet extends HttpServlet {
 			client = new MongoClient("localhost", 27017);//conectamos
 			database = client.getDatabase("test");//elegimos bbdd
 			collection = database.getCollection("aire");//tomamos la coleccion de mapas de aire
-			collectionCarto = database.getCollection("cartodb");//tomamos la coleccion de mapas de aire
+			collectionCarto = database.getCollection("tweetProv");//tomamos la coleccion de mapas de aire
 			List<Document> pipeline = asList(
 					new Document("$group", new Document("_id", "$Provincia")
 							.append("estaciones", new Document("$addToSet","$Estacion"))), 

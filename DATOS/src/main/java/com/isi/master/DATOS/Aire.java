@@ -30,7 +30,7 @@ public class Aire {
 		database = client.getDatabase("test");//elegimos bbdd
 		collection = database.getCollection("aire");//tomamos la coleccion de estaciones de aire
 		limits = database.getCollection("contaminantes");//tomamos la coleccion de contaminantes
-		insertarLimites();//insertamos los limites de ciertos contaminantes en la base de datos
+		//insertarLimites();//insertamos los limites de ciertos contaminantes en la base de datos
 		limites = limits.find(new Document()).into(new ArrayList<Document>());
 	}
 
