@@ -15,9 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -114,16 +112,15 @@ public class Opcion_Servlet extends HttpServlet {
 				break;
 			}
 
-			String bodyTweet = collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().getString("contenido");
-			StringTokenizer tokens=new StringTokenizer(bodyTweet);
-			while(tokens.hasMoreTokens()){
-				String palabra = tokens.nextToken();
-				if(palabra.startsWith("#"))
-				{
-					palabra = quitarTildes(palabra.replace("#", "").toLowerCase().replaceAll("[^\\p{L}\\p{Nd}]+$",""));
-					insertarPalabra(palabra, hashTag);
+			//cogemos el array de hashtags
+			List<String> hashTagsList = (List<String>)collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().get("hashtag");
+			if(hashTagsList!=null && hashTagsList.size()>0)
+			{//comprobamos que el tweet tenga hashtags
+				for (String palabra : hashTagsList) {
+					palabra = quitarTildes(palabra);
+					insertarPalabra(palabra, hashTag);//insertamos en el hashmap de frequencia de hashtag
 					String fecha = dt1.format(collectionTweet.find(new Document("_id",tw.getString("id_tweet"))).first().getDate("fecha"));
-					insertarPalabraDate(palabra,hashTagDate, fecha);
+					insertarPalabraDate(palabra,hashTagDate, fecha);//insertamos en el hashmap de evolucion por fecha
 				}
 			}
 		}
@@ -154,12 +151,6 @@ public class Opcion_Servlet extends HttpServlet {
 	@SuppressWarnings("deprecation")
 	private void insertarPalabraDate(String palabra, HashMap<Date,List<HashtagFreq>> hashDate, String fecha) {
 		List<HashtagFreq> hashList = new ArrayList<HashtagFreq>();
-		if(palabra.contains(".")||palabra.contains(",")||palabra.contains(":")||palabra.contains(";"))
-		{
-			String[] test = palabra.split("\\.")[0].split(",")[0].split(":")[0].split(";");
-			palabra = test[0];
-		}
-
 		if(hashDate.get(new Date(fecha))!=null){
 			List<HashtagFreq> aux = hashDate.get(new Date(fecha));
 			boolean existe = false;
@@ -186,11 +177,6 @@ public class Opcion_Servlet extends HttpServlet {
 	 * @param hashTag
 	 */
 	private void insertarPalabra(String palabra, HashMap<String, Integer> hashTag) {
-		if(palabra.contains(".")||palabra.contains(",")||palabra.contains(":")||palabra.contains(";"))
-		{
-			String[] test = palabra.split("\\.")[0].split(",")[0].split(":")[0].split(";");
-			palabra = test[0];
-		}
 		if(hashTag.get(palabra)!=null){
 			if(hashTag.get(palabra)+1>90)
 			{
