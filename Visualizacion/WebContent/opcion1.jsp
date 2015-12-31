@@ -191,8 +191,10 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 									<%} %>
 									<h3>Sentimiento de tweets</h3>
 										<div id="piechart" style="width: 100%; height: 400px;"></div>
+									<%if(hashTag!=null&&hashTag.size()>0){ %>
 									<h3>Evolcuión diaria de Hashtags principales</h3>
 										<div class="igraph" id="lineal" style="width: 100%; height: 400px;"></div>
+									<%}%>
 									</article>
 								</div>
 							</div>
