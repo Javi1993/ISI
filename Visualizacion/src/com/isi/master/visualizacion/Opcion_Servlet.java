@@ -178,12 +178,7 @@ public class Opcion_Servlet extends HttpServlet {
 	 */
 	private void insertarPalabra(String palabra, HashMap<String, Integer> hashTag) {
 		if(hashTag.get(palabra)!=null){
-			if(hashTag.get(palabra)+1>90)
-			{
-				hashTag.put(palabra, 90);
-			}else{
-				hashTag.put(palabra, hashTag.get(palabra)+1);
-			}	
+			hashTag.put(palabra, hashTag.get(palabra)+1);
 		}else{
 			hashTag.put(palabra, 1);
 		}

@@ -9,10 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="assets/css/jqcloud.min.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<script type="text/javascript" src="./assets/js/d3.v3.min.js"></script>
-<script type="text/javascript" src="./assets/js/d3.layout.cloud.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="./assets/js/jqcloud.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <%
 int[] feeling = (int[])request.getAttribute("feeling"); 
@@ -116,77 +117,22 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 										int i = 0;
 										Iterator<Entry<String, Integer>> it = hashTag.entrySet().iterator();%>
 									<div id="hashtag"></div>
-									<script>
-									var fill = d3.scale.category20();
-									
-									    var frequency_list = [
-									        <%
+									<script>					    
+									    var words = [
+								        <%
 										while (it.hasNext()) {
 											if(i>25){break;}else{
 												 Map.Entry<String,Integer> e = (Map.Entry<String,Integer>)it.next();
 									        %>
-									        {"text":"<%=e.getKey()%>","size":<%=e.getValue()%>},
+									        		{text:"#<%=e.getKey()%>",weight:<%=e.getValue()%>},
 									        <%}i++;
-									        	}%>
-									        ];
-										
-									    var layout = d3.layout.cloud()
-									    <%if(hashTag.size()>=25){%>
-									    .size([800, 500])
-									    <%}else{%>
-									    .size([800, 300])
-									    <%}%>
-										.words(frequency_list)
-									    /*.words([
-									      "Hello", "world", "normally", "you", "want", "more", "words",
-									      "than", "this"].map(function(d) {
-									      return {text: d, size: 10 + Math.random() * 90, test: "haha"};
-									    }))*/
-									    .padding(5)
-									    .rotate(function() { return ~~((Math.random() * 6) - 3) * 30; })
-									    .font("Impact")
-									    .fontSize(function(d) { return d.size; })
-									    .on("end", draw);
-
-									layout.start();
-
-									function draw(words) {
-									  d3.select("div#hashtag").append("svg")
-									      .attr("width", layout.size()[0])
-									      .attr("height", layout.size()[1])
-									    .append("g")
-									      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
-									    .selectAll("text")
-									      .data(words)
-									    .enter().append("text")
-									      .style("font-size", function(d) {
-									    	  <%if(hashTag.size()>=25){%>
-										    	  if(d.size<5){
-										    		  return (d.size+15)+"px"; 
-										    	  }else if(d.size>=100){
-										    		  return (80+d.size*0.1)+"px"; 
-										    	  }else{
-										    		  return (d.size+10) + "px"; 
-										    	  }
-										    	  <%}else{%>
-										    	  if(d.size<=1){
-										    		  return "9px"; 
-										    	  }else if(d.size>=100){
-										    		  return (80+d.size*0.1)+"px"; 
-										    	  }else{
-										    		  return (d.size+20) + "px"; 
-										    	  }
-												    <%}%>
-									    	   }
-									      )
-									      .style("font-family", "Impact")
-									      .style("fill", function(d, i) { return fill(i); })
-									      .attr("text-anchor", "middle")
-									      .attr("transform", function(d) {
-									        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-									      })
-									      .text(function(d) { return d.text; });
-									}
+							        			}%>
+									               ];
+						               $('#hashtag').jQCloud(words,{
+						            	  autoResize: true,
+						               	  width: 800,
+						               	  height: 300
+						               });
 									</script>
 									<%} %>
 									<h3>Sentimiento de tweets</h3>
@@ -242,7 +188,6 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 		<jsp:include page="./footer.html" flush="true" />
 	</div>
 	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.dropotron.min.js"></script>
 	<script src="assets/js/skel.min.js"></script>
 	<script src="assets/js/skel-viewport.min.js"></script>
