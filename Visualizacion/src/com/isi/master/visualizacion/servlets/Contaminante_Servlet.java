@@ -1,4 +1,4 @@
-package com.isi.master.visualizacion;
+package com.isi.master.visualizacion.servlets;
 
 import static java.util.Arrays.asList;
 import java.io.IOException;

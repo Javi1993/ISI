@@ -1,4 +1,4 @@
-package com.isi.master.visualizacion;
+package com.isi.master.visualizacion.clases;
 
 public class HashtagFreq {
 	private String hashtag;
