@@ -1,7 +1,6 @@
 package com.isi.master.visualizacion.clases;
 
 import static java.util.Arrays.asList;
-
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,10 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
-
 import javax.servlet.http.HttpServletRequest;
 import org.bson.Document;
-
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
