@@ -34,7 +34,7 @@ public class Datasheet {
 		collectionCarto = database.getCollection("tweetProv");//tomamos la coleccion de mapas de aire
 	}
 
-	public HttpServletRequest mostrarFiles(HttpServletRequest request)
+	public void mostrarFiles(HttpServletRequest request)
 	{
 		List<Document> pipeline = asList(
 				new Document("$group", new Document("_id", "$Provincia")
@@ -46,7 +46,6 @@ public class Datasheet {
 		request.setAttribute("geo", geo);
 		request.setAttribute("list", prov_estaciones);
 		client.close();
-		return request;
 	}
 
 	public void descargarFiles(HttpServletResponse response, String csvName) throws ServletException, IOException

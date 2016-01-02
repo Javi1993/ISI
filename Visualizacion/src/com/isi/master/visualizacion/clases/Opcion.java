@@ -44,7 +44,7 @@ public class Opcion {
 	 * Opcion 3- Visualizacion de mapa+grafico de medias una provincia
 	 * @param request - Parametros de la peticion
 	 */
-	public HttpServletRequest opcion3(HttpServletRequest request){
+	public void opcion3(HttpServletRequest request){
 		try{
 			//obtenemos los mapas para esa provincia
 			Document map = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
@@ -73,14 +73,13 @@ public class Opcion {
 			e.printStackTrace();
 		}
 		client.close();
-		return request;
 	}
 
 	/**
 	 * Opcion 2- Visualizacion de provincia VS provincia
 	 * @param request - Parametros de la peticion
 	 */
-	public HttpServletRequest opcion2(HttpServletRequest request){
+	public void opcion2(HttpServletRequest request){
 		try{
 			//obtenemos los mapas de las provincias
 			Document map1 = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
@@ -133,7 +132,6 @@ public class Opcion {
 			e.printStackTrace();
 		}
 		client.close();
-		return request;
 	}
 
 	/**
@@ -340,7 +338,7 @@ public class Opcion {
 	 * @param request - Parametros de la peticion
 	 */
 	@SuppressWarnings("unchecked")
-	public HttpServletRequest opcion1(HttpServletRequest request){
+	public void opcion1(HttpServletRequest request){
 		Document doc = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
 		List<Document> tweets = (List<Document>) doc.get("tweets");
 		int[] feeling = new int[3];//0-P,1-N,2-Neu
@@ -385,7 +383,6 @@ public class Opcion {
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
 		client.close();
-		return request;
 	}
 
 	/**
