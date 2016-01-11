@@ -164,9 +164,10 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 										<a
 											href='https://twitter.com/<%=tweets.get(k).getString("user")%>/status/<%=tweets.get(k).getString("id_tweet")%>'></a>
 									</blockquote>
-									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
-									
+									<div title="Negativo" style="background-color: red; height: 8px; width: 100%">
+									</div>
 									<%}%>
+									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
 									<p>Página <%=cnt/5+1%> de <%if(tweets.size()/5==0){%>1<%}else{%><%=tweets.size()/5%><%}if(tweets.size()>5){%>
 									<br><%if(cnt>=5){%><a href="/Visualizacion/page?n=0&p=<%=cnt%>">Anterior</a> | <%}if(limite<tweets.size()){%><a href="/Visualizacion/page?n=1&p=<%=cnt%>">Siguiente</a><%}}%></p>
 									<p>Mostrando <%if(tweets.size()<=5){%><%=tweets.size()%><%}else if(tweets.size()-cnt<5){%><%=tweets.size()-cnt%><%}else{%>5<%}%> de un total de <%=tweets.size()%> tweets</p>
