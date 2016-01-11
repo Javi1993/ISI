@@ -15,8 +15,7 @@
 <script src="assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="./assets/js/jqcloud.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<%
-int[] feeling = (int[])request.getAttribute("feeling"); 
+<%int[] feeling = (int[])request.getAttribute("feeling"); 
 Map<Date, List<HashtagFreq>> hashTagDate = (Map <Date, List<HashtagFreq>>)request.getAttribute("hashTagDate");
 HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute("hashTag");
 %>
@@ -89,6 +88,47 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
         }
       <%} %>
     </script>
+<%Document mapas = (Document)request.getAttribute("maps");
+List<Document> medias = (List<Document>) request.getAttribute("medias");
+String contaminantes3[] = null;
+String elem = "NO2";
+if(mapas!=null && medias!=null && medias.size()>0){
+	contaminantes3 = new String[mapas.keySet().size()];
+	contaminantes3 = mapas.keySet().toArray(contaminantes3);
+	elem = contaminantes3[0];
+%>
+<script type="text/javascript">
+google.load('visualization', '1.1', {packages: ['line']});
+   <%for(int i = 0; i<contaminantes3.length; i++){%>    
+     google.setOnLoadCallback(drawChart<%=contaminantes3[i]%>);
+     function drawChart<%=contaminantes3[i]%>() {
+   	var data = new google.visualization.DataTable();
+   		data.addColumn('string', 'Fecha (MM/yyyy)');
+   		data.addColumn('number', '<%=contaminantes3[i]%>');
+   	
+	   	data.addRows([
+	   		<%for (Document med : medias) {%>
+	           ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+contaminantes3[i])%>],
+	   		<%}
+	   		%>
+	       ]);
+
+	var options = {
+			chart: {
+		          subtitle: '<%if(contaminantes3[i].equals("CO")||contaminantes3[i].equals("TOL")||contaminantes3[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>',
+		        },
+			width: 783,
+			height: 400,
+	       };
+
+	var chart = new google.charts.Line(document.getElementById('plus<%=contaminantes3[i]%>'));
+
+   chart.draw(data, options);
+
+     }
+     <%}%>
+</script>
+<%}%>
 </head>
 <body class="right-sidebar">
 	<div id="page-wrapper">
@@ -141,6 +181,19 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 									<h3>Evolcuión diaria de Hashtags principales</h3>
 										<div class="igraph" id="lineal" style="width: 100%; height: 400px;"></div>
 									<%}%>
+
+									<a id="plus" style="cursor:pointer;">Ver <%=request.getAttribute("provincia")%> en detalle &raquo;</a>
+									<div id="plusG">
+									<a id="less" style="cursor:pointer;">&laquo; Ocultar</a>
+									<br><br>
+									<p><span class="overflow-element">
+									<span title="<%=contaminantes3[0]%>" class="map" id="map<%=contaminantes3[0]%>" style="color:white;cursor:pointer;"><%=contaminantes3[0]%></span><%for(int i = 1; i<contaminantes3.length; i++){%>&nbsp;&nbsp;<span title="<%=contaminantes3[i]%>" class="map" id="map<%=contaminantes3[i]%>" style="cursor:pointer;"><%=contaminantes3[i]%></span><%}%>
+								</span></p>
+									</div>
+																	<%if(contaminantes3!=null&&contaminantes3.length>0){
+									for(int i=0; i<contaminantes3.length; i++){ %>
+										<div class="iplus" id="plus<%=contaminantes3[i]%>"></div>
+											<%} }%>
 									</article>
 								</div>
 							</div>
@@ -161,11 +214,21 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 										for(int k = cnt; k<limite; k++){%>
 									<blockquote class="twitter-tweet" data-cards="hidden" lang="es">
 										<p lang="es" dir="ltr"></p>
-										<a
-											href='https://twitter.com/<%=tweets.get(k).getString("user")%>/status/<%=tweets.get(k).getString("id_tweet")%>'></a>
+										<a href='https://twitter.com/<%=tweets.get(k).getString("user")%>/status/<%=tweets.get(k).getString("id_tweet")%>'></a>
 									</blockquote>
-									<div title="Negativo" style="background-color: red; height: 8px; width: 100%">
-									</div>
+									<%String sentimiento = tweets.get(k).getString("feeling");
+										switch(sentimiento){
+											case "P":
+												sentimiento = "positivo";
+												break;
+											case "N":
+												sentimiento = "negativo";
+												break;
+											default:
+												sentimiento = "neutro";
+										}
+									%>
+									<div title="<%=sentimiento%>" style="background-color: <%if(sentimiento.equals("negativo")){%>#ff0000<%}else if(sentimiento.equals("neutro")){%>#adad85<%}else{%>#00cc00<%}%>; height: 5px; width: 100%; margin-top: -10px"></div>
 									<%}%>
 									<script async src="./assets/js/widgets.js" charset="utf-8"></script>
 									<p>Página <%=cnt/5+1%> de <%if(tweets.size()/5==0){%>1<%}else{%><%=tweets.size()/5%><%}if(tweets.size()>5){%>
@@ -198,5 +261,37 @@ HashMap<String,Integer> hashTag = (HashMap<String,Integer>)request.getAttribute(
 </body>
 <script>
 $( "li#v" ).addClass( "current_page_item" );
+$("#plusG").css("display","none");
+$(".iplus").css("display","none");
+
+$( "#plus" ).click(function() {
+	$(this).css("display","none");
+	$('#plusG').css("display","inline");
+	$("#plus<%=elem%>").css("display","inline");
+});
+$( "#less" ).click(function() {
+	$("#plusG").css("display","none");
+	$('#plus').css("display","inline");
+	$(".iplus").css("display","none");
+});
+$( ".map" ).click(function() {
+	$(".iplus").css("display","none");
+	$('#plus'+$(this).attr('id').substring(3)).css("display","inline");
+	$('.map').css("color","#7b818c");
+	$('#'+$(this).attr('id')).css("color","white");
+});
 </script>
+<style>
+.overflow-element {
+	border: 5px solid #404248;
+	font-size: 11px;
+	background-color: #404248;
+	border-radius: 25px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+	margin: 20px;
+}
+</style>
 </html>

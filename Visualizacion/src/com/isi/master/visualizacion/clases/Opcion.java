@@ -379,7 +379,8 @@ public class Opcion {
 		request.setAttribute("hashTag", sortHashtag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
-		client.close();
+		opcion3(request);
+		request.setAttribute("medias",juntarListasOpcion2((List<Document>)request.getAttribute("medias"), (List<Document>)request.getAttribute("medias2")));
 	}
 
 	/**

@@ -384,7 +384,6 @@ $( "li#v" ).addClass( "current_page_item" );
 	white-space: nowrap;
 	box-sizing: border-box;
 	margin: 20px;
-	border-radius: 25px;
 }
 </style>
 </html>
