@@ -98,33 +98,31 @@ if(mapas!=null && medias!=null && medias.size()>0){
 	elem = contaminantes3[0];
 %>
 <script type="text/javascript">
-google.load('visualization', '1.1', {packages: ['line']});
+google.load("visualization", "1", {packages:["corechart"]});
    <%for(int i = 0; i<contaminantes3.length; i++){%>    
      google.setOnLoadCallback(drawChart<%=contaminantes3[i]%>);
      function drawChart<%=contaminantes3[i]%>() {
-   	var data = new google.visualization.DataTable();
-   		data.addColumn('string', 'Fecha (MM/yyyy)');
-   		data.addColumn('number', '<%=contaminantes3[i]%>');
-   	
-	   	data.addRows([
-	   		<%for (Document med : medias) {%>
-	           ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+contaminantes3[i])%>],
-	   		<%}
-	   		%>
-	       ]);
+    	 var data = google.visualization.arrayToDataTable([
+   	        ['Fecha','<%=contaminantes3[i]%>'],
+       		<%for (Document med : medias) {%>
+               ['<%=((Document) med.get("_id")).get("month")%>/<%=((Document) med.get("_id")).get("year")%>',<%=med.get("average_"+contaminantes3[i])%>],
+       		<%}
+       		%>
+   	      ]);
 
-	var options = {
-			chart: {
-		          subtitle: '<%if(contaminantes3[i].equals("CO")||contaminantes3[i].equals("TOL")||contaminantes3[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>',
-		        },
-			width: 783,
-			height: 400,
-	       };
+   	      var view = new google.visualization.DataView(data);
 
-	var chart = new google.charts.Line(document.getElementById('plus<%=contaminantes3[i]%>'));
 
-   chart.draw(data, options);
-
+   	      var options = {
+   			width: 783,
+   			height: 400,
+   	        bar: {groupWidth: "75%"},
+   			vAxis: {title: 'Fecha (MM/yyyy)', titleTextStyle: {color: '#333'}},
+   			hAxis: {title: '<%if(contaminantes3[i].equals("CO")||contaminantes3[i].equals("TOL")||contaminantes3[i].equals("SH2")){%>mg/m3<%}else{%>ug/m3<%}%>', titleTextStyle: {color: '#333'}, minValue: 0},		
+   	        legend: { position: "top" }
+   	      };
+   	      var chart = new google.visualization.BarChart(document.getElementById('plus<%=contaminantes3[i]%>'));
+   	      chart.draw(view, options); 
      }
      <%}%>
 </script>
