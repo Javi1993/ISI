@@ -237,6 +237,8 @@ google.load("visualization", "1", {packages:["corechart"]});
 										request.getSession().setAttribute("hashTag", hashTag);
 										request.getSession().setAttribute("tweets", tweets);
 										request.getSession().setAttribute("feeling", feeling);	
+										request.getSession().setAttribute("maps", mapas);	
+										request.getSession().setAttribute("medias", medias);	
 										request.getSession().setAttribute("provincia", request.getAttribute("provincia"));	
 									}%> 
 									<p></section>

@@ -37,6 +37,8 @@ public class PageServlet extends HttpServlet {
 		request.setAttribute("hashTagDate", request.getSession().getAttribute("hashTagDate"));
 		request.setAttribute("hashTag", request.getSession().getAttribute("hashTag"));
 		request.setAttribute("feeling", request.getSession().getAttribute("feeling"));
+		request.setAttribute("maps", request.getSession().getAttribute("maps"));
+		request.setAttribute("medias", request.getSession().getAttribute("medias"));
 		request.setAttribute("provincia",request.getSession().getAttribute("provincia"));//guardamos la provincia
 		request.getRequestDispatcher("/opcion1.jsp").forward(request, response);
 	}
