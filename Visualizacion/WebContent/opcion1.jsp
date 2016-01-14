@@ -178,8 +178,9 @@ google.load("visualization", "1", {packages:["corechart"]});
 									<%if(hashTag!=null&&hashTag.size()>0){ %>
 									<h3>Evolcuión diaria de Hashtags principales</h3>
 										<div class="igraph" id="lineal" style="width: 100%; height: 400px;"></div>
-									<%}%>
-
+									<%}
+									if(mapas!=null&&medias!=null&&contaminantes3!=null&&contaminantes3.length>0){%>
+										
 									<a id="plus" style="cursor:pointer;">Ver <%=request.getAttribute("provincia")%> en detalle &raquo;</a>
 									<div id="plusG">
 									<a id="less" style="cursor:pointer;">&laquo; Ocultar</a>
@@ -187,8 +188,8 @@ google.load("visualization", "1", {packages:["corechart"]});
 									<p><span class="overflow-element">
 									<span title="<%=contaminantes3[0]%>" class="map" id="map<%=contaminantes3[0]%>" style="color:white;cursor:pointer;"><%=contaminantes3[0]%></span><%for(int i = 1; i<contaminantes3.length; i++){%>&nbsp;&nbsp;<span title="<%=contaminantes3[i]%>" class="map" id="map<%=contaminantes3[i]%>" style="cursor:pointer;"><%=contaminantes3[i]%></span><%}%>
 								</span></p>
-									</div>
-																	<%if(contaminantes3!=null&&contaminantes3.length>0){
+									</div><%} %>
+								<%if(mapas!=null&&medias!=null&contaminantes3!=null&&contaminantes3.length>0){
 									for(int i=0; i<contaminantes3.length; i++){ %>
 										<div class="iplus" id="plus<%=contaminantes3[i]%>"></div>
 											<%} }%>

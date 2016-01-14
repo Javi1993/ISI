@@ -337,6 +337,7 @@ public class Opcion {
 	@SuppressWarnings("unchecked")
 	public void opcion1(HttpServletRequest request){
 		Document doc = collectionTweetProv.find(new Document("_id", request.getParameter("provincia"))).first();
+		String prov = request.getParameter("provincia");
 		List<Document> tweets = (List<Document>) doc.get("tweets");
 		int[] feeling = new int[3];//0-P,1-N,2-Neu
 		HashMap<String,Integer> hashTag = new HashMap<String,Integer>();
@@ -379,8 +380,12 @@ public class Opcion {
 		request.setAttribute("hashTag", sortHashtag);
 		request.setAttribute("tweets", tweets);
 		request.setAttribute("feeling", feeling);
-		opcion3(request);
-		request.setAttribute("medias",juntarListasOpcion2((List<Document>)request.getAttribute("medias"), (List<Document>)request.getAttribute("medias2")));
+		if(!prov.equals("SEVILLA")&&!prov.equals("ALMERIA")&&!prov.equals("BADAJOZ")&&!prov.equals("CACERES")&&!prov.equals("CADIZ")
+				&&!prov.equals("MALAGA")&&!prov.equals("CORDOBA")&&!prov.equals("JAEN")&&!prov.equals("GRANADA")&&!prov.equals("HUELVA"))
+		{
+			opcion3(request);
+			request.setAttribute("medias",juntarListasOpcion2((List<Document>)request.getAttribute("medias"), (List<Document>)request.getAttribute("medias2")));
+		}
 	}
 
 	/**
